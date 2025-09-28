@@ -38,4 +38,4 @@ Contributing is easy! We welcome everyone. Here are the steps:
 
 A big thank you to all our amazing contributors!
 
-[![Contributors](https://img.shields.io/github/contributors/heysaiyad/dev-toolkit)](https://github.com/heysaiyad/dev-toolkit/graphs/contributors)
+[![Contributors](https://img.shields.io/github/contributors/heysaiyad/dev-toolkit)](https://github.com/heysaiyad/dev-toolkit/graphs/contributors) 
