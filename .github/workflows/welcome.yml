@@ -17,7 +17,8 @@ jobs:
           script: |
             const pr = context.payload.pull_request;
             const message = `Hey @${pr.user.login}! 🎉 Thank you so much for your first contribution to Developer's Toolkit! We're thrilled to have you here.\n\nI'll review your pull request as soon as possible. Meanwhile, feel free to check out other issues.\n\nWelcome to the community! 🚀`;
-            github.issues.createComment({
+
+            github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: pr.number,
