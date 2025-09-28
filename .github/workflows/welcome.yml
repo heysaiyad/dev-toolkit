@@ -3,7 +3,7 @@
 name: Welcome First-Timers
 
 on:
-  pull_request_target:
+  pull_request:
     types: [opened]
 
 jobs:
@@ -11,12 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Welcome new contributor
-        uses: actions/first-interaction@v1
+        uses: actions/github-script@v7
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          pr-message: |
-            Hey @${{ github.actor }}! 🎉 Thank you so much for your first contribution to Developer's Toolkit! We're thrilled to have you here.
-
-            I'll review your pull request as soon as possible. Meanwhile, feel free to check out other issues.
-
-            Welcome to the community! 🚀
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            const message = `Hey @${pr.user.login}! 🎉 Thank you so much for your first contribution to Developer's Toolkit! We're thrilled to have you here.\n\nI'll review your pull request as soon as possible. Meanwhile, feel free to check out other issues.\n\nWelcome to the community! 🚀`;
+            github.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              body: message
+            });
