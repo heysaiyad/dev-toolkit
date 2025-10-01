@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Previewer - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0a0f1e 0%, #1a1f2e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-shapes {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: #ff6b35;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 250px;
+            height: 250px;
+            background: #0081b4;
+            top: 60%;
+            right: 10%;
+            animation-delay: 3s;
+        }
+
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            background: #00d084;
+            bottom: 10%;
+            left: 50%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: rgba(26, 31, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 1000;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #ff6b35;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b35, #0081b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 8px;
+            color: #ff6b35;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn:hover {
+            background: #ff6b35;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .action-btn.success {
+            background: rgba(0, 208, 132, 0.2);
+            border-color: rgba(0, 208, 132, 0.5);
+            color: #00d084;
+        }
+
+        /* Main Container */
+        .container {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            z-index: 1;
+        }
+
+        /* Editor Panel */
+        .editor-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: rgba(26, 31, 46, 0.8);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .panel-header {
+            padding: 1rem 1.5rem;
+            background: rgba(255, 107, 53, 0.1);
+            border-bottom: 1px solid rgba(255, 107, 53, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .panel-header i {
+            color: #ff6b35;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+
+        .editor-wrapper {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #markdown-input {
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #e0e0e0;
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            line-height: 1.8;
+            resize: none;
+            overflow-y: auto;
+        }
+
+        #markdown-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Preview Panel */
+        .preview-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: rgba(26, 31, 46, 0.6);
+            backdrop-filter: blur(20px);
+        }
+
+        .preview-panel .panel-header {
+            background: rgba(0, 129, 180, 0.1);
+            border-bottom: 1px solid rgba(0, 129, 180, 0.3);
+        }
+
+        .preview-panel .panel-header i {
+            color: #0081b4;
+        }
+
+        #preview {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        /* Markdown Styles */
+        #preview h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            color: #ff6b35;
+            border-bottom: 2px solid rgba(255, 107, 53, 0.3);
+            padding-bottom: 0.5rem;
+        }
+
+        #preview h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+            color: #0081b4;
+        }
+
+        #preview h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.25rem 0 0.5rem;
+            color: #00d084;
+        }
+
+        #preview h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 1rem 0 0.5rem;
+            color: #e0e0e0;
+        }
+
+        #preview h5, #preview h6 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0.75rem 0 0.5rem;
+            color: #b0b0b0;
+        }
+
+        #preview p {
+            margin: 1rem 0;
+            color: #d0d0d0;
+        }
+
+        #preview a {
+            color: #0081b4;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        #preview a:hover {
+            color: #ff6b35;
+            border-bottom-color: #ff6b35;
+        }
+
+        #preview strong {
+            color: #ff6b35;
+            font-weight: 600;
+        }
+
+        #preview em {
+            color: #00d084;
+            font-style: italic;
+        }
+
+        #preview code {
+            background: rgba(255, 107, 53, 0.1);
+            color: #ff6b35;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+        }
+
+        #preview pre {
+            background: rgba(10, 15, 30, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #ff6b35;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+
+        #preview pre code {
+            background: transparent;
+            color: #00d084;
+            padding: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        #preview ul, #preview ol {
+            margin: 1rem 0 1rem 2rem;
+            color: #d0d0d0;
+        }
+
+        #preview li {
+            margin: 0.5rem 0;
+        }
+
+        #preview blockquote {
+            border-left: 4px solid #0081b4;
+            background: rgba(0, 129, 180, 0.1);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            color: #b0b0b0;
+            font-style: italic;
+        }
+
+        #preview hr {
+            border: none;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.5), transparent);
+            margin: 2rem 0;
+        }
+
+        #preview table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: rgba(26, 31, 46, 0.5);
+        }
+
+        #preview th, #preview td {
+            padding: 0.75rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: left;
+        }
+
+        #preview th {
+            background: rgba(255, 107, 53, 0.2);
+            color: #ff6b35;
+            font-weight: 600;
+        }
+
+        #preview tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        #preview img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        /* Scrollbar */
+        #markdown-input::-webkit-scrollbar,
+        #preview::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #markdown-input::-webkit-scrollbar-track,
+        #preview::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        #markdown-input::-webkit-scrollbar-thumb,
+        #preview::-webkit-scrollbar-thumb {
+            background: rgba(255, 107, 53, 0.5);
+            border-radius: 4px;
+        }
+
+        #markdown-input::-webkit-scrollbar-thumb:hover,
+        #preview::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 107, 53, 0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .editor-panel, .preview-panel {
+                flex: 1;
+            }
+
+            .header {
+                padding: 0 1rem;
+            }
+
+            .header-title {
+                font-size: 1.2rem;
+            }
+
+            .header-actions {
+                gap: 0.5rem;
+            }
+
+            .action-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            #markdown-input, #preview {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <a href="../../index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Back to Tools
+        </a>
+        <h1 class="header-title">Markdown Previewer</h1>
+        <div class="header-actions">
+            <button class="action-btn" id="copy-markdown">
+                <i class="fas fa-copy"></i>
+                Copy MD
+            </button>
+            <button class="action-btn" id="copy-html">
+                <i class="fas fa-code"></i>
+                Copy HTML
+            </button>
+            <button class="action-btn" id="download-md">
+                <i class="fas fa-download"></i>
+                Download
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Editor Panel -->
+        <div class="editor-panel">
+            <div class="panel-header">
+                <i class="fas fa-edit"></i>
+                <span class="panel-title">Markdown Editor</span>
+            </div>
+            <div class="editor-wrapper">
+                <textarea id="markdown-input" placeholder="# Start writing your markdown here...
+
+## Headings
+Use # for headings (# H1, ## H2, ### H3)
+
+## Formatting
+**Bold text** and *italic text*
+`Inline code`
+
+## Lists
+- Bullet point 1
+- Bullet point 2
+
+1. Numbered item
+2. Another item
+
+## Links
+[Link text](https://example.com)
+
+## Code Blocks
+```javascript
+function hello() {
+  console.log('Hello World!');
+}
+```
+
+## Blockquotes
+> This is a quote
+
+## Tables
+| Header 1 | Header 2 |
+| -------- | -------- |
+| Cell 1   | Cell 2   |
+
+---
+
+Happy writing!"></textarea>
+            </div>
+        </div>
+
+        <!-- Preview Panel -->
+        <div class="preview-panel">
+            <div class="panel-header">
+                <i class="fas fa-eye"></i>
+                <span class="panel-title">Live Preview</span>
+            </div>
+            <div id="preview"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
