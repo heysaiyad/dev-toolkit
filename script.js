@@ -1,26 +1,93 @@
 // Modern Dev Toolkit JavaScript
 // Interactive elements and animations
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Initialize all features
-  initTypingEffect();
-  initCounterAnimation();
-  initToolsFilter();
-  initScrollAnimations();
-  initNavbarScroll();
-  initSmoothScrolling();
-  initParallaxEffect();
-  initAdvancedSearch();
-  initThemeSystem();
-  initPerformanceMonitoring();
-  initMobileMenu();
-  initSidebar();
-  initEnhancedNavigation();
-  initMicroAnimations();
-  initSectionAnimations();
+// Global error handling
+window.addEventListener('error', function(e) {
+  console.error('Global error:', e.error);
 });
 
-// Typing Effect Animation
+window.addEventListener('unhandledrejection', function(e) {
+  console.error('Unhandled promise rejection:', e.reason);
+});
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  try {
+    // Show loading screen
+    initLoadingScreen();
+    
+    // Initialize all features
+    initTypingEffect();
+    initCounterAnimation();
+    initToolsFilter();
+    initScrollAnimations();
+    initNavbarScroll();
+    initSmoothScrolling();
+    initParallaxEffect();
+    initAdvancedSearch();
+    initThemeSystem();
+    initPerformanceMonitoring();
+    initMobileMenu();
+    initSidebar();
+    initEnhancedNavigation();
+    initMicroAnimations();
+    initSectionAnimations();
+    
+    // Hide loading screen after initialization
+    setTimeout(hideLoadingScreen, 1500);
+  } catch (error) {
+    console.error('Error during initialization:', error);
+    hideLoadingScreen();
+  }
+});
+
+// Advanced Loading Screen
+function initLoadingScreen() {
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  if (loadingOverlay) {
+    // Add random loading messages
+    const messages = [
+      'Loading DevToolkit...',
+      'Preparing tools...',
+      'Setting up workspace...',
+      'Almost ready...'
+    ];
+    const textElement = loadingOverlay.querySelector('.loading-text');
+    let messageIndex = 0;
+    
+    const messageInterval = setInterval(() => {
+      if (textElement) {
+        textElement.textContent = messages[messageIndex];
+        messageIndex = (messageIndex + 1) % messages.length;
+      }
+    }, 400);
+    
+    // Store interval to clear it later
+    loadingOverlay.messageInterval = messageInterval;
+  }
+}
+
+function hideLoadingScreen() {
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  if (loadingOverlay) {
+    // Clear message interval
+    if (loadingOverlay.messageInterval) {
+      clearInterval(loadingOverlay.messageInterval);
+    }
+    
+    // Fade out with advanced animation
+    loadingOverlay.classList.add('fade-out');
+    
+    setTimeout(() => {
+      loadingOverlay.remove();
+    }, 800);
+  }
+}
+
+// Typing Effect Animation with performance optimization
 function initTypingEffect() {
   const typingText = document.querySelector(".typing-text");
   if (!typingText) return;
@@ -37,6 +104,7 @@ function initTypingEffect() {
   let charIndex = 0;
   let isDeleting = false;
   let typingSpeed = 100;
+  let animationId;
 
   function typeMessage() {
     const currentMessage = messages[messageIndex];
@@ -58,10 +126,17 @@ function initTypingEffect() {
       messageIndex = (messageIndex + 1) % messages.length;
     }
 
-    setTimeout(typeMessage, typingSpeed);
+    animationId = setTimeout(typeMessage, typingSpeed);
   }
 
   typeMessage();
+  
+  // Cleanup function for better memory management
+  return () => {
+    if (animationId) {
+      clearTimeout(animationId);
+    }
+  };
 }
 
 // Animated Counter
@@ -104,7 +179,10 @@ function initCounterAnimation() {
 // Tools Filter System
 function initToolsFilter() {
   const filterButtons = document.querySelectorAll(".filter-btn");
-  const toolCards = document.querySelectorAll(".tool-card");
+  const toolCards = document.querySelectorAll(".tool-card:not(.add-tool-card)");
+  const resultCount = document.getElementById("resultCount");
+  
+  // Filter system ready
 
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -114,18 +192,26 @@ function initToolsFilter() {
       button.classList.add("active");
 
       const filterValue = button.getAttribute("data-filter");
+      let visibleCount = 0;
 
       toolCards.forEach((card) => {
-        if (
-          filterValue === "all" ||
-          card.getAttribute("data-category") === filterValue
-        ) {
+        const cardCategory = card.getAttribute("data-category");
+        
+        if (filterValue === "all" || cardCategory === filterValue) {
           card.style.display = "flex";
           card.style.animation = "fadeInUp 0.5s ease-out";
+          card.classList.remove('hidden');
+          visibleCount++;
         } else {
           card.style.display = "none";
+          card.classList.add('hidden');
         }
       });
+      
+      // Update result count
+      if (resultCount) {
+        resultCount.textContent = visibleCount;
+      }
     });
   });
 }
@@ -363,28 +449,123 @@ function initAdvancedSearch() {
   const toolsDatabase = [
     {
       name: "Word Counter",
-      description:
-        "Count words, characters, and paragraphs in your text with real-time analysis",
+      description: "Advanced text analysis tool with real-time word, character, and paragraph counting",
       category: "text",
       keywords: ["word", "count", "text", "character", "paragraph", "analysis"],
       icon: "fas fa-font",
       url: "tools/word-counter/index.html",
     },
     {
-      name: "JSON Formatter",
-      description: "Format and validate JSON data with syntax highlighting",
-      category: "code",
-      keywords: ["json", "format", "validate", "syntax", "code"],
-      icon: "fas fa-code",
-      url: "#",
+      name: "Line Sorter & Unique",
+      description: "Sort text lines alphabetically and remove duplicates",
+      category: "text",
+      keywords: ["sort", "unique", "lines", "text", "alphabetical", "duplicate"],
+      icon: "fas fa-sort-alpha-down",
+      url: "tools/line-sorter-unique/index.html",
     },
     {
-      name: "Color Picker",
-      description: "Advanced color picker with palette generation",
+      name: "Lorem Ipsum Generator",
+      description: "Generate placeholder text for your designs and mockups",
+      category: "text",
+      keywords: ["lorem", "ipsum", "placeholder", "text", "generator"],
+      icon: "fas fa-paragraph",
+      url: "tools/lorem-ipsum-generator/index.html",
+    },
+    {
+      name: "String Reverser",
+      description: "Reverse any string or text instantly",
+      category: "text",
+      keywords: ["string", "reverse", "text", "flip"],
+      icon: "fas fa-exchange-alt",
+      url: "tools/string-reverser/index.html",
+    },
+    {
+      name: "Base64 Encoder",
+      description: "Encode and decode Base64 strings easily",
       category: "utility",
-      keywords: ["color", "picker", "palette", "hex", "rgb"],
-      icon: "fas fa-palette",
-      url: "#",
+      keywords: ["base64", "encode", "decode", "string"],
+      icon: "fas fa-code",
+      url: "tools/base64-encoder/index.html",
+    },
+    {
+      name: "Code Beautifier",
+      description: "Format and beautify your code with syntax highlighting",
+      category: "code",
+      keywords: ["code", "format", "beautify", "syntax", "html", "css", "js"],
+      icon: "fas fa-code",
+      url: "tools/code-beautifier/index.html",
+    },
+    {
+      name: "Even Odd Checker",
+      description: "Check if a number is even or odd",
+      category: "utility",
+      keywords: ["even", "odd", "number", "check", "math"],
+      icon: "fas fa-calculator",
+      url: "tools/even-odd-checker/index.html",
+    },
+    {
+      name: "Image Base64 Converter",
+      description: "Convert images to Base64 and vice versa",
+      category: "utility",
+      keywords: ["image", "base64", "convert", "encode", "decode"],
+      icon: "fas fa-image",
+      url: "tools/image-base64-converter/index.html",
+    },
+    {
+      name: "Markdown Previewer",
+      description: "Preview markdown text with live rendering",
+      category: "code",
+      keywords: ["markdown", "preview", "md", "render", "text"],
+      icon: "fab fa-markdown",
+      url: "tools/markdown-previewer/index.html",
+    },
+    {
+      name: "Password Generator",
+      description: "Generate secure passwords with customizable options",
+      category: "utility",
+      keywords: ["password", "generate", "secure", "random"],
+      icon: "fas fa-key",
+      url: "tools/password-generator/index.html",
+    },
+    {
+      name: "Percentage Calculator",
+      description: "Calculate percentages, increase, and decrease",
+      category: "utility",
+      keywords: ["percentage", "calculate", "math", "percent"],
+      icon: "fas fa-percentage",
+      url: "tools/percentage-calculator/index.html",
+    },
+    {
+      name: "Timer & Stopwatch",
+      description: "Count down or count up with precision timing",
+      category: "utility",
+      keywords: ["timer", "stopwatch", "countdown", "time"],
+      icon: "fas fa-stopwatch",
+      url: "tools/timer-stopwatch/index.html",
+    },
+    {
+      name: "Unix Timestamp Converter",
+      description: "Convert between Unix timestamp and human-readable date",
+      category: "utility",
+      keywords: ["unix", "timestamp", "date", "convert", "time"],
+      icon: "fas fa-clock",
+      url: "tools/unix-timestamp-converter/index.html",
+    },
+    {
+      name: "URL Encoder/Decoder",
+      description: "Encode and decode URLs and URI components",
+      category: "utility",
+      keywords: ["url", "encode", "decode", "uri", "component"],
+      icon: "fas fa-link",
+      url: "tools/url-encoder-decoder/index.html",
+    },
+    {
+      name: "UUID Generator",
+      description: "Generate unique identifiers (UUID) in various formats",
+      category: "utility",
+      keywords: ["uuid", "generate", "unique", "identifier", "guid"],
+      icon: "fas fa-fingerprint",
+      url: "tools/uuid-generator/index.html",
     },
   ];
 
@@ -527,30 +708,53 @@ function initAdvancedSearch() {
   }
 
   function updateToolDisplay(results, query) {
+    let visibleCount = 0;
+    
     toolCards.forEach((card) => {
       const toolName = card.querySelector(".tool-title")?.textContent || "";
-      const toolDesc =
-        card.querySelector(".tool-description")?.textContent || "";
+      const toolDesc = card.querySelector(".tool-description")?.textContent || "";
 
-      const isMatch = results.some(
-        (result) => result.name.toLowerCase() === toolName.toLowerCase()
-      );
+      let isMatch = false;
+      
+      if (query.length === 0) {
+        isMatch = true;
+      } else {
+        // Check exact matches from search results
+        isMatch = results.some((result) => 
+          result.name.toLowerCase() === toolName.toLowerCase()
+        );
+        
+        // Also check direct text matching as fallback
+        if (!isMatch) {
+          const searchTerm = query.toLowerCase();
+          isMatch = toolName.toLowerCase().includes(searchTerm) ||
+                   toolDesc.toLowerCase().includes(searchTerm);
+        }
+      }
 
-      if (query.length === 0 || isMatch) {
+      if (isMatch) {
         card.style.display = "flex";
         card.style.animation = "fadeInUp 0.5s ease-out";
+        card.classList.remove('hidden');
+        visibleCount++;
       } else {
         card.style.display = "none";
+        card.classList.add('hidden');
       }
     });
+    
+    updateResultCount(visibleCount);
   }
 
   function showAllTools() {
+    let visibleCount = 0;
     toolCards.forEach((card) => {
       card.style.display = "flex";
       card.style.animation = "fadeInUp 0.5s ease-out";
+      card.classList.remove('hidden');
+      visibleCount++;
     });
-    updateResultCount(toolCards.length);
+    updateResultCount(visibleCount);
   }
 
   function updateResultCount(count) {
@@ -559,6 +763,8 @@ function initAdvancedSearch() {
 
   // Initialize count
   updateResultCount(toolCards.length);
+  
+  // Search system initialized successfully
 }
 
 // Advanced Theme System
@@ -793,12 +999,12 @@ function initPerformanceMonitoring() {
   // Monitor load times
   window.addEventListener("load", function () {
     const loadTime = performance.now();
-    console.log(`🚀 DevToolkit loaded in ${loadTime.toFixed(2)}ms`);
+    // DevToolkit loaded successfully
 
     // Track Core Web Vitals
     if ("web-vital" in window) {
       // This would integrate with web-vitals library if available
-      console.log("📊 Web Vitals monitoring enabled");
+      // Web Vitals monitoring enabled
     }
   });
 
