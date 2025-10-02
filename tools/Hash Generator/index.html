@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash Generator - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1 class="tool-title">Hash Generator</h1>
+            <p class="tool-subtitle">
+                Generate secure cryptographic hashes from any text input using MD5 or SHA-256 algorithms.
+            </p>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <div class="input-label">
+                <i class="fas fa-edit"></i>
+                Enter Text to Hash
+            </div>
+            <textarea id="text-input" class="text-input" placeholder="Enter your text here..."></textarea>
+        </div>
+
+        <!-- Algorithm Selection -->
+        <div class="algorithm-section">
+            <div class="input-label">
+                <i class="fas fa-cogs"></i>
+                Select Hash Algorithm
+            </div>
+            <div class="algorithm-buttons">
+                <button id="md5-btn" class="algorithm-btn active" data-algorithm="md5">
+                    <i class="fas fa-lock"></i>
+                    MD5
+                    <span class="algorithm-info">128-bit (32 chars)</span>
+                </button>
+                <button id="sha256-btn" class="algorithm-btn" data-algorithm="sha256">
+                    <i class="fas fa-shield-alt"></i>
+                    SHA-256
+                    <span class="algorithm-info">256-bit (64 chars)</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Generate Button -->
+        <button id="generate-btn" class="generate-btn">
+            <i class="fas fa-magic"></i>
+            Generate Hash
+        </button>
+
+        <!-- Result Section -->
+        <div id="result-section" class="result-section" style="display: none;">
+            <div class="input-label">
+                <i class="fas fa-key"></i>
+                Generated Hash
+            </div>
+            <div class="hash-result">
+                <div id="hash-display" class="hash-display"></div>
+                <button id="copy-btn" class="copy-btn">
+                    <i class="fas fa-copy"></i>
+                    Copy
+                </button>
+            </div>
+            <div class="hash-info">
+                <span id="hash-length"></span> • 
+                <span id="hash-algorithm"></span>
+            </div>
+        </div>
+
+        <!-- Information Section -->
+        <div class="info-section">
+            <h3>
+                <i class="fas fa-info-circle"></i>
+                About Hash Functions
+            </h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4><i class="fas fa-lock"></i> MD5</h4>
+                    <p>Message Digest Algorithm 5 produces a 128-bit hash (32 hexadecimal characters). Fast but considered cryptographically broken for security purposes.</p>
+                </div>
+                <div class="info-card">
+                    <h4><i class="fas fa-shield-alt"></i> SHA-256</h4>
+                    <p>Secure Hash Algorithm 256-bit produces a 256-bit hash (64 hexadecimal characters). Cryptographically secure and widely used.</p>
+                </div>
+            </div>
+            <div class="warning-note">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Important:</strong> Hash functions are one-way operations. You cannot reverse a hash to get the original text.
+            </div>
+        </div>
+
+        <!-- Feature Highlight -->
+        <div class="feature-highlight">
+            <h4>🔐 Secure Hashing</h4>
+            <p>Generate cryptographic hashes for data integrity, password storage, and digital signatures.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
