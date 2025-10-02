@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Range-Based Random Number Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#4F46E5', // Indigo 600
+                        'secondary': '#8B5CF6', // Violet 500
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1F2937; 
+            color: #F9FAFB; 
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="p-4">
+
+    <div id="app" class="w-full max-w-lg mx-auto">
+        <div class="bg-gray-900 p-6 sm:p-10 rounded-2xl shadow-2xl border border-gray-700">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-center mb-2 text-primary">
+                Random Number Generator
+            </h1>
+            <p class="text-gray-400 text-center mb-8">
+                Set the range and hit generate!
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                <div class="flex-1">
+                    <label for="min-input" class="block text-sm font-medium text-gray-300 mb-1">Minimum Value</label>
+                    <input type="number" id="min-input" value="1" placeholder="Min"
+                           class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-secondary focus:border-secondary transition duration-150 text-xl text-white">
+                </div>
+
+                <div class="flex-1">
+                    <label for="max-input" class="block text-sm font-medium text-gray-300 mb-1">Maximum Value</label>
+                    <input type="number" id="max-input" value="100" placeholder="Max"
+                           class="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-secondary focus:border-secondary transition duration-150 text-xl text-white">
+                </div>
+            </div>
+
+            <button id="generate-button"
+                    class="w-full py-4 text-xl font-bold bg-primary hover:bg-secondary rounded-xl shadow-lg transition duration-200 ease-in-out transform hover:scale-[1.01] active:scale-95 text-white focus:outline-none focus:ring-4 focus:ring-secondary/50">
+                Generate Random Number
+            </button>
+
+            <div class="mt-10 p-6 bg-gray-800 border-2 border-dashed border-primary/50 rounded-xl text-center min-h-[100px] flex flex-col justify-center items-center">
+                <p class="text-sm font-semibold text-gray-400 mb-2 uppercase tracking-wider">Generated Number</p>
+                <div id="result-display" class="text-6xl font-extrabold text-white">
+                    ?
+                </div>
+            </div>
+
+            <div id="message-box" class="mt-6 p-3 rounded-lg text-sm text-center transition-opacity duration-300 opacity-0 hidden" role="alert">
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const minInput = document.getElementById('min-input');
+            const maxInput = document.getElementById('max-input');
+            const generateButton = document.getElementById('generate-button');
+            const resultDisplay = document.getElementById('result-display');
+            const messageBox = document.getElementById('message-box');
+
+            /**
+             * Shows a message to the user in the message box.
+             * @param {string} message - The text message to display.
+             * @param {string} type - 'error' or 'success' to control styling.
+             */
+            function showMessage(message, type = 'error') {
+                messageBox.textContent = message;
+                messageBox.classList.remove('hidden', 'opacity-0', 'bg-green-700/20', 'text-green-300', 'bg-red-700/20', 'text-red-300');
+
+                if (type === 'error') {
+                    messageBox.classList.add('bg-red-700/20', 'text-red-300');
+                } else {
+                    messageBox.classList.add('bg-green-700/20', 'text-green-300');
+                }
+
+                // Use a slight delay to ensure the opacity transition is visible
+                setTimeout(() => messageBox.classList.remove('opacity-0'), 10);
+            }
+            function clearMessage() {
+                messageBox.classList.add('opacity-0');
+                setTimeout(() => {
+                    messageBox.classList.add('hidden');
+                    messageBox.textContent = '';
+                }, 300); // Wait for the transition to finish
+            }
+
+        
+            function generateRandomNumber(min, max) {
+                // The formula for a random integer in a range [min, max]
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+           
+            function handleGenerate() {
+                clearMessage();
+
+                // 1. Parse and validate inputs
+                const min = parseInt(minInput.value, 10);
+                const max = parseInt(maxInput.value, 10);
+
+                if (isNaN(min) || isNaN(max)) {
+                    resultDisplay.textContent = '?';
+                    showMessage("Please enter valid numerical values for both Minimum and Maximum.", 'error');
+                    return;
+                }
+
+                if (min > max) {
+                    resultDisplay.textContent = '?';
+                    showMessage("Error: The Minimum Value cannot be greater than the Maximum Value.", 'error');
+                    return;
+                }
+
+                // 2. Generate the number
+                const randomNumber = generateRandomNumber(min, max);
+
+                // 3. Display the result
+                resultDisplay.textContent = randomNumber;
+                showMessage(`Successfully generated a number between ${min} and ${max}.`, 'success');
+            }
+
+            // Attach the event listener to the button
+            generateButton.addEventListener('click', handleGenerate);
+
+            // Optional: Also allow generation on 'Enter' key press in inputs
+            minInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleGenerate();
+            });
+            maxInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleGenerate();
+            });
+            
+            // Initial call to set the display when the app loads
+            resultDisplay.textContent = generateRandomNumber(
+                parseInt(minInput.value, 10), 
+                parseInt(maxInput.value, 10)
+            );
+        });
+    </script>
+</body>
+</html>
