@@ -101,29 +101,6 @@
   }
 
 
-/* Default scroll style (dark mode) */
-.navbar.scrolled {
-  background: #0f172a;  /* dark navy */
-  color: #ffffff;
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-/* Light mode scroll navbar */
-[data-theme="light"] .navbar.scrolled {
-  background: #ffffff;   /* white background */
-  color: #0f172a;        /* dark text */
-}
-
-/* Light mode links in scrolled state */
-[data-theme="light"] .navbar.scrolled .nav-link {
-  color: #0f172a;
-}
-
-[data-theme="light"] .navbar.scrolled .nav-link:hover {
-  color: #1e40af; /* blue hover */
-}
-
-
 /* Body and page layout */
 body {
   font-family: var(--font-primary);
@@ -2514,25 +2491,4 @@ button:hover, input:hover, select:hover, textarea:hover {
     .sidebar-tool-link {
         padding: 1rem 1.5rem;
     }
-}
-
-/* Dark mode scroll navbar */
-.navbar.scrolled {
-  background: #0f172a;
-  color: #ffffff;
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-/* Light mode scroll navbar */
-[data-theme="light"] .navbar.scrolled {
-  background: #ffffff;
-  color: #0f172a;
-}
-
-[data-theme="light"] .navbar.scrolled .nav-link {
-  color: #0f172a;
-}
-
-[data-theme="light"] .navbar.scrolled .nav-link:hover {
-  color: #1e40af;
 }
