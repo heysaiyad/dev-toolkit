@@ -67,15 +67,20 @@ function initTypingEffect() {
 // Animated Counter
 function initCounterAnimation() {
   const counters = document.querySelectorAll(".stat-number");
+  const toolCards = document.querySelectorAll(".tool-card");
+  const toolCounter = document.querySelector('[data-stat="tools"]');
 
+  if (toolCounter) {
+    toolCounter.setAttribute("data-target", toolCards.length- 1);
+  }
   const animateCounter = (counter) => {
     const target = parseInt(counter.getAttribute("data-target"));
     const count = parseInt(counter.innerText);
-    const increment = target / 200;
+    const increment = target / 100;
 
     if (count < target) {
       counter.innerText = Math.ceil(count + increment);
-      setTimeout(() => animateCounter(counter), 10);
+      setTimeout(() => animateCounter(counter), 30);
     } else {
       counter.innerText = target;
     }
