@@ -6,52 +6,173 @@
 }
 
 :root {
-    /* Hacktoberfest Colors */
-    --primary-color: #ff6b35;
-    --secondary-color: #0081b4;
-    --accent-color: #ff8c42;
-    --success-color: #7ed321;
-    --warning-color: #f5a623;
-    --error-color: #d0021b;
+  /* Hacktoberfest Colors */
+  --primary-color: #ff6b35;
+  --secondary-color: #0081b4;
+  --accent-color: #ff8c42;
+  --success-color: #7ed321;
+  --warning-color: #f5a623;
+  --error-color: #d0021b;
 
-    /* Modern Colors */
-    --bg-primary: #0f0f23;
-    --bg-secondary: #1a1a2e;
-    --bg-tertiary: #16213e;
-    --text-primary: #ffffff;
-    --text-secondary: #b8b8d1;
-    --text-muted: #8b8ba7;
+  /* Modern Colors */
+  --bg-primary: #0f0f23;
+  --bg-secondary: #1a1a2e;
+  --bg-tertiary: #16213e;
+  --text-primary: #ffffff;
+  --text-secondary: #b8b8d1;
+  --text-muted: #8b8ba7;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-    --gradient-secondary: linear-gradient(135deg, #0081b4 0%, #00a8cc 100%);
-    --gradient-dark: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  --gradient-secondary: linear-gradient(135deg, #0081b4 0%, #00a8cc 100%);
+  --gradient-dark: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
 
-    /* Shadows */
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
-    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
 
-    /* Border Radius */
-    --radius-sm: 6px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-    --radius-xl: 30px;
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 30px;
 
-    /* Typography */
-    --font-primary: 'Poppins', system-ui, -apple-system, sans-serif;
-    --font-mono: 'Fira Code', 'Consolas', monospace;
+  /* Typography */
+  --font-primary: 'Poppins', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Fira Code', 'Consolas', monospace;
+
+  /* Transitions */
+  --transition-fast: 0.3s ease;
 }
 
+[data-theme="light"] {
+  --primary-color: #ff6b35;
+  --secondary-color: #0081b4;
+  --accent-color: #ff8c42;
+  --success-color: #28a745;
+  --warning-color: #f5a623;
+  --error-color: #c82333;
+
+  --bg-primary: #ffffff;
+  --bg-secondary: #f1f3f6;
+  --bg-tertiary: #e2e6ea;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #6b7280;
+
+  --gradient-primary: linear-gradient(135deg, #ff9a76 0%, #ff6b35 100%);
+  --gradient-secondary: linear-gradient(135deg, #40c4ff 0%, #0081b4 100%);
+  --gradient-dark: linear-gradient(135deg, #f1f3f6 0%, #e2e6ea 100%);
+}
+
+/* Default navbar/footer in light mode (not scrolled yet) */
+[data-theme="light"] header,
+[data-theme="light"] nav,
+[data-theme="light"] footer {
+  background: var(--bg-secondary);   /* light gray */
+  color: var(--text-primary);        /* dark text */
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Default cards in light mode */
+[data-theme="light"] .card {
+  background: #ffffff;
+  color: var(--text-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+
+/* Optional: lighter shadow in light mode */
+[data-theme="light"] .card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+  /* Optional: secondary or muted text inside cards/nav */
+  header .secondary, nav .secondary, .card .secondary {
+    color: #475569;
+  }
+
+  header .muted, nav .muted, .card .muted {
+    color: #6b7280;
+  }
+
+
+/* Default scroll style (dark mode) */
+.navbar.scrolled {
+  background: #0f172a;  /* dark navy */
+  color: #ffffff;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Light mode scroll navbar */
+[data-theme="light"] .navbar.scrolled {
+  background: #ffffff;   /* white background */
+  color: #0f172a;        /* dark text */
+}
+
+/* Light mode links in scrolled state */
+[data-theme="light"] .navbar.scrolled .nav-link {
+  color: #0f172a;
+}
+
+[data-theme="light"] .navbar.scrolled .nav-link:hover {
+  color: #1e40af; /* blue hover */
+}
+
+
+/* Body and page layout */
 body {
-    font-family: var(--font-primary);
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    line-height: 1.6;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
+  font-family: var(--font-primary);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  transition: background var(--transition-fast), color var(--transition-fast);
 }
+
+/* Headers, sections, navbars, footers */
+header, footer, main, section, nav {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+/* Cards and panels */
+.card {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-md);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+/* Links */
+a {
+  color: var(--accent-color);
+  transition: color var(--transition-fast);
+}
+a:hover {
+  opacity: 0.85;
+}
+
+/* Buttons, inputs, selects, textareas */
+button, input, select, textarea {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--text-muted);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 1rem;
+  transition: background var(--transition-fast), color var(--transition-fast), border var(--transition-fast);
+}
+button:hover, input:hover, select:hover, textarea:hover {
+  background: var(--bg-tertiary);
+}
+
 
 /* Animated Background */
 .animated-bg {
@@ -2393,4 +2514,25 @@ body {
     .sidebar-tool-link {
         padding: 1rem 1.5rem;
     }
+}
+
+/* Dark mode scroll navbar */
+.navbar.scrolled {
+  background: #0f172a;
+  color: #ffffff;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Light mode scroll navbar */
+[data-theme="light"] .navbar.scrolled {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+[data-theme="light"] .navbar.scrolled .nav-link {
+  color: #0f172a;
+}
+
+[data-theme="light"] .navbar.scrolled .nav-link:hover {
+  color: #1e40af;
 }
