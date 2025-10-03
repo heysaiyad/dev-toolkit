@@ -1,31 +1,5 @@
 // Modern Dev Toolkit JavaScript
 // Interactive elements and animations
-const btn = document.getElementById('theme-toggle');
-const STORAGE_KEY = 'devtoolkit-theme';
-
-function applyTheme(theme) {
-  if (theme === 'light') {
-    document.documentElement.setAttribute('data-theme', 'light');
-  } else {
-    document.documentElement.removeAttribute('data-theme'); // fallback is dark
-  }
-  btn.textContent = theme === 'light' ? '🌙 Dark' : '☀️ Light';
-  btn.setAttribute('aria-pressed', theme === 'light');
-}
-
-function toggleTheme() {
-  const current = localStorage.getItem(STORAGE_KEY) || 'dark';
-  const next = current === 'dark' ? 'light' : 'dark';
-  localStorage.setItem(STORAGE_KEY, next);
-  applyTheme(next);
-}
-
-// init theme
-document.addEventListener('DOMContentLoaded', () => {
-  const stored = localStorage.getItem(STORAGE_KEY) || 'dark';
-  applyTheme(stored);
-  btn.addEventListener('click', toggleTheme);
-});
 
 document.addEventListener("DOMContentLoaded", function () {
   // Initialize all features

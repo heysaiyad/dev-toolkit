@@ -115,9 +115,11 @@
       <i class="fas fa-th-list"></i>
     </button>
 
-    <button id="theme-toggle" class="toggle-btn" aria-pressed="false" title="Toggle light / dark theme">
-      🌙 Dark
-    </button>
+    <label class="theme-switch">
+        <input type="checkbox" id="theme-toggle">
+        <span class="slider"></span>
+    </label>
+
   </div>
 </nav>
 
@@ -879,6 +881,26 @@
                 document.querySelector('.install-banner')?.remove();
             }
         }
+
+        const toggleSwitch = document.getElementById("theme-toggle");
+        const body = document.body;
+
+        // Restore saved theme
+        if (localStorage.getItem("theme") === "light") {
+            body.classList.add("light-mode");
+            toggleSwitch.checked = true;
+        }
+
+        toggleSwitch.addEventListener("change", () => {
+            if (toggleSwitch.checked) {
+            body.classList.add("light-mode");
+            localStorage.setItem("theme", "light");
+            } else {
+            body.classList.remove("light-mode");
+            localStorage.setItem("theme", "dark");
+            }
+        });
+
     </script>
 </body>
 
