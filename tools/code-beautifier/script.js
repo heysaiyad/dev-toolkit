@@ -15,6 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
+      // Check if html_beautify is available
+      if (typeof html_beautify === 'undefined') {
+        outputEl.value = "❌ Error: Code beautifier library not loaded. Please refresh the page.";
+        return;
+      }
+
       const prettyCode = html_beautify(messyCode, {
         indent_size: 2,
         space_in_empty_paren: true,
@@ -28,21 +34,51 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Copy function
+  // Copy function with better error handling
   function copyOutput() {
-    if (!outputEl.value.trim()) return;
+    if (!outputEl.value.trim()) {
+      copyBtn.innerHTML = "⚠️ Nothing to copy";
+      setTimeout(() => {
+        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Output';
+      }, 1500);
+      return;
+    }
 
-    navigator.clipboard
-      .writeText(outputEl.value)
-      .then(() => {
-        copyBtn.innerHTML = "✅ Copied!";
-        setTimeout(() => {
-          copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Output';
-        }, 1500);
-      })
-      .catch((err) => {
-        console.error("Clipboard copy failed:", err);
-      });
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard
+        .writeText(outputEl.value)
+        .then(() => {
+          copyBtn.innerHTML = "✅ Copied!";
+          setTimeout(() => {
+            copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Output';
+          }, 1500);
+        })
+        .catch((err) => {
+          console.error("Clipboard copy failed:", err);
+          fallbackCopy();
+        });
+    } else {
+      fallbackCopy();
+    }
+  }
+
+  // Fallback copy method for older browsers
+  function fallbackCopy() {
+    outputEl.select();
+    outputEl.setSelectionRange(0, 99999); // For mobile devices
+    
+    try {
+      document.execCommand('copy');
+      copyBtn.innerHTML = "✅ Copied!";
+      setTimeout(() => {
+        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Output';
+      }, 1500);
+    } catch (err) {
+      copyBtn.innerHTML = "❌ Copy failed";
+      setTimeout(() => {
+        copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Output';
+      }, 1500);
+    }
   }
 
   // Event listeners

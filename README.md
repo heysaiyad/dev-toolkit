@@ -309,7 +309,7 @@ If you found this project helpful, please consider:
 
 - [x] 🔧 Add 10+ essential developer tools  
 - [ ] 🎨 Dark/Light theme toggle  
-- [x] 📱 Progressive Web App (PWA) support  
+- [x] 🌐 Cross-platform compatibility  
 - [ ] 🌐 Multi-language support  
 - [x] 🔍 Tool search and filtering  
 - [ ] 📊 Usage analytics dashboard  

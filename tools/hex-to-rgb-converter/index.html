@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hex to RBG Converter - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1 class="tool-title">Hex to RGB Converter</h1>
+            <p class="tool-subtitle">
+                A Hex to RGB converter is a tool that translates hexadecimal
+                color codes into their corresponding Red, Green, and Blue (RGB) values.
+            </p>
+        </div>
+
+        <div class="input-section">
+            <div class="input-area">
+
+
+                <label for="input">Enter Hexa Color Code (E.g., #3498db or 3498db)</label>
+
+                <input class="stat-card" type="text" placeholder="#000000" name="input" id="hexInput"
+                    oninput="conversion()" />
+
+            </div>
+            <div class="output-section">
+
+                <div class="output" id="output"></div>
+                <div class="output-area">
+                    <div class="prev-box" style="background-color: white;" id="prev-box"></div>
+
+                    <button class="btn btn-secondary" onclick="copyToClipboard()"><i class="fas fa-copy"></i> Copy to
+                        clipboard</button>
+
+
+                </div>
+                
+            </div>
+<div id="message"></div>
+        </div>
+
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
