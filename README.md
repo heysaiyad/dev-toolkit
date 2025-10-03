@@ -208,6 +208,14 @@ Thanks goes to these wonderful people:
     <br />💻
   </td>
   <td align="center">
+    <a href="https://github.com/codingr15">
+      <img src="https://avatars.githubusercontent.com/u/116160426?v=4" width="100px;" alt="codingr15"/>
+      <br />
+      <sub><b>codingr15</b></sub>
+    </a>
+    <br />💻
+  </td>
+  <td align="center">
     <a href="https://github.com/muhammadrafayasif">
       <img src="https://avatars.githubusercontent.com/u/26499941?v=4" width="100px;" alt="muhammadrafayasif"/>
       <br />
@@ -216,10 +224,28 @@ Thanks goes to these wonderful people:
     <br />💻
   </td>
   <td align="center">
+    <a href="https://github.com/Athting">
+      <img src="https://avatars.githubusercontent.com/u/149139084?v=4" width="100px;" alt="Athting"/>
+      <br />
+      <sub><b>Athting</b></sub>
+    </a>
+    <br />💻
+  </td>
+</tr><tr>
+
+  <td align="center">
     <a href="https://github.com/nikeshadhikari9">
       <img src="https://avatars.githubusercontent.com/u/133838660?v=4" width="100px;" alt="nikeshadhikari9"/>
       <br />
       <sub><b>nikeshadhikari9</b></sub>
+    </a>
+    <br />💻
+  </td>
+  <td align="center">
+    <a href="https://github.com/Vidhan0206">
+      <img src="https://avatars.githubusercontent.com/u/74712838?v=4" width="100px;" alt="Vidhan0206"/>
+      <br />
+      <sub><b>Vidhan0206</b></sub>
     </a>
     <br />💻
   </td>
@@ -231,21 +257,37 @@ Thanks goes to these wonderful people:
     </a>
     <br />💻
   </td>
-</tr><tr>
-
-  <td align="center">
-    <a href="https://github.com/Athting">
-      <img src="https://avatars.githubusercontent.com/u/149139084?v=4" width="100px;" alt="Athting"/>
-      <br />
-      <sub><b>Athting</b></sub>
-    </a>
-    <br />💻
-  </td>
   <td align="center">
     <a href="https://github.com/apps/github-actions">
       <img src="https://avatars.githubusercontent.com/in/15368?v=4" width="100px;" alt="github-actions[bot]"/>
       <br />
       <sub><b>github-actions[bot]</b></sub>
+    </a>
+    <br />💻
+  </td>
+  <td align="center">
+    <a href="https://github.com/arshiyank">
+      <img src="https://avatars.githubusercontent.com/u/227343491?v=4" width="100px;" alt="arshiyank"/>
+      <br />
+      <sub><b>arshiyank</b></sub>
+    </a>
+    <br />💻
+  </td>
+  <td align="center">
+    <a href="https://github.com/Himanshubansal-2008">
+      <img src="https://avatars.githubusercontent.com/u/227182109?v=4" width="100px;" alt="Himanshubansal-2008"/>
+      <br />
+      <sub><b>Himanshubansal-2008</b></sub>
+    </a>
+    <br />💻
+  </td>
+</tr><tr>
+
+  <td align="center">
+    <a href="https://github.com/Vedanshgupta1806">
+      <img src="https://avatars.githubusercontent.com/u/225804248?v=4" width="100px;" alt="Vedanshgupta1806"/>
+      <br />
+      <sub><b>Vedanshgupta1806</b></sub>
     </a>
     <br />💻
   </td>
