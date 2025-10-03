@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>DevToolkit - Free Developer Tools Collection | Hacktoberfest 2025</title>
 
     <!-- SEO Meta Tags -->
     <meta name="description"
+       
         content="DevToolkit - A beautiful collection of free web-based developer tools. Word counter, JSON formatter, color picker, and more. Perfect for Hacktoberfest 2025 contributions!">
     <meta name="keywords"
+       
         content="developer tools, web tools, JSON formatter, word counter, color picker, hacktoberfest, open source, free tools, programming utilities">
     <meta name="author" content="Md Saiyad Ali">
     <meta name="robots" content="index, follow">
     <meta name="language" content="English">
     <meta name="revisit-after" content="7 days">
+    
+
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://heysaiyad.github.io/dev-toolkit/">
     <meta property="og:title" content="DevToolkit - Free Developer Tools Collection">
     <meta property="og:description"
+       
         content="Beautiful collection of free web-based developer tools. Perfect for Hacktoberfest 2025 contributions!">
     <meta property="og:image" content="https://heysaiyad.github.io/dev-toolkit/poster.png">
     <meta property="og:site_name" content="DevToolkit">
@@ -30,6 +37,7 @@
     <meta property="twitter:url" content="https://heysaiyad.github.io/dev-toolkit/">
     <meta property="twitter:title" content="DevToolkit - Free Developer Tools Collection">
     <meta property="twitter:description"
+       
         content="Beautiful collection of free web-based developer tools. Perfect for Hacktoberfest 2025 contributions!">
     <meta property="twitter:image" content="https://heysaiyad.github.io/dev-toolkit/poster.png">
 
@@ -44,10 +52,10 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon"
+       
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>">
 
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
+
 
     <!-- Schema.org structured data -->
     <script type="application/ld+json">
@@ -73,13 +81,23 @@
     }
     </script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="loading.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+       
         rel="stylesheet">
 </head>
 
 <body>
-    <!-- Animated Background -->
+    <!-- Advanced Loading Screen -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading DevToolkit...</div>
+    </div>
+
+    <!-- Advanced Animated Background -->
     <div class="animated-bg">
         <div class="floating-shapes">
             <div class="shape shape-1"></div>
@@ -91,19 +109,19 @@
     </div>
 
     <!-- Navigation -->
-        <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <div class="nav-logo">
-                <i class="fas fa-code"></i>
+                <i class="fas fa-code" aria-hidden="true"></i>
                 <span>DevToolkit</span>
             </div>
             <div class="nav-links">
                 <a href="#tools" class="nav-link">Tools</a>
                 <a href="#contribute" class="nav-link">Contribute</a>
                 <a href="#creator" class="nav-link">Creator</a>
-                <a href="https://github.com/heysaiyad/dev-toolkit" target="_blank" class="nav-link github-link">
-                    <i class="fab fa-github"></i>
+                <a href="https://github.com/heysaiyad/dev-toolkit" target="_blank" class="nav-link github-link" 
+                   aria-label="View source code on GitHub">
+                    <i class="fab fa-github" aria-hidden="true"></i>
                 </a>
             </div>
             <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">
@@ -242,9 +260,22 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <div class="hero-badge">
-                <i class="fas fa-star"></i>
-                <span>Hacktoberfest 2025</span>
+            <div class="hero-badges">
+                <div class="hero-badge">
+                    <span>🎃</span>
+                    <span>Hacktoberfest 2025</span>
+                </div>
+                <div class="github-badges">
+                    <span class="github-badge">
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                        </svg>
+                        Open Source
+                    </span>
+                    <span class="contributors-badge">
+                        <span>👥</span> Contributors Welcome
+                    </span>
+                </div>
             </div>
             <h1 class="hero-title">
                 <span class="gradient-text">Developer's Toolkit</span>
@@ -254,21 +285,21 @@
                 </div>
             </h1>
             <p class="hero-description">
-                A modern collection of powerful web development tools crafted by the open-source community.
+                A community-driven collection of powerful web development tools crafted by the open-source community.
                 Built for developers, by developers. 🚀
             </p>
             <div class="hero-stats">
                 <div class="stat">
-                    <span class="stat-number" data-target="11">0</span>
+                    <span class="stat-number" data-stat="tools" data-target="15">0</span>
                     <span class="stat-label">Tools Available</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-number" data-target="50">0</span>
+                    <span class="stat-number" data-target="25">0</span>
                     <span class="stat-label">Contributors</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-number" data-target="1000">0</span>
-                    <span class="stat-label">Stars</span>
+                    <span class="stat-number" data-target="147">0</span>
+                    <span class="stat-label">GitHub Stars</span>
                 </div>
             </div>
             <div class="hero-buttons">
@@ -284,12 +315,72 @@
         </div>
     </section>
 
+    <!-- Contribution Section -->
+    <section class="contribution-section">
+        <div class="container">
+            <div class="contribution-content">
+                <div class="contribution-text">
+                    <h2>🌟 Join Our Open Source Community!</h2>
+                    <p>DevToolkit is proudly participating in <strong>Hacktoberfest 2025</strong>! We welcome contributions from developers of all skill levels.</p>
+                    <div class="contribution-stats">
+                        <div class="contrib-stat">
+                            <span class="contrib-number">15</span>
+                            <span class="contrib-label">Active Tools</span>
+                        </div>
+                        <div class="contrib-stat">
+                            <span class="contrib-number">25+</span>
+                            <span class="contrib-label">Contributors</span>
+                        </div>
+                        <div class="contrib-stat">
+                            <span class="contrib-number">147</span>
+                            <span class="contrib-label">GitHub Stars</span>
+                        </div>
+                    </div>
+                    <div class="contribution-actions">
+                        <a href="https://github.com/heysaiyad/dev-toolkit" class="contrib-btn primary">
+                            <i class="fab fa-github"></i> View Repository
+                        </a>
+                        <a href="https://github.com/heysaiyad/dev-toolkit/issues" class="contrib-btn secondary">
+                            <i class="fas fa-bug"></i> Report Issues
+                        </a>
+                    </div>
+                </div>
+                <div class="contribution-visual">
+                    <div class="github-card">
+                        <div class="repo-header">
+                            <i class="fas fa-book"></i>
+                            <span>heysaiyad/dev-toolkit</span>
+                            <span class="repo-badge">Public</span>
+                        </div>
+                        <div class="repo-description">
+                            A collection of essential developer tools for Hacktoberfest 2025
+                        </div>
+                        <div class="repo-stats">
+                            <div class="repo-stat">
+                                <i class="fas fa-star"></i>
+                                <span>1.2k</span>
+                            </div>
+                            <div class="repo-stat">
+                                <i class="fas fa-code-branch"></i>
+                                <span>235</span>
+                            </div>
+                            <div class="repo-language">
+                                <span class="lang-dot js"></span>
+                                JavaScript
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Tools Section -->
     <section id="tools" class="tools-section">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Available Tools</h2>
-                <p class="section-subtitle">Powerful utilities to boost your development workflow</p>
+                <p class="section-subtitle">Community-built utilities to boost your development workflow</p>
             </div>
 
             <!-- Advanced Search Bar -->
@@ -297,11 +388,12 @@
                 <div class="search-wrapper">
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" class="search-input"
+                       
                         placeholder="Search tools... (try 'word', 'text', or 'counter')" id="toolSearch">
                     <div class="search-suggestions" id="searchSuggestions"></div>
                 </div>
                 <div class="search-stats" id="searchStats">
-                    <span id="resultCount">11</span> tools found
+                    <span id="resultCount">15</span> tools found
                 </div>
             </div>
 
@@ -373,6 +465,7 @@
                     <div class="tool-content">
                         <h3 class="tool-title">Lorem Ipsum Generator</h3>
                         <p class="tool-description">Generate customizable placeholder text by words or paragraphs for
+                           
                             your design and development projects. Perfect for mockups and prototyping.</p>
                         <div class="tool-tags">
                             <span class="tag">Text</span>
@@ -404,6 +497,7 @@
                     </div>
                 </a>
 
+
                 <!-- JSON Formatter -->
                 <div class="tool-card" data-category="code">
                     <div class="tool-icon">
@@ -412,6 +506,7 @@
                     <div class="tool-content">
                         <h3 class="tool-title">JSON Formatter</h3>
                         <p class="tool-description">Format, validate and beautify JSON data with syntax highlighting and
+                           
                             error detection.</p>
                         <div class="tool-tags">
                             <span class="tag">JSON</span>
@@ -443,6 +538,7 @@
                     </div>
                 </a>
 
+
                 <!-- Color Picker -->
                 <div class="tool-card" data-category="utility">
                     <div class="tool-icon">
@@ -451,6 +547,7 @@
                     <div class="tool-content">
                         <h3 class="tool-title">Color Picker</h3>
                         <p class="tool-description">Generate color palettes, convert between formats, and find perfect
+                           
                             color combinations.</p>
                         <div class="tool-tags">
                             <span class="tag">Color</span>
@@ -521,25 +618,7 @@
                     </div>
                 </a>
 
-                <!-- URL Shortener -->
-                <div class="tool-card" data-category="utility" data-wide="true">
-                    <div class="tool-icon">
-                        <i class="fas fa-link"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">URL Shortener</h3>
-                        <p class="tool-description">Create short, manageable URLs with custom aliases and click tracking
-                            analytics for better link management.</p>
-                        <div class="tool-tags">
-                            <span class="tag">URL</span>
-                            <span class="tag">Analytics</span>
-                            <span class="tag">Tracking</span>
-                        </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </div>
+
 
                 <!-- Password Generator -->
                 <a href="tools/password-generator/index.html" class="tool-card" data-category="utility">
@@ -549,6 +628,7 @@
                     <div class="tool-content">
                         <h3 class="tool-title">Password Generator</h3>
                         <p class="tool-description">Generate secure passwords with customizable length and character
+                           
                             sets.</p>
                         <div class="tool-tags">
                             <span class="tag">Security</span>
@@ -580,6 +660,8 @@
                     </div>
                 </a>
 
+
+
                 <!-- QR Code Generator -->
                 <div class="tool-card" data-category="utility">
                     <div class="tool-icon">
@@ -588,6 +670,7 @@
                     <div class="tool-content">
                         <h3 class="tool-title">QR Code Generator</h3>
                         <p class="tool-description">Create QR codes for URLs, text, WiFi, and more with customizable
+                           
                             styling.</p>
                         <div class="tool-tags">
                             <span class="tag">QR Code</span>
@@ -598,7 +681,24 @@
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </div>
-
+                
+                <!-- Hexadecimal to RGB Converter -->
+                <a href="tools/hex-to-rgb-converter/index.html" class="tool-card" data-category="utility">
+                    <div class="tool-icon">
+                       <i class="fas fa-solid fa-backward"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Hex to RGB Converter</h3>
+                        <p class="tool-description">Convert the hexadecimal to RGB color code in a single click.</p>
+                        <div class="tool-tags">
+                            <span class="tag">Hex to RGB</span>
+                            <span class="tag">Converter</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
                 <!-- UUID Generator -->
                 <a href="tools/uuid-generator/index.html" class="tool-card" data-category="utility">
                     <div class="tool-icon">
@@ -654,6 +754,24 @@
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
+                <!-- Text Trimmer -->
+                <a href="tools/text-trimmer/index.html" class="tool-card" data-category="text">
+                    <div class="tool-icon">
+                        <i class="fas fa-scissors"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Text Trimmer</h3>
+                        <p class="tool-description">Remove leading/trailing whitespace and normalize spaces in your text. Perfect for data cleaning and text preprocessing.</p>
+                        <div class="tool-tags">
+                            <span class="tag">Text</span>
+                            <span class="tag">Trim</span>
+                            <span class="tag">Clean</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
                 <a href="tools/code-beautifier/index.html" class="tool-card" data-category="code">
                     <div class="tool-icon">
                         <i class="fas fa-code tool-icon"></i>
@@ -699,6 +817,7 @@
                     <div class="tool-content">
                         <h3 class="tool-title">Add Your Tool</h3>
                         <p class="tool-description">Contribute a new tool and be part of Hacktoberfest 2025! Help us
+                           
                             build the ultimate developer toolkit.</p>
                         <div class="tool-tags">
                             <span class="tag">Contribute</span>
@@ -793,6 +912,7 @@
                                 Connect on LinkedIn
                             </a>
                             <a href="https://github.com/heysaiyad" target="_blank"
+                               
                                 class="btn btn-secondary creator-btn">
                                 <i class="fab fa-github"></i>
                                 Follow on GitHub
@@ -865,77 +985,9 @@
     </footer>
 
     <script src="script.js"></script>
-    <script>
-        // Register Service Worker for PWA functionality
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                const swUrl = new URL('sw.js', window.location.href);
-                navigator.serviceWorker.register(swUrl.href, { scope: './' })
-                    .then(registration => {
-                        console.log('🚀 SW registered successfully:', registration.scope);
 
-                        // Check for updates
-                        registration.addEventListener('updatefound', () => {
-                            const newWorker = registration.installing;
-                            newWorker.addEventListener('statechange', () => {
-                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                    showUpdateNotification();
-                                }
-                            });
-                        });
-                    })
-                    .catch(error => {
-                        console.log('❌ SW registration failed:', error);
-                    });
-            });
-        }
-
-        // Show update notification
-        function showUpdateNotification() {
-            const notification = document.createElement('div');
-            notification.className = 'update-notification';
-            notification.innerHTML = `
-                <div class="update-content">
-                    <span>🚀 New version available!</span>
-                    <button onclick="window.location.reload()" class="update-btn">Update</button>
-                </div>
-            `;
-            document.body.appendChild(notification);
-        }
-
-        // PWA Install prompt
-        let deferredPrompt;
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            showInstallPromotion();
-        });
-
-        function showInstallPromotion() {
-            const installBanner = document.createElement('div');
-            installBanner.className = 'install-banner';
-            installBanner.innerHTML = `
-                <div class="install-content">
-                    <span>📱 Install DevToolkit for quick access</span>
-                    <button onclick="installApp()" class="install-btn">Install</button>
-                    <button onclick="this.parentElement.parentElement.remove()" class="close-btn">×</button>
-                </div>
-            `;
-            document.body.appendChild(installBanner);
-        }
-
-        async function installApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                console.log(`User choice: ${outcome}`);
-                deferredPrompt = null;
-                document.querySelector('.install-banner')?.remove();
-            }
-        }
-    </script>
 </body>
+
 
 </html>
 

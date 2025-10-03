@@ -1,0 +1,5 @@
+# Simple development settings - no caching
+<IfModule mod_headers.c>
+    # Disable caching for development
+    Header set Cache-Control "no-cache"
+</IfModule>

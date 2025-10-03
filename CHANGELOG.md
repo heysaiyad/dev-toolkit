@@ -49,14 +49,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Resolved service worker caching issues affecting tool display
+- Resolved tool display issues on various browsers
 - Fixed incomplete tool display problems
 - Improved landing page UI consistency
 
 ### Technical Improvements
 
-- **PWA Support**: Progressive Web App capabilities with manifest.json
-- **Service Worker**: Offline functionality and caching
 - **SEO Optimization**: sitemap.xml and robots.txt
 - **Performance**: Optimized loading and animations
 - **Accessibility**: Enhanced keyboard navigation and screen reader support
@@ -116,7 +114,7 @@ This major release transforms DevToolkit into a modern, contributor-friendly pla
 - Responsive design for all devices
 - Smooth animations and transitions
 - Accessibility improvements (WCAG 2.1 AA compliance)
-- PWA capabilities with offline support
+- Cross-browser compatibility
 
 **🛠️ New Tools:**
 The toolkit now includes 9 essential developer tools covering text processing, encoding/decoding, password generation, and time conversion utilities.
