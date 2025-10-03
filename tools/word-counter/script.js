@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (selection.toString().trim()) {
             // Highlight the selected word temporarily
             const selectedText = selection.toString();
-            console.log('Selected word:', selectedText);
+            // Selected word captured for potential future features
 
             // You could add more functionality here like word definition lookup
         }

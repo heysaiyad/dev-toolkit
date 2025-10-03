@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line Sorter & Unique Extractor - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        <span>Back to Tools</span>
+    </a>
+    <div class="tool-container">
+        <header class="tool-header">
+            <h1 class="tool-title">Line Sorter & Unique Extractor</h1>
+            <p class="tool-subtitle">Sort your text lines alphabetically and remove duplicates with ease. Perfect for cleaning up lists and organizing data.</p>
+        </header>
+        <div class="input-section">
+            <textarea id="inputText" placeholder="Paste or type your lines here..."></textarea>
+            <div class="options">
+                <label><input type="checkbox" id="sortLines"> Sort alphabetically</label>
+                <label><input type="checkbox" id="uniqueLines"> Extract unique lines</label>
+            </div>
+            <button id="processBtn">Process Text</button>
+        </div>
+        <h2>Output</h2>
+        <div class="input-section">
+            <textarea id="outputText" readonly></textarea>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

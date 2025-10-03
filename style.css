@@ -15,7 +15,7 @@
     --warning-color: #d29922;
     --error-color: #da3633;
     
-    /* Open Source Theme (Dark Mode Defaults) */
+    /* Open Source Theme */
     --bg-primary: #0d1117;
     --bg-secondary: #161b22;
     --bg-tertiary: #21262d;
@@ -112,6 +112,10 @@ a {
     box-shadow: var(--shadow-md);
 }
 
+
+        linear-gradient(135deg, #0d1117 0%, #161b22 40%, #21262d 100%);
+    animation: backgroundShift 20s ease-in-out infinite;
+}
 
 @keyframes backgroundShift {
     0%, 100% { 
@@ -239,6 +243,9 @@ a {
     background: var(--navbar-bg);
     backdrop-filter: blur(25px);
     border-bottom: 1px solid var(--navbar-border);
+    background: rgba(15, 15, 35, 0.9);
+    backdrop-filter: blur(25px);
+    border-bottom: 1px solid rgba(255, 107, 53, 0.2);
     z-index: 1000;
     padding: 1.2rem 0;
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
