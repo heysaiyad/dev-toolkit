@@ -740,6 +740,14 @@ function initAdvancedSearch() {
       url: "tools/image-to-pdf/index.html",
     },
     {
+      name: "XML to JSON converter",
+      description: "Convert your XML data into JSON",
+      category: "utility",
+      keywords: ["xml", "converter", "tool", "data", "json"],
+      icon: "fas fa-exchange",
+      url: "tools/xml-to-json-converter/index.html",
+    },
+    {
       name: "QR Code Generator",
       description: "Create QR codes for URLs, text, WiFi, and more with customizable styling.",
       category: "utility",
