@@ -740,6 +740,14 @@ function initAdvancedSearch() {
       url: "tools/image-to-pdf/index.html",
     },
     {
+      name: "Color Contrast Checker",
+      description: "Check color contrast between two colors",
+      category: "utility",
+      keywords: ["utilities", "converter", "checker"],
+      icon: "fas fa-palette",
+      url: "tools/color-contrast-checker/index.html",
+    },
+    {
       name: "QR Code Generator",
       description: "Create QR codes for URLs, text, WiFi, and more with customizable styling.",
       category: "utility",
