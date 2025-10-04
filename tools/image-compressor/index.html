@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Compressor - DevToolkit</title>
+  <link rel="stylesheet" href="../../style.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Tool-specific styles aligned with template */
+    .tool-container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+    .tool-header { text-align: center; margin-bottom: 2rem; }
+    .tool-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+    }
+    .tool-subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0.5rem auto 0; }
+
+    .back-button { position: fixed; top: 2rem; left: 2rem; z-index: 1000; display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: var(--bg-secondary); color: var(--text-primary); text-decoration: none; border-radius: var(--radius-md); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease; backdrop-filter: blur(20px); }
+    .back-button:hover { background: var(--primary-color); color: #fff; transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+    .panel { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1rem; position: relative; overflow: hidden; }
+    .panel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gradient-primary); }
+
+    .row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .row.end { align-items: flex-end; }
+    .row > * { flex: 1; }
+    .row.tight { gap: 0.75rem; }
+    .flex2 { flex: 2; }
+    .controls { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+    .slider-row { display: grid; grid-template-columns: 90px 1fr 70px; gap: 0.6rem; align-items: center; }
+
+    /* Consistent input and dropdown styling */
+    select,
+    input[type="file"],
+    input[type="number"] {
+      padding: 0.65rem 0.9rem;
+      background: var(--bg-primary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+    }
+    select { cursor: pointer; }
+    select:focus,
+    input[type="file"]:focus,
+    input[type="number"]:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
+    }
+
+    /* Range slider styling */
+    input[type="range"] {
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      border: 2px solid rgba(255,255,255,0.6);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      cursor: pointer;
+      margin-top: -7px;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      border: 2px solid rgba(255,255,255,0.6);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      cursor: pointer;
+    }
+    .readonly-value { width: 70px; background: transparent; border: none; color: var(--text-primary); text-align: right; }
+
+    .label { color: var(--text-primary); font-size: 0.9rem; opacity: 0.9; }
+    .stat { font-size: 0.85rem; color: var(--text-secondary); }
+
+    .checkbox-wrapper { position: relative; display: inline-flex; align-items: center; gap: 8px; }
+    .checkbox-wrapper input[type="checkbox"] {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--primary-color);
+      border-radius: 4px;
+      background: transparent;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .checkbox-wrapper input[type="checkbox"]:checked {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+    .checkbox-wrapper input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .preview-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .preview { background: var(--bg-tertiary); border: 1px dashed rgba(255,255,255,0.2); border-radius: var(--radius-lg); min-height: 220px; display: flex; align-items: center; justify-content: center; overflow: auto; position: relative; }
+    .preview.uploader { cursor: pointer; }
+    .preview.uploader.dragover { border-color: var(--primary-color); background: rgba(255,107,53,0.06); }
+    .preview .resizable { resize: both; overflow: auto; display: inline-block; }
+    .preview img, .preview canvas { width: 100%; height: 100%; display: block; object-fit: contain; }
+    .badge { position: absolute; top: 8px; left: 8px; background: rgb(67 78 92); padding: 4px 8px; border-radius: 999px; font-size: 12px; color: var(--text-primary); border: 1px solid rgba(255,255,255,0.12); }
+
+    .actions { display: flex; gap: 10px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: var(--radius-md); background: var(--primary-color); color: #fff; border: 1px solid transparent; cursor: pointer; font-weight: 600; transition: all .2s ease; }
+    .btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+    .btn.secondary { background: transparent; color: var(--text-primary); border-color: rgba(255,255,255,0.15); }
+    .btn[disabled] { opacity: 0.6; cursor: not-allowed; }
+
+    .note { font-size: 12px; color: var(--text-secondary); }
+    .preview .note { pointer-events: none; }
+    .preview.has-image .note { display: none !important; }
+    .hidden { display: none !important; }
+    .resizable { box-sizing: border-box; padding: 0; border: 0; }
+    .resizable, .resizable * { transition: none !important; }
+    .resizable > img { display: block; width: 100%; height: 100%; object-fit: contain; }
+
+
+    @media (max-width: 900px) { .preview-wrap { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <a href="../../index.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Tools</a>
+
+  <div class="tool-container">
+    <div class="tool-header">
+      <h1 class="tool-title">Image Compressor</h1>
+      <p class="tool-subtitle">Compress JPG/PNG images in your browser. Adjust quality, optionally resize, and download instantly. All processing happens locally.</p>
+    </div>
+    <div>
+        <label class="label hidden" for="fileInput">Select image (JPG or PNG)</label>
+        <input id="fileInput" type="file" accept="image/jpeg,image/png" class="hidden" />
+    </div>
+    <main>
+      <section class="panel">
+        <div class="row">
+          <div class="controls">
+            <div class="slider-row">
+              <span class="label">Quality</span>
+              <input id="quality" type="range" min="1" max="100" value="80" />
+              <input id="qualityValue" class="readonly-value" type="text" value="80%" aria-label="quality value" readonly />
+            </div>
+            <div class="row tight">
+              <div>
+                <label class="label" for="format">Output format</label>
+                <select id="format">
+                  <option value="auto" selected>Auto (keep or switch to JPEG for compression)</option>
+                  <option value="image/jpeg">JPEG (.jpg)</option>
+                  <option value="image/png">PNG (.png)</option>
+                </select>
+              </div>
+              <div>
+                <label class="label" for="maxWidth">Max width (px)</label>
+                <input id="maxWidth" type="number" min="1" placeholder="e.g., 1920 (optional)" />
+              </div>
+              <div>
+                <label class="label" for="maxHeight">Max height (px)</label>
+                <input id="maxHeight" type="number" min="1" placeholder="e.g., 1080 (optional)" />
+              </div>
+              <div class="checkbox-wrapper">
+                <input id="keepAspect" type="checkbox" checked />
+                <label class="label" for="keepAspect" style="margin:0; cursor:pointer;">Keep aspect ratio</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel preview-wrap">
+        <div class="preview uploader" id="origPreview" role="button" tabindex="0" aria-label="Upload image by clicking or dropping here">
+          <span class="badge">Original</span>
+          <span class="note">Click or drop an image here</span>
+        </div>
+        <div class="preview" id="compPreview">
+          <span class="badge">Compressed</span>
+          <span class="note">Adjust settings to compress</span>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="row" style="align-items:flex-end;">
+          <div style="flex:2;">
+            <div class="stat" id="infoOriginal">Original: —</div>
+            <div class="stat" id="infoCompressed">Compressed: —</div>
+            <div class="stat" id="infoSavings">Savings: —</div>
+            <div class="note hidden" id="transparencyNote">Note: PNG transparency may be lost when converting to JPEG.</div>
+          </div>
+          <div class="actions">
+            <button id="compressBtn" class="btn" disabled><i class="fas fa-compress"></i> Compress</button>
+            <a id="downloadLink" class="btn secondary" download disabled><i class="fas fa-download"></i> Download</a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
