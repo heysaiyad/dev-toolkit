@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Password Strength Indicator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Password Strength Indicator</h2>
+    <p>Type a password to see how strong it is.</p>
+
+    <div class="input-group">
+      <input type="password" id="password" placeholder="Enter your password" />
+      <button id="toggleBtn">Show</button>
+    </div>
+
+    <div class="meter">
+      <div id="strength-bar"></div>
+    </div>
+    <div id="strength-text" class="strength-text">Strength: </div>
+
+    <ul id="suggestions" class="suggestions"></ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
