@@ -771,6 +771,14 @@ function initAdvancedSearch() {
       icon: "fas fa-qrcode",
       url: "#",
     },
+    {
+      name: "Text Extractor",
+      description: "Extract meaningful text from various document formats, including PDFs, Word files and images.",
+      category: "utility",
+      keywords: ["text", "extraction", "pdf", "word", "image"],
+      icon: "fas fa-file-alt",
+      url: "tools/text-extraction/index.html",
+    }
   ];
 
   let searchTimeout;

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Extractor - DevToolkit</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gradient-primary: linear-gradient(135deg,#ff6347 0%,#ff8c00 70%);
+      --primary-color: #ff6347;
+      --accent: #2563eb;
+      --bg: #18191a;
+      --bg-secondary: #161b22;
+      --card: #18191a;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.53);
+      --text-primary: #f0f6fc;
+      --text-secondary: #9baec8;
+      --muted: #ffb36b;
+    }
+    body {
+      margin: 0; min-height: 100vh;
+      background: var(--bg);
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-primary);
+      position: relative;
+      overflow-x: hidden;
+    }
+    .animated-bg { position: fixed; z-index: 0; inset: 0; overflow: hidden; pointer-events: none;}
+    .floating-shapes { position: absolute; inset: 0; width:100%; height:100%; pointer-events:none; z-index:0;}
+    .shape { position:absolute; border-radius:50%; filter:blur(100px); opacity:0.32; z-index:0; animation:pulseShape 13s ease-in-out infinite alternate;}
+    .shape-1 { background:#ff6347;width:400px;height:400px;top:10%;left:5%;}
+    .shape-2 { background:#ffb36b;width:300px;height:300px;bottom:12%;right:8%;}
+    .shape-3 { background:#ff8c00;width:220px;height:220px;top:58%;left:60%;}
+    .shape-4 { background:#2563eb;width:200px;height:200px;bottom:34%;right:38%;}
+    .shape-5 { background:#00c2b2;width:120px;height:120px;top:65%;left:14%;}
+    @keyframes pulseShape { 0%{transform:scale(1);} 50%{transform:scale(1.12);} 100%{transform:scale(1);} }
+    .tool-container {
+      max-width: 1000px;
+      margin: 4rem auto;
+      padding: 2rem 3rem;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      z-index: 1;
+      color: var(--text-primary);
+    }
+    .tool-header { text-align:center; margin-bottom:2.5rem;}
+    .tool-title {
+      font-size:clamp(2rem,4vw,3rem);
+      font-weight:700;
+      background:var(--gradient-primary);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      margin-bottom:1rem;
+    }
+    .tool-subtitle {
+      font-size:1.1rem; color:var(--text-secondary);
+      max-width:600px; margin:0 auto;
+    }
+    .back-button {
+      position: fixed; top: 2rem; left: 2rem; z-index: 1000;
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-secondary);
+      color: var(--text-primary); text-decoration: none;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(20px);
+      font-weight: 600; font-size: 0.9rem;
+    }
+    .back-button:hover { background: var(--primary-color); color: white; transform:translateY(-2px); box-shadow: var(--shadow-lg);}
+    .card {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: 2rem 1.5rem;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .grid {
+      display: grid; grid-template-columns:1fr 400px; gap:32px;
+    }
+    @media (max-width:900px){ .grid{grid-template-columns:1fr;gap:16px;} }
+    .upload {
+      border:2px dashed #ffb36b;
+      background:rgba(255,255,255,0.01);
+      border-radius:var(--radius-lg);
+      padding:2rem;text-align:center;cursor:pointer;transition:all 0.3s;
+      display:flex;flex-direction:column;align-items:center;
+      color: var(--text-primary);margin-bottom:1rem;box-shadow:var(--shadow-lg);
+    }
+    .upload.dragover { border-color:#ff6347;background:rgba(255,99,71,0.07);}
+    .controls { display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:1.2rem;}
+    button {
+      display:inline-flex;align-items:center;gap:0.5rem;
+      padding:0.65rem 1.3rem; border-radius:var(--radius-md);
+      font-weight:600; font-size:1rem; border:none; cursor:pointer;
+      transition:all 0.3s ease; background:var(--gradient-primary); color:white;
+    }
+    button.ghost, .small.ghost, #btnDownloadTxt {
+      background:transparent;color:#ffb36b;border:1.5px solid #ffb36b;font-size:0.98rem;
+    }
+    button.ghost:hover, .small.ghost:hover, #btnDownloadTxt:hover {
+      background:#ff6347;color:white;border-color:#ff6347;
+    }
+    #btnOcr { background:var(--gradient-primary);color:white;font-weight:600; }
+    #btnOcr:hover { transform:translateY(-2px);background:#ff6347;color:white;box-shadow:var(--shadow-lg);}
+    #btnDownloadTxt:disabled { opacity:0.34; pointer-events:none; }
+    .preview { display:flex;flex-direction:column;gap:12px;align-items:center;margin-top:1rem;}
+    canvas { max-width:100%; border-radius:var(--radius-md); background:#18191a; box-shadow:0 4px 14px rgba(2,6,23,0.05);}
+    .progress { height:10px; background:#232323; border-radius:8px; overflow:hidden; margin-top:16px; box-shadow:var(--shadow-lg);}
+    .progress > i { display:block;height:100%;background:linear-gradient(90deg,#ff6347,#ff8c00);width:0%;transition:width 0.3s;}
+    textarea, pre {
+      width:100%; border-radius:var(--radius-md); padding:16px;
+      border:1px solid rgba(255,255,255,0.08); font-family:monospace; font-size:1rem;
+      background:rgba(255,255,255,0.02); color:var(--text-primary);margin-bottom:1rem;box-shadow:var(--shadow-lg);
+    }
+    textarea { min-height:160px; resize:vertical;}
+    .row {display:flex;gap:12px;align-items:center;margin-top:12px;}
+    .muted, .small-muted { color:var(--muted);font-size:0.96rem;}
+    .small-muted {font-size:0.86rem;}
+    #previewArea, #outText, #outJson {margin-bottom:8px;}
+    select, input[type=checkbox] {margin-top:4px;}
+    .back-to-top {
+      position:fixed;right:24px;bottom:24px;z-index:999;display:none;width:50px;height:50px;
+      border-radius:14px;align-items:center;justify-content:center;background:var(--primary-color);color:white;
+      box-shadow:var(--shadow-lg);cursor:pointer;font-size:1.25rem;border:none;
+    }
+    .back-to-top.show {display:flex;}
+    @media (max-width:900px){ .tool-container{padding:1rem;} .card{padding:1rem;} }
+    @media (max-width:600px){ .tool-header{margin-bottom:1rem;} .tool-container{padding:0.5rem;} .card{padding:8px;}
+      .back-button{top:0.5rem;left:0.5rem;padding:0.5rem 1rem;} button{ font-size:0.95rem; } }
+  </style>
+</head>
+<body>
+  <div class="animated-bg">
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+    </div>
+  </div>
+  <a href="../../index.html" class="back-button" aria-label="Back to Tools">
+    <i class="fas fa-arrow-left"></i> Back to Tools
+  </a>
+  <div class="tool-container">
+    <div class="tool-header">
+      <h1 class="tool-title">Text Extractor</h1>
+      <p class="tool-subtitle">
+        Extract text from images (JPG/PNG/TIFF) or PDFs instantly.<br /> Multi-page supported. Mobile-friendly.
+      </p>
+    </div>
+    <div class="card">
+      <div class="grid">
+        <!-- Left: Upload & Preview -->
+        <div>
+          <label class="upload" id="dropZone" tabindex="0" aria-label="Drop files here or click to upload">
+            <input id="fileInput" type="file" accept="image/*,.pdf" aria-label="Choose image or PDF file" />
+            <div id="uploadContent">
+              <div style="font-weight:600">Drop image or PDF here</div>
+              <div class="muted">or click to browse — supports JPG, PNG, TIFF, PDF</div>
+              <div class="controls">
+                <button id="btnClear" class="small">Clear</button>
+                <button id="btnCamera" class="small ghost">Camera</button>
+              </div>
+            </div>
+          </label>
+          <div id="previewArea" class="preview" aria-live="polite">
+            <canvas id="previewCanvas" width="800" height="600" style="display:none"></canvas>
+            <canvas id="overlayCanvas" width="800" height="600" style="position:relative;display:none"></canvas>
+            <div id="noPreview" class="small-muted">No preview yet</div>
+          </div>
+          <div class="row">
+            <div style="flex: 1">
+              <label class="small-muted">Language</label>
+              <select id="langSelect" aria-label="Select language">
+                <option value="eng">English (eng)</option>
+              </select>
+            </div>
+            <div style="width: 140px">
+              <label class="small-muted">Options</label>
+              <div style="display:flex;gap:8px;align-items:center">
+                <input type="checkbox" id="boxesCheck" /> <label for="boxesCheck" class="small-muted">Show boxes</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <button id="btnOcr">Start OCR</button>
+            <button id="btnDownloadTxt" class="ghost small" disabled>Download Text</button>
+          </div>
+          <div class="progress" aria-hidden="true"><i id="progBar"></i></div>
+          <div class="row" style="justify-content:space-between; margin-top:4px;">
+            <div id="statusText" class="small-muted">Idle</div>
+            <div id="statusPercent" class="small-muted">0%</div>
+          </div>
+          <div id="pageControls" style="margin-top:8px; display:none;">
+            <button id="prevPage" class="small ghost">Prev</button><span id="currentPage">1</span>/<span
+              id="totalPages">1</span>
+            <button id="nextPage" class="small ghost">Next</button>
+          </div>
+        </div>
+        <!-- Right: Output -->
+        <div>
+          <div class="small-muted" style="margin-bottom:8px">OCR Output</div>
+          <textarea id="outText" placeholder="Extracted text will appear here" aria-label="Extracted text"></textarea>
+          <div style="margin-top:12px" class="small-muted">Tips</div>
+          <ul class="small-muted">
+            <li>Use high-resolution images for better results.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="backToTop" class="back-to-top" title="Back to top" aria-label="Back to top">↑</div>
+  <script src="https://unpkg.com/tesseract.js@2.1.5/dist/tesseract.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.worker.min.js"></script>
+  <script src="scripts.js"></script>
+</body>
+</html>
