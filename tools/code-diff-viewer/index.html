@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Diff Viewer - DevToolkit</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet">
+  <style>
+    /* Back button styles */
+    .back-button {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(20px);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-button:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Main container styles */
+    .tool-container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .tool-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      margin-top: 3rem;
+    }
+
+    .tool-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .tool-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Input Section */
+    .input-section {
+      background: var(--bg-secondary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .input-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient-primary);
+    }
+
+    .input-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .input-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .input-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* Code Input Areas */
+    .code-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .code-input-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .code-input-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .code-input-label .label-badge {
+      background: var(--primary-color);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .code-textarea {
+      width: 100%;
+      min-height: 300px;
+      padding: 1rem;
+      background: var(--bg-primary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      resize: vertical;
+      transition: all 0.3s ease;
+    }
+
+    .code-textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 15px rgba(255, 107, 53, 0.2);
+    }
+
+    /* File Upload */
+    .file-upload-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .file-upload-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .file-upload-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .file-input {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .file-input-button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem;
+      background: var(--bg-primary);
+      border: 2px dashed rgba(255, 255, 255, 0.3);
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      justify-content: center;
+      min-height: 80px;
+    }
+
+    .file-input-button:hover {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+      background: rgba(255, 107, 53, 0.1);
+    }
+
+    .file-input-button.has-file {
+      border-color: var(--success-color);
+      color: var(--success-color);
+      background: rgba(126, 211, 33, 0.1);
+    }
+
+    /* Control Buttons */
+    .control-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      color: white;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 2px solid var(--primary-color);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Diff Viewer */
+    .diff-viewer {
+      background: var(--bg-secondary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .diff-viewer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient-primary);
+    }
+
+    .diff-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: var(--bg-primary);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .diff-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .diff-stats {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .diff-stat {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .diff-stat.additions {
+      color: var(--success-color);
+    }
+
+    .diff-stat.deletions {
+      color: var(--error-color);
+    }
+
+    .diff-stat.changes {
+      color: var(--warning-color);
+    }
+
+    .diff-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .diff-pane {
+      position: relative;
+      overflow-x: auto;
+      background: var(--bg-primary);
+    }
+
+    .diff-pane:first-child {
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .diff-pane-header {
+      padding: 0.75rem 1rem;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .diff-pane-header.original {
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .diff-pane-content {
+      position: relative;
+      font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* Diff Line Styles */
+    .diff-line {
+      display: flex;
+      min-height: 1.6em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .diff-line-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 3rem;
+      padding: 0 0.5rem;
+      background: var(--bg-secondary);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      user-select: none;
+    }
+
+    .diff-line-content {
+      flex: 1;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      word-break: break-all;
+      white-space: pre-wrap;
+    }
+
+    /* Diff Line Types */
+    .diff-line.unchanged {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    .diff-line.added {
+      background: rgba(126, 211, 33, 0.1);
+      color: var(--text-primary);
+      border-left: 3px solid var(--success-color);
+    }
+
+    .diff-line.removed {
+      background: rgba(208, 2, 27, 0.1);
+      color: var(--text-primary);
+      border-left: 3px solid var(--error-color);
+    }
+
+    .diff-line.modified {
+      background: rgba(245, 162, 35, 0.1);
+      color: var(--text-primary);
+      border-left: 3px solid var(--warning-color);
+    }
+
+    /* Language Selection */
+    .language-selector {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .language-select {
+      padding: 0.5rem;
+      background: var(--bg-primary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-size: 0.9rem;
+    }
+
+    .language-select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    /* Empty State */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    .empty-state h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+    }
+
+    .empty-state p {
+      font-size: 1rem;
+      max-width: 400px;
+      line-height: 1.5;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .diff-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .diff-pane:first-child {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .tool-container {
+        padding: 1rem;
+      }
+
+      .code-inputs {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .file-upload-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .input-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .control-buttons {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .diff-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+      }
+
+      .diff-stats {
+        justify-content: center;
+      }
+
+      .back-button {
+        top: 1rem;
+        left: 1rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .tool-title {
+        font-size: 1.8rem;
+      }
+
+      .tool-subtitle {
+        font-size: 1rem;
+      }
+
+      .input-section {
+        padding: 1rem;
+      }
+
+      .code-textarea {
+        min-height: 200px;
+        font-size: 0.8rem;
+      }
+
+      .diff-pane-header {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+      }
+
+      .diff-line-content {
+        padding: 0 0.5rem;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <a href="../../index.html" class="back-button">
+    <i class="fas fa-arrow-left"></i>
+    Back to Tools
+  </a>
+
+  <div class="tool-container">
+    <!-- Header -->
+    <div class="tool-header">
+      <h1 class="tool-title">Code Diff Viewer</h1>
+      <p class="tool-subtitle">
+        Compare code snippets side-by-side with GitHub-style diff highlighting. Upload files or paste code to see detailed differences.
+      </p>
+    </div>
+
+    <!-- Input Section -->
+    <div class="input-section">
+      <div class="input-header">
+        <h2 class="input-title">
+          <i class="fas fa-code"></i>
+          Code Comparison
+        </h2>
+        <div class="input-controls">
+          <div class="language-selector">
+            <i class="fas fa-language"></i>
+            <select id="language-select" class="language-select">
+              <option value="javascript">JavaScript</option>
+              <option value="python">Python</option>
+              <option value="java">Java</option>
+              <option value="cpp">C++</option>
+              <option value="csharp">C#</option>
+              <option value="php">PHP</option>
+              <option value="ruby">Ruby</option>
+              <option value="go">Go</option>
+              <option value="rust">Rust</option>
+              <option value="html">HTML</option>
+              <option value="css">CSS</option>
+              <option value="json">JSON</option>
+              <option value="xml">XML</option>
+              <option value="yaml">YAML</option>
+              <option value="sql">SQL</option>
+              <option value="bash">Bash</option>
+              <option value="plain">Plain Text</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Code Input Areas -->
+      <div class="code-inputs">
+        <div class="code-input-group">
+          <label class="code-input-label">
+            <span class="label-badge">Original</span>
+            <i class="fas fa-file-code"></i>
+            Original Code
+          </label>
+          <textarea 
+            id="original-code" 
+            class="code-textarea" 
+            placeholder="Paste your original code here..."
+          >function greet(name) {
+  console.log("Hello, " + name + "!");
+}
+
+greet("World");</textarea>
+        </div>
+
+        <div class="code-input-group">
+          <label class="code-input-label">
+            <span class="label-badge">Modified</span>
+            <i class="fas fa-file-code"></i>
+            Modified Code
+          </label>
+          <textarea 
+            id="modified-code" 
+            class="code-textarea" 
+            placeholder="Paste your modified code here..."
+          >function greet(name, greeting = "Hello") {
+  console.log(`${greeting}, ${name}!`);
+}
+
+greet("World");
+greet("Developer", "Hi");</textarea>
+        </div>
+      </div>
+
+      <!-- File Upload -->
+      <div class="file-upload-container">
+        <div class="file-upload-group">
+          <label class="file-upload-label">
+            <i class="fas fa-upload"></i>
+            Upload Original File
+          </label>
+          <div class="file-input-wrapper">
+            <input type="file" id="original-file" class="file-input" accept=".js,.py,.java,.cpp,.cs,.php,.rb,.go,.rs,.html,.css,.json,.xml,.yml,.yaml,.sql,.sh,.txt">
+            <div class="file-input-button" id="original-file-button">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <span>Choose Original File</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="file-upload-group">
+          <label class="file-upload-label">
+            <i class="fas fa-upload"></i>
+            Upload Modified File
+          </label>
+          <div class="file-input-wrapper">
+            <input type="file" id="modified-file" class="file-input" accept=".js,.py,.java,.cpp,.cs,.php,.rb,.go,.rs,.html,.css,.json,.xml,.yml,.yaml,.sql,.sh,.txt">
+            <div class="file-input-button" id="modified-file-button">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <span>Choose Modified File</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Control Buttons -->
+      <div class="control-buttons">
+        <button id="compare-btn" class="btn btn-primary">
+          <i class="fas fa-search"></i>
+          Compare Code
+        </button>
+        <button id="clear-btn" class="btn btn-secondary">
+          <i class="fas fa-trash"></i>
+          Clear All
+        </button>
+        <button id="swap-btn" class="btn btn-secondary">
+          <i class="fas fa-exchange-alt"></i>
+          Swap Sides
+        </button>
+      </div>
+    </div>
+
+    <!-- Diff Viewer -->
+    <div class="diff-viewer" id="diff-viewer" style="display: none;">
+      <div class="diff-header">
+        <h3 class="diff-title">
+          <i class="fas fa-code-branch"></i>
+          Code Differences
+        </h3>
+        <div class="diff-stats">
+          <div class="diff-stat additions">
+            <i class="fas fa-plus"></i>
+            <span id="additions-count">0</span> additions
+          </div>
+          <div class="diff-stat deletions">
+            <i class="fas fa-minus"></i>
+            <span id="deletions-count">0</span> deletions
+          </div>
+          <div class="diff-stat changes">
+            <i class="fas fa-edit"></i>
+            <span id="changes-count">0</span> changes
+          </div>
+        </div>
+      </div>
+      
+      <div class="diff-content">
+        <div class="diff-pane">
+          <div class="diff-pane-header original">
+            <i class="fas fa-file-code"></i>
+            <span id="original-filename">Original</span>
+          </div>
+          <div class="diff-pane-content" id="original-diff-content">
+            <!-- Original diff content will be rendered here -->
+          </div>
+        </div>
+        
+        <div class="diff-pane">
+          <div class="diff-pane-header">
+            <i class="fas fa-file-code"></i>
+            <span id="modified-filename">Modified</span>
+          </div>
+          <div class="diff-pane-content" id="modified-diff-content">
+            <!-- Modified diff content will be rendered here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="empty-state">
+      <i class="fas fa-code-branch"></i>
+      <h3>Ready to Compare</h3>
+      <p>
+        Enter your original and modified code snippets above, or upload files to see a detailed side-by-side comparison with highlighted differences.
+      </p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

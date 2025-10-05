@@ -740,12 +740,28 @@ function initAdvancedSearch() {
       url: "tools/image-to-pdf/index.html",
     },
     {
+      name: "Color Contrast Checker",
+      description: "Check color contrast between two colors",
+      category: "utility",
+      keywords: ["utilities", "converter", "checker"],
+      icon: "fas fa-palette",
+      url: "tools/color-contrast-checker/index.html",
+    },
+    {
       name: "XML to JSON converter",
       description: "Convert your XML data into JSON",
       category: "utility",
       keywords: ["xml", "converter", "tool", "data", "json"],
       icon: "fas fa-exchange",
       url: "tools/xml-to-json-converter/index.html",
+    },
+    {
+      name: "File Zipper",
+      description: "Convert your files into a zip and download it.",
+      category: "utility",
+      keywords: ["qr", "code", "generator", "url", "text", "wifi", "scan"],
+      icon: "fas fa-qrcode",
+      url: "tools/file-zipper/index.html",
     },
     {
       name: "QR Code Generator",
@@ -1842,3 +1858,26 @@ function initBackToTop() {
   // Initial check in case page is already scrolled
   toggleBackToTopButton();
 }
+
+// Random Color Generator
+const btn = document.getElementById("generate-btn");
+const codeDisplay = document.getElementById("color-code");
+const colorBox = document.getElementById("color-display");
+
+function getRandomHex() {
+    const hex = Math.floor(Math.random() * 16777215).toString(16);
+    return "#" + hex.padStart(6, "0");
+}
+
+function getRandomRGB() {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
+btn.addEventListener("click", () => {
+    const color = Math.random() < 0.5 ? getRandomHex() : getRandomRGB();
+    codeDisplay.textContent = color;
+    colorBox.style.backgroundColor = color;
+});

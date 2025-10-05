@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internet Speed Tester - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1 class="tool-title">Internet Speed Tester</h1>
+            <p class="tool-subtitle">
+                Test your internet connection speed with accurate measurements of download, upload, and ping latency.
+            </p>
+        </div>
+
+        <!-- Speed Test Display -->
+        <div class="speed-test-container">
+            <!-- Speedometer -->
+            <div class="speedometer-container">
+                <svg class="speedometer" viewBox="0 0 200 120">
+                    <!-- Background arc -->
+                    <path class="speedometer-bg" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke-width="12"/>
+                    <!-- Progress arc -->
+                    <path class="speedometer-progress" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke-width="12"/>
+                    <!-- Needle -->
+                    <line class="speedometer-needle" x1="100" y1="100" x2="100" y2="30" stroke-width="3"/>
+                    <circle cx="100" cy="100" r="8" fill="var(--primary-color)"/>
+                </svg>
+                <div class="speedometer-value">
+                    <span class="speed-number" id="currentSpeed">0</span>
+                    <span class="speed-unit">Mbps</span>
+                </div>
+                <div class="speed-label" id="speedLabel">Ready to test</div>
+            </div>
+
+            <!-- Start Button -->
+            <button class="btn btn-primary btn-start" id="startTest">
+                <i class="fas fa-play"></i>
+                Start Test
+            </button>
+
+            <!-- Progress Indicator -->
+            <div class="test-progress" id="testProgress" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Initializing...</div>
+            </div>
+        </div>
+
+        <!-- Results Grid -->
+        <div class="results-grid" id="resultsGrid" style="display: none;">
+            <div class="result-card">
+                <div class="result-icon">
+                    <i class="fas fa-download"></i>
+                </div>
+                <div class="result-info">
+                    <div class="result-label">Download</div>
+                    <div class="result-value">
+                        <span id="downloadSpeed">0</span>
+                        <span class="result-unit">Mbps</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-icon">
+                    <i class="fas fa-upload"></i>
+                </div>
+                <div class="result-info">
+                    <div class="result-label">Upload</div>
+                    <div class="result-value">
+                        <span id="uploadSpeed">0</span>
+                        <span class="result-unit">Mbps</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-icon">
+                    <i class="fas fa-signal"></i>
+                </div>
+                <div class="result-info">
+                    <div class="result-label">Ping</div>
+                    <div class="result-value">
+                        <span id="pingValue">0</span>
+                        <span class="result-unit">ms</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="result-info">
+                    <div class="result-label">Jitter</div>
+                    <div class="result-value">
+                        <span id="jitterValue">0</span>
+                        <span class="result-unit">ms</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Connection Info -->
+        <div class="connection-info" id="connectionInfo" style="display: none;">
+            <h3><i class="fas fa-info-circle"></i> Connection Details</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">IP Address:</span>
+                    <span class="info-value" id="ipAddress">Detecting...</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Location:</span>
+                    <span class="info-value" id="location">Detecting...</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">ISP:</span>
+                    <span class="info-value" id="isp">Detecting...</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Connection Type:</span>
+                    <span class="info-value" id="connectionType">Unknown</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Speed History -->
+        <div class="history-container" id="historyContainer" style="display: none;">
+            <div class="history-header">
+                <h3><i class="fas fa-history"></i> Test History</h3>
+                <button class="btn-clear-history" id="clearHistory">
+                    <i class="fas fa-trash"></i> Clear History
+                </button>
+            </div>
+            <div class="history-list" id="historyList"></div>
+        </div>
+
+        <!-- Tips Section -->
+        <div class="tips-section">
+            <h3><i class="fas fa-lightbulb"></i> Tips for Accurate Results</h3>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <i class="fas fa-wifi"></i>
+                    <p>Use a wired connection for the most accurate results</p>
+                </div>
+                <div class="tip-card">
+                    <i class="fas fa-times-circle"></i>
+                    <p>Close other applications using internet bandwidth</p>
+                </div>
+                <div class="tip-card">
+                    <i class="fas fa-redo"></i>
+                    <p>Run multiple tests at different times of day</p>
+                </div>
+                <div class="tip-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <p>Disconnect other devices from your network</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

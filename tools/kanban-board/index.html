@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban Board - DevToolkit</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Back button styles */
+    .back-button {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(20px);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-button:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Main container styles */
+    .tool-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .tool-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      margin-top: 3rem;
+    }
+
+    .tool-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .tool-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Kanban Board Styles */
+    .kanban-board {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .kanban-column {
+      background: var(--bg-secondary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      min-height: 500px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kanban-column::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient-primary);
+    }
+
+    .column-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .column-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .task-count {
+      background: var(--primary-color);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .tasks-container {
+      min-height: 400px;
+      padding-bottom: 1rem;
+    }
+
+    /* Task Styles */
+    .task {
+      background: var(--bg-primary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      cursor: grab;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .task:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-color);
+    }
+
+    .task.dragging {
+      opacity: 0.5;
+      transform: rotate(5deg);
+    }
+
+    .task-header {
+      display: flex;
+      justify-content: between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+
+    .task-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      word-break: break-word;
+    }
+
+    .task-description {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      word-break: break-word;
+    }
+
+    .task-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .task-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .task-action-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.25rem;
+      border-radius: var(--radius-sm);
+      transition: all 0.3s ease;
+    }
+
+    .task-action-btn:hover {
+      color: var(--primary-color);
+      background: rgba(255, 107, 53, 0.1);
+    }
+
+    /* Add Task Button */
+    .add-task-btn {
+      width: 100%;
+      padding: 1rem;
+      background: transparent;
+      border: 2px dashed rgba(255, 255, 255, 0.3);
+      border-radius: var(--radius-md);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .add-task-btn:hover {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+      background: rgba(255, 107, 53, 0.1);
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      background: var(--bg-secondary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      width: 90%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.show .modal {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .modal-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .close-btn:hover {
+      color: var(--error-color);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--bg-primary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 15px rgba(255, 107, 53, 0.2);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 2px solid var(--text-muted);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    /* Drag and Drop States */
+    .kanban-column.drag-over {
+      background: rgba(255, 107, 53, 0.1);
+      border-color: var(--primary-color);
+    }
+
+    .drop-zone {
+      min-height: 50px;
+      border: 2px dashed transparent;
+      border-radius: var(--radius-md);
+      transition: all 0.3s ease;
+    }
+
+    .drop-zone.active {
+      border-color: var(--primary-color);
+      background: rgba(255, 107, 53, 0.1);
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .tool-container {
+        padding: 1rem;
+      }
+
+      .kanban-board {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .kanban-column {
+        min-height: 300px;
+        padding: 1rem;
+      }
+
+      .modal {
+        width: 95%;
+        padding: 1.5rem;
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .back-button {
+        top: 1rem;
+        left: 1rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .tool-title {
+        font-size: 1.8rem;
+      }
+
+      .tool-subtitle {
+        font-size: 1rem;
+      }
+
+      .kanban-column {
+        padding: 0.75rem;
+      }
+
+      .task {
+        padding: 0.75rem;
+      }
+
+      .modal {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <a href="../../index.html" class="back-button">
+    <i class="fas fa-arrow-left"></i>
+    Back to Tools
+  </a>
+
+  <div class="tool-container">
+    <!-- Header -->
+    <div class="tool-header">
+      <h1 class="tool-title">Kanban Board</h1>
+      <p class="tool-subtitle">
+        Organize your tasks with a simple drag-and-drop Kanban board. All data is saved locally in your browser.
+      </p>
+      <div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <button onclick="kanbanBoard.clearAllTasks()" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+          <i class="fas fa-trash-alt"></i>
+          Clear All
+        </button>
+        <button onclick="kanbanBoard.exportTasks()" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+          <i class="fas fa-download"></i>
+          Export
+        </button>
+        <label for="import-file" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem; cursor: pointer; margin: 0;">
+          <i class="fas fa-upload"></i>
+          Import
+          <input type="file" id="import-file" accept=".json" style="display: none;" onchange="handleFileImport(this)">
+        </label>
+      </div>
+    </div>
+
+    <!-- Kanban Board -->
+    <div class="kanban-board">
+      <!-- To Do Column -->
+      <div class="kanban-column" data-column="todo">
+        <div class="column-header">
+          <h3 class="column-title">
+            <i class="fas fa-clipboard-list"></i>
+            To Do
+          </h3>
+          <span class="task-count" id="todo-count">0</span>
+        </div>
+        <div class="tasks-container" id="todo-tasks">
+          <!-- Tasks will be dynamically added here -->
+        </div>
+        <button class="add-task-btn" onclick="openTaskModal('todo')">
+          <i class="fas fa-plus"></i>
+          Add Task
+        </button>
+      </div>
+
+      <!-- In Progress Column -->
+      <div class="kanban-column" data-column="progress">
+        <div class="column-header">
+          <h3 class="column-title">
+            <i class="fas fa-play-circle"></i>
+            In Progress
+          </h3>
+          <span class="task-count" id="progress-count">0</span>
+        </div>
+        <div class="tasks-container" id="progress-tasks">
+          <!-- Tasks will be dynamically added here -->
+        </div>
+        <button class="add-task-btn" onclick="openTaskModal('progress')">
+          <i class="fas fa-plus"></i>
+          Add Task
+        </button>
+      </div>
+
+      <!-- Done Column -->
+      <div class="kanban-column" data-column="done">
+        <div class="column-header">
+          <h3 class="column-title">
+            <i class="fas fa-check-circle"></i>
+            Done
+          </h3>
+          <span class="task-count" id="done-count">0</span>
+        </div>
+        <div class="tasks-container" id="done-tasks">
+          <!-- Tasks will be dynamically added here -->
+        </div>
+        <button class="add-task-btn" onclick="openTaskModal('done')">
+          <i class="fas fa-plus"></i>
+          Add Task
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Task Modal -->
+  <div class="modal-overlay" id="task-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Add New Task</h3>
+        <button class="close-btn" onclick="closeTaskModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <form id="task-form">
+        <div class="form-group">
+          <label class="form-label" for="task-title">Task Title</label>
+          <input type="text" id="task-title" class="form-input" placeholder="Enter task title" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="task-description">Description</label>
+          <textarea id="task-description" class="form-input form-textarea" placeholder="Enter task description (optional)"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="task-column">Column</label>
+          <select id="task-column" class="form-input">
+            <option value="todo">To Do</option>
+            <option value="progress">In Progress</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeTaskModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i>
+            Save Task
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

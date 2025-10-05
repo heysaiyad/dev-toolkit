@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Cropper - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Tool-specific styles go here */
+        .tool-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .tool-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .tool-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        .back-button:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .drag-and-drop-area {
+            border: 2px dashed var(--primary-color);
+            border-radius: var(--radius-md);
+            padding: 3rem;
+            text-align: center;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dragover {
+            transform: scale(1.2);
+        }
+
+        .preview-area {
+            width: 100%;
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .preview-container {
+            position: relative;
+            max-width: 50vw;
+            max-height: 80vh;
+            object-fit: contain;
+            display: inline-block;
+            cursor: crosshair;
+
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .preview-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .preview-footer {
+            display: block;
+            margin-top: 1rem;
+        }
+
+        .crop-zone {
+            position: absolute;
+            border: 2px dashed var(--primary-color);
+            background: rgba(0, 123, 255, 0.2);
+        }
+
+        .fa-xxl {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin: 1rem 0;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        .shake {
+            animation: shake 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1 class="tool-title">Image Cropper</h1>
+            <p class="tool-subtitle">
+                Upload your image in the area below and select the part you want to keep. 
+                <br>
+                Then click on "<strong>Crop Image</strong>" to obtain the cropped image.
+            </p>
+        </div>
+
+        <!-- Your tool content goes here -->
+        <div class="tool-content">
+            <div class="drag-and-drop-area" id="drop-zone">
+                <p class="suggestion-title">
+                    Drop your image here
+                    <br>
+                    <span class="fa fa-upload fa-xxl"></span>
+                </p>
+                <p class="suggestion-description">or click to browse</p>
+                <button class="btn btn-primary">Select image</button>
+            </div>
+            <input type="file" type="file" id="upload-image" accept="image/*" style="display: none;">
+        
+            <div class="preview-area" id="preview-area" style="display: none;">
+                <h2 class="preview-title">Crop your image !</h2>
+                <div class="preview-container">
+                    <img id="img-preview" src="../../poster.png" alt="Image Preview" style="max-width: 100%; height: auto;">
+                </div>
+                <div class="preview-footer">
+                    <div id="group-btn-edition">
+                        <button class="btn btn-primary" id="crop-button">Crop Image</button>
+                        <button class="btn btn-secondary" id="replace-button">Change Image</button>
+                    </div>
+                    <div id="group-btn-result" style="display: none;">
+                        <button class="btn btn-primary" id="download-button">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <button class="btn btn-secondary" id="reset-button">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

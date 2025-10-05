@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discount Calculator - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .tool-container {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        /* Header */
+        .tool-header {
+            margin-bottom: 2.5rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        .tool-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+        }
+
+        .tool-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Input Section */
+        .input-section {
+            background: rgba(26, 26, 46, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(25px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        input {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(15, 15, 35, 0.6);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.85rem 2rem;
+            border-radius: var(--radius-md);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--gradient-primary);
+            color: white;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Result Section */
+        .result-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .stat-card {
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary-color);
+        }
+
+        .result-label {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .result-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-top: 0.3rem;
+            letter-spacing: 1px;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .tool-container {
+                padding: 1rem;
+            }
+            .result-value {
+                font-size: 1.8rem;
+            }
+        }
+        .back-button {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.4rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+}
+
+.back-button i {
+    font-size: 0.9rem;
+}
+
+.back-button:hover {
+    background: var(--gradient-primary);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.5);
+}
+
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <div class="tool-header">
+            <h1 class="tool-title">Discount Calculator</h1>
+            <p class="tool-subtitle">
+                Instantly calculate your savings and the final price after applying discounts.
+            </p>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <div class="input-group">
+                <label for="original-price">Original Price (₹)</label>
+                <input type="number" id="original-price" placeholder="Enter original price" min="0" step="0.01">
+            </div>
+            <div class="input-group">
+                <label for="discount-percent">Discount Percentage (%)</label>
+                <input type="number" id="discount-percent" placeholder="Enter discount %" min="0" max="100" step="0.1">
+            </div>
+            <button id="calculate-btn" class="btn">
+                <i class="fas fa-calculator"></i> Calculate
+            </button>
+        </div>
+
+        <!-- Results Section -->
+            <div class="stat-card">
+                <p class="result-label">Final Price</p>
+                <p id="final-price" class="result-value">₹0.00</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

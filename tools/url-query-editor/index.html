@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Query Parameter Editor - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Tool-specific styles */
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .tool-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .tool-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        .back-button:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .input-section {
+            margin-bottom: 2rem;
+        }
+
+        .url-input-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .url-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+
+        .parse-btn {
+            padding: 1rem 2rem;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: var(--radius-md);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .parse-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .parameters-section {
+            margin-bottom: 2rem;
+        }
+
+        .parameters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .add-param-btn {
+            padding: 0.5rem 1rem;
+            background: var(--success-color);
+            border: none;
+            border-radius: var(--radius-sm);
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .add-param-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .parameters-table {
+            width: 100%;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            align-items: center;
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .param-input {
+            padding: 0.5rem;
+            background: var(--bg-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .param-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .param-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .remove-btn {
+            padding: 0.25rem 0.5rem;
+            background: var(--error-color);
+            border: none;
+            border-radius: var(--radius-sm);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .remove-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .output-section {
+            margin-top: 2rem;
+        }
+
+        .output-container {
+            background: var(--bg-secondary);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .output-url {
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--primary-color);
+            border: none;
+            border-radius: var(--radius-sm);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .info-box {
+            background: rgba(74, 144, 226, 0.1);
+            border: 1px solid rgba(74, 144, 226, 0.3);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .info-box i {
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .url-input-container {
+                flex-direction: column;
+            }
+
+            .table-header, .table-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .parameters-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .param-actions {
+                justify-content: center;
+            }
+
+            .copy-btn {
+                position: static;
+                margin-top: 1rem;
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1 class="tool-title">
+                <i class="fas fa-link"></i>
+                URL Query Parameter Editor
+            </h1>
+            <p class="tool-subtitle">
+                Parse, modify, and rebuild URLs with their query parameters. 
+                Add, edit, or remove parameters with ease.
+            </p>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+            <i class="fas fa-info-circle"></i>
+            Enter a URL below to parse its query parameters. You can then modify, add, or remove parameters and generate a new URL.
+        </div>
+
+        <!-- Example URLs -->
+        <div class="info-box" style="background: rgba(255, 165, 0, 0.1); border-color: rgba(255, 165, 0, 0.3);">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Try these examples:</strong>
+            <div style="margin-top: 0.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <button onclick="urlEditor.loadExample('https://shop.example.com/search?q=laptop&category=electronics&brand=apple&min_price=500&max_price=2000&sort=price_asc')" 
+                        style="padding: 0.25rem 0.5rem; background: var(--accent-color); border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.8rem;">
+                    E-commerce
+                </button>
+                <button onclick="urlEditor.loadExample('https://example.com/page?utm_source=google&utm_medium=cpc&utm_campaign=summer_sale&utm_content=ad1&gclid=abc123')" 
+                        style="padding: 0.25rem 0.5rem; background: var(--accent-color); border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.8rem;">
+                    Analytics
+                </button>
+                <button onclick="urlEditor.loadExample('https://social.example.com/share?url=https://example.com&title=Check%20this%20out&hashtags=awesome,cool')" 
+                        style="padding: 0.25rem 0.5rem; background: var(--accent-color); border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 0.8rem;">
+                    Social Media
+                </button>
+            </div>
+        </div>
+
+        <!-- URL Input Section -->
+        <div class="input-section">
+            <div class="url-input-container">
+                <input 
+                    type="text" 
+                    id="urlInput" 
+                    class="url-input" 
+                    placeholder="Enter URL (e.g., https://example.com?param1=value1&param2=value2)"
+                >
+                <button id="parseBtn" class="parse-btn">
+                    <i class="fas fa-search"></i>
+                    Parse URL
+                </button>
+            </div>
+        </div>
+
+        <!-- Parameters Section -->
+        <div class="parameters-section">
+            <div class="parameters-header">
+                <h2 class="section-title">Query Parameters</h2>
+                <button id="addParamBtn" class="add-param-btn">
+                    <i class="fas fa-plus"></i>
+                    Add Parameter
+                </button>
+            </div>
+
+            <div class="parameters-table">
+                <div class="table-header">
+                    <div>Parameter Key</div>
+                    <div>Parameter Value</div>
+                    <div>Actions</div>
+                </div>
+                <div id="parametersContainer">
+                    <div class="empty-state">
+                        No parameters found. Enter a URL or add parameters manually.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Output Section -->
+        <div class="output-section">
+            <h2 class="section-title">Generated URL</h2>
+            <div class="output-container">
+                <div id="outputUrl" class="output-url">
+                    Enter a URL or add parameters to see the result here.
+                </div>
+                <button id="copyBtn" class="copy-btn" style="display: none;">
+                    <i class="fas fa-copy"></i>
+                    Copy URL
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

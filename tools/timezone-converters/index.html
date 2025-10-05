@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timezone Converter - DevToolkit</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="animated-bg">
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+    </div>
+  </div>
+
+  <a href="../../index.html" class="back-button">
+    <i class="fas fa-arrow-left"></i>
+    Back to Tools
+  </a>
+
+  <div class="tool-container">
+    <div class="tool-header">
+      <h1 class="tool-title">Timezone Converter</h1>
+      <p class="tool-subtitle">Convert a date & time between common timezones (with abbreviations).</p>
+    </div>
+
+    <div class="input-section">
+      <div class="date-inputs">
+        <div class="date-group">
+          <label class="label-text"><i class="fas fa-calendar-alt"></i> Date</label>
+          <input type="date" id="date-input">
+        </div>
+
+        <div class="date-group">
+          <label class="label-text"><i class="fas fa-clock"></i> Time</label>
+          <input type="time" id="time-input">
+        </div>
+
+        <div class="date-group">
+          <label class="label-text"><i class="fas fa-location-arrow"></i> From Timezone</label>
+          <select id="from-tz" class="tz-select"></select>
+        </div>
+
+        <div class="date-group">
+          <label class="label-text"><i class="fas fa-location-crosshairs"></i> To Timezone</label>
+          <select id="to-tz" class="tz-select"></select>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button class="convert-btn" id="convert-btn"><i class="fas fa-exchange-alt"></i> Convert</button>
+        <button class="action-btn" id="swap-btn" title="Swap zones"><i class="fas fa-arrows-alt-h"></i> Swap</button>
+        <label class="checkbox-label">
+          <input type="checkbox" id="show-now"> Show current time
+        </label>
+      </div>
+    </div>
+
+    <div class="output-section">
+      <div class="output-label"><i class="fas fa-info-circle"></i> Result</div>
+      <div id="result-display">Pick a date/time and timezones, then click Convert.</div>
+      <div class="output-buttons">
+        <button class="action-btn" id="copy-btn" disabled><i class="fas fa-copy"></i> Copy Result</button>
+        <button class="action-btn" id="now-update" title="Refresh current times"><i class="fas fa-sync"></i>
+          Refresh</button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="./script.js"></script>
+</body>
+
+</html>

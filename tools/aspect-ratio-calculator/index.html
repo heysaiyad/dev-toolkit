@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Tool Name - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Tool-specific styles go here */
+        .tool-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .tool-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .tool-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        .back-button:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Add your custom styles here */
+
+        .mode-section {
+            margin-bottom: 2rem;
+        }
+
+        .mode-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 2rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn:hover {
+            background: rgba(255, 107, 53, 0.1);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .mode-btn.active {
+            background: var(--gradient-primary);
+            border-color: var(--primary-color);
+            color: white;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .input-section {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .input-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-primary);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .label-text {
+            color: var(--text-secondary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .aspect-ratio-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .custom-ratio-input {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .custom-ratio-input input {
+            flex: 1;
+        }
+
+        .custom-ratio-input span {
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        input[type="number"],
+        select {
+            background: var(--bg-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .preview-section {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .preview-label {
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .preview-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 450px;
+            padding: 3rem;
+        }
+
+        .dimension-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .aspect-preview {
+            background: #183547;
+            border: 2px solid var(--primary-color);
+            border-radius: 0;
+            max-width: 600px;
+            max-height: 400px;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            padding-bottom: 1rem;
+        }
+
+        .preview-ratio-label {
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .results-section {
+            margin-bottom: 2rem;
+        }
+
+        .result-card-single {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-card-single::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-primary);
+        }
+
+        .result-card-single:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-color);
+        }
+
+        .result-grid-info {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 1024px) {
+            .result-grid-info {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .result-info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .info-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-label i {
+            color: var(--primary-color);
+        }
+
+        .info-value {
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .result-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .result-content {
+            position: relative;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .result-value {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        .copy-btn {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copy-btn:hover:not(:disabled) {
+            background: var(--gradient-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .copy-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .copy-btn.copied {
+            background: var(--success-color);
+            border-color: var(--success-color);
+            color: white;
+        }
+
+        .info-section {
+            margin-top: 2rem;
+        }
+
+        .info-card {
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .info-card i {
+            color: var(--primary-color);
+            font-size: 1.25rem;
+            margin-top: 0.25rem;
+        }
+
+        .info-card p {
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .tool-container {
+                padding: 1rem;
+            }
+
+            .input-section,
+            .preview-section {
+                padding: 1.5rem;
+            }
+
+            .preview-container {
+                padding: 1rem;
+                min-height: 300px;
+            }
+
+            .mode-buttons {
+                flex-direction: column;
+            }
+
+            .mode-btn {
+                width: 100%;
+            }
+
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .result-grid-info {
+                grid-template-columns: 1fr;
+            }
+
+            .info-value {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1 class="tool-title">Aspect Ratio Calculator</h1>
+            <p class="tool-subtitle">
+                Calculate dimensions based on aspect ratios. Perfect for responsive design, video dimensions, and screen specifications.
+            </p>
+        </div>
+
+        <!-- Mode Selection -->
+        <div class="mode-section">
+            <div class="mode-buttons">
+                <button class="mode-btn active" data-mode="calculate-height">
+                    <i class="fas fa-arrows-alt-v"></i>
+                    Calculate Height
+                </button>
+                <button class="mode-btn" data-mode="calculate-width">
+                    <i class="fas fa-arrows-alt-h"></i>
+                    Calculate Width
+                </button>
+            </div>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <div class="input-grid">
+                <!-- Aspect Ratio Selection -->
+                <div class="input-group full-width">
+                    <label class="label-text">
+                        <i class="fas fa-expand"></i>
+                        Aspect Ratio
+                    </label>
+                    <div class="aspect-ratio-controls">
+                        <select id="aspect-ratio-preset">
+                            <option value="16:9">16:9 (Widescreen)</option>
+                            <option value="4:3">4:3 (Standard)</option>
+                            <option value="21:9">21:9 (Ultrawide)</option>
+                            <option value="1:1">1:1 (Square)</option>
+                            <option value="3:2">3:2 (Classic)</option>
+                            <option value="16:10">16:10 (Monitor)</option>
+                            <option value="9:16">9:16 (Mobile Portrait)</option>
+                            <option value="2.39:1">2.39:1 (Cinematic)</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                        <div id="custom-ratio" class="custom-ratio-input" style="display: none;">
+                            <input type="number" id="ratio-width" placeholder="Width" min="0.1" step="0.1" value="16">
+                            <span>:</span>
+                            <input type="number" id="ratio-height" placeholder="Height" min="0.1" step="0.1" value="9">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Known Dimension Input -->
+                <div class="input-group">
+                    <label class="label-text" id="known-dimension-label">
+                        <i class="fas fa-ruler-horizontal"></i>
+                        Width
+                    </label>
+                    <input type="number" id="known-value" placeholder="Enter value" min="0" step="0.01">
+                </div>
+
+                <!-- Unit Selection -->
+                <div class="input-group">
+                    <label class="label-text">
+                        <i class="fas fa-ruler"></i>
+                        Unit
+                    </label>
+                    <select id="unit-select">
+                        <option value="px">Pixels (px)</option>
+                        <option value="cm">Centimeters (cm)</option>
+                        <option value="in">Inches (in)</option>
+                        <option value="mm">Millimeters (mm)</option>
+                        <option value="pt">Points (pt)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visual Preview with Technical Drawing -->
+        <div class="preview-section">
+            <div class="preview-label">
+                <i class="fas fa-eye"></i>
+                Visual Preview
+            </div>
+            <div class="preview-container">
+                <svg id="dimension-svg" class="dimension-svg">
+                    <!-- Dimension lines will be drawn here by JavaScript -->
+                </svg>
+                <div id="aspect-preview" class="aspect-preview">
+                    <div class="preview-ratio-label" id="preview-ratio-label">16:9</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section">
+            <!-- Single Result Card -->
+            <div class="result-card-single">
+                <div class="result-icon">
+                    <i class="fas fa-ruler-combined"></i>
+                </div>
+                <div class="result-content">
+                    <div class="result-label">Calculated Dimensions</div>
+                    <div class="result-grid-info">
+                        <div class="result-info-item">
+                            <span class="info-label">
+                                <i class="fas fa-arrows-alt-h"></i>
+                                Width:
+                            </span>
+                            <span class="info-value" id="width-value">-</span>
+                        </div>
+                        <div class="result-info-item">
+                            <span class="info-label">
+                                <i class="fas fa-arrows-alt-v"></i>
+                                Height:
+                            </span>
+                            <span class="info-value" id="height-value">-</span>
+                        </div>
+                        <div class="result-info-item">
+                            <span class="info-label">
+                                <i class="fas fa-tv"></i>
+                                Diagonal:
+                            </span>
+                            <span class="info-value" id="diagonal-value">-</span>
+                        </div>
+                        <div class="result-info-item">
+                            <span class="info-label">
+                                <i class="fas fa-expand"></i>
+                                Ratio:
+                            </span>
+                            <span class="info-value" id="ratio-value">-</span>
+                        </div>
+                    </div>
+                    <button class="copy-btn" id="copy-btn" disabled>
+                        <i class="fas fa-copy"></i>
+                        Copy Dimensions
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-section">
+            <div class="info-card">
+                <i class="fas fa-info-circle"></i>
+                <p>
+                    <strong>Tip:</strong> The diagonal calculation converts your dimensions to inches and uses the Pythagorean theorem.
+                    Perfect for determining screen sizes or creating responsive layouts!
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

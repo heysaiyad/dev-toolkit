@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Squarer/Cuber - DevToolkit</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Back button styles */
+    .back-button {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(20px);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-button:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Main container styles */
+    .tool-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .tool-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      margin-top: 3rem;
+    }
+
+    .tool-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .tool-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .calculator-section {
+      background: var(--bg-secondary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .calculator-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--gradient-primary);
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    input {
+      background: var(--bg-primary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      color: var(--text-primary);
+      font-size: 1rem;
+      width: 150px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 15px rgba(255, 107, 53, 0.2);
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .results-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .result-card {
+      background: var(--bg-primary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-color);
+    }
+
+    .result-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient-primary);
+    }
+
+    .result-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .result-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .result-formula {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .error-message {
+      text-align: center;
+      font-size: 1.1rem;
+      color: var(--error-color);
+      margin-top: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+    }
+
+    .error-message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .success-message {
+      text-align: center;
+      font-size: 1.1rem;
+      color: var(--success-color);
+      margin-top: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+    }
+
+    .success-message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .tool-container {
+        padding: 1rem;
+      }
+
+      .tool-header {
+        margin-bottom: 2rem;
+      }
+
+      .calculator-section {
+        padding: 1.5rem;
+      }
+
+      .input-group {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: stretch;
+      }
+
+      input {
+        width: 100%;
+        text-align: center;
+      }
+
+      .results-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .result-value {
+        font-size: 1.5rem;
+      }
+
+      .back-button {
+        top: 1rem;
+        left: 1rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .tool-title {
+        font-size: 1.8rem;
+      }
+
+      .tool-subtitle {
+        font-size: 1rem;
+      }
+
+      .calculator-section {
+        padding: 1rem;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.75rem 1.5rem;
+      }
+
+      .result-card {
+        padding: 1rem;
+      }
+
+      .result-value {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <a href="../../index.html" class="back-button">
+    <i class="fas fa-arrow-left"></i>
+    Back to Tools
+  </a>
+
+  <div class="tool-container">
+    <!-- Header -->
+    <div class="tool-header">
+      <h1 class="tool-title">Number Squarer/Cuber</h1>
+      <p class="tool-subtitle">
+        Calculate the square and cube of any number instantly
+      </p>
+    </div>
+
+    <!-- Calculator Section -->
+    <div class="calculator-section">
+      <div class="input-group">
+        <span class="label">Enter a number:</span>
+        <input type="number" id="numberInput" placeholder="Enter number" step="any">
+      </div>
+
+      <div style="text-align: center;">
+        <button onclick="calculate()" class="btn">
+          <i class="fas fa-calculator"></i>
+          Calculate
+        </button>
+      </div>
+
+      <!-- Results Container -->
+      <div class="results-container" id="resultsContainer" style="display: none;">
+        <div class="result-card">
+          <div class="result-label">
+            <i class="fas fa-square"></i> Square
+          </div>
+          <div class="result-value" id="squareResult">0</div>
+          <div class="result-formula" id="squareFormula">n²</div>
+        </div>
+        
+        <div class="result-card">
+          <div class="result-label">
+            <i class="fas fa-cube"></i> Cube
+          </div>
+          <div class="result-value" id="cubeResult">0</div>
+          <div class="result-formula" id="cubeFormula">n³</div>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="error-message" id="errorMessage"></div>
+      <div class="success-message" id="successMessage"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

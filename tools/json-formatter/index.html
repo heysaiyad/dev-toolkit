@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter & Viewer - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .tool-container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .tool-header { text-align: center; margin-bottom: 3rem; }
+        .tool-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; }
+        .tool-subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 720px; margin: 0 auto; }
+
+        .back-button { position: fixed; top: 2rem; left: 2rem; z-index: 1000; display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: var(--bg-secondary); color: var(--text-primary); text-decoration: none; border-radius: var(--radius-md); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease; backdrop-filter: blur(20px); }
+        .back-button:hover { background: var(--primary-color); color: white; transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+        .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .panel { background: var(--bg-secondary); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-lg); overflow: hidden; position: relative; }
+        .panel-header { display:flex; align-items:center; justify-content: space-between; padding: .75rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); }
+        .panel-title { display:flex; align-items:center; gap:.5rem; color: var(--text-secondary); font-weight:600; }
+        .panel-body { padding: 0; }
+
+        textarea#json-input { width: 100%; height: 420px; background: transparent; color: var(--text-primary); border: none; outline: none; resize: vertical; padding: 1rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.95rem; line-height: 1.5; }
+        .actions { display:flex; flex-wrap: wrap; gap: .5rem; }
+        .btn { display:inline-flex; align-items:center; gap:.5rem; padding:.5rem .9rem; border-radius: var(--radius-md); border:1px solid rgba(255,255,255,0.12); background: transparent; color: var(--text-primary); cursor:pointer; }
+        .btn:hover { border-color: var(--primary-color); box-shadow: var(--shadow-sm); }
+        .btn-primary { background: var(--gradient-primary); border: none; color: #fff; }
+        .status { display:flex; align-items:center; gap:.5rem; font-size:.9rem; }
+        .status.ok { color: var(--success-color); }
+        .status.err { color: var(--error-color); }
+        .status .dot { width:8px; height:8px; border-radius:999px; background: currentColor; display:inline-block; }
+
+        .output-tabs { display:flex; gap:.5rem; padding:.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); }
+        .tab { padding:.4rem .7rem; border-radius: var(--radius-sm); cursor:pointer; color: var(--text-secondary); border:1px solid transparent; }
+        .tab.active { color: var(--text-primary); border-color: rgba(255,255,255,0.14); background: rgba(255,255,255,0.03); }
+        .tabpanes { position: relative; height: 420px; }
+        .tabpane { position:absolute; inset:0; overflow:auto; padding: 1rem; display:none; }
+        .tabpane.active { display:block; }
+        pre.code { margin:0; white-space: pre; font-family: ui-monospace, monospace; font-size: .95rem; }
+        .line-error { background: rgba(208, 2, 27, 0.15); border-left: 3px solid var(--error-color); padding-left: .5rem; }
+
+        /* Tree view */
+        .tree { font-family: ui-monospace, monospace; font-size:.95rem; line-height:1.6; }
+        .tree ul { list-style:none; padding-left: 1rem; margin: 0; border-left: 1px dashed rgba(255,255,255,0.15); }
+        .tree li { margin: .15rem 0; position:relative; }
+        .tree .node { display:flex; align-items:center; gap:.35rem; }
+        .twisty { cursor:pointer; width: 1rem; text-align:center; color: var(--text-secondary); }
+        .key { color: #8bd3ff; }
+        .value.string { color: #ffcf8b; }
+        .value.number { color: #a0e57c; }
+        .value.boolean { color: #ff9aa2; }
+        .value.null { color: #c7c7c7; font-style: italic; }
+        .badge { font-size: .7rem; color: var(--text-secondary); border:1px solid rgba(255,255,255,0.15); padding: .05rem .35rem; border-radius: 999px; }
+        .muted { color: var(--text-muted); }
+
+        .footer-note { margin-top: .75rem; font-size: .9rem; color: var(--text-secondary); }
+
+        @media (max-width: 900px){ .layout{ grid-template-columns: 1fr; } .tabpanes, textarea#json-input { height: 360px; } }
+    </style>
+</head>
+<body>
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <a href="../../index.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Tools</a>
+
+    <div class="tool-container">
+        <div class="tool-header">
+            <h1 class="tool-title">JSON Formatter & Viewer</h1>
+            <p class="tool-subtitle">Paste raw JSON to get instant validation, pretty formatting, and an interactive tree view.</p>
+        </div>
+
+        <div class="layout">
+            <!-- Input Panel -->
+            <section class="panel">
+                <div class="panel-header">
+                    <div class="panel-title"><i class="fa-solid fa-file-code"></i> Input JSON</div>
+                    <div class="actions">
+                        <button class="btn" id="sampleBtn"><i class="fa-solid fa-flask"></i> Sample</button>
+                        <button class="btn" id="clearBtn"><i class="fa-solid fa-eraser"></i> Clear</button>
+                        <button class="btn" id="copyInputBtn"><i class="fa-regular fa-copy"></i> Copy</button>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <textarea id="json-input" placeholder='{"hello":"world","items":[1,2,3],"nested":{"ok":true}}'></textarea>
+                </div>
+                <div class="panel-header" style="border-top:1px solid rgba(255,255,255,0.08)">
+                    <div id="status" class="status"><span class="dot"></span> Waiting for input…</div>
+                    <div class="actions">
+                        <button class="btn-primary btn" id="formatBtn"><i class="fa-solid fa-wand-magic-sparkles"></i> Format</button>
+                        <button class="btn btn" id="minifyBtn"><i class="fa-solid fa-compress"></i> Minify</button>
+                        <button class="btn btn" id="downloadBtn"><i class="fa-solid fa-download"></i> Download</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Output Panel -->
+            <section class="panel">
+                <div class="panel-header">
+                    <div class="panel-title"><i class="fa-solid fa-eye"></i> Output</div>
+                    <div class="actions">
+                        <span class="muted">Auto-updates as you type</span>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="output-tabs">
+                        <div class="tab active" data-tab="pretty">Formatted</div>
+                        <div class="tab" data-tab="tree">Tree</div>
+                        <div class="tab" data-tab="raw">Raw</div>
+                    </div>
+                    <div class="tabpanes">
+                        <div class="tabpane active" id="pane-pretty">
+                            <pre id="pretty" class="code"></pre>
+                        </div>
+                        <div class="tabpane" id="pane-tree">
+                            <div id="tree" class="tree"></div>
+                        </div>
+                        <div class="tabpane" id="pane-raw">
+                            <pre id="raw" class="code"></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-header" style="border-top:1px solid rgba(255,255,255,0.08)">
+                    <div class="footer-note">Tip: Press Ctrl/Cmd + Enter to format.</div>
+                    <div class="actions">
+                        <button class="btn" id="copyFormattedBtn"><i class="fa-regular fa-copy"></i> Copy Formatted</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

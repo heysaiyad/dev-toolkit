@@ -232,14 +232,3 @@ xmlInput.addEventListener('keydown', (e) => {
 
 // Initial state
 toggleOutputButtons(false);
-
-// Sample XML for testing (you can remove this in production)
-console.log('XML to JSON Converter loaded successfully!');
-console.log('Conversion Logic:');
-console.log('1. Parse XML string using DOMParser');
-console.log('2. Check for parsing errors');
-console.log('3. Recursively convert XML nodes to JSON objects');
-console.log('4. Handle attributes with @attributes prefix');
-console.log('5. Handle text content with #text key');
-console.log('6. Handle multiple elements with same name as arrays');
-console.log('7. Format output with proper indentation');

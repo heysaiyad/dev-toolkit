@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Contrast Checker - DevToolkit</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ff6347;
+            --secondary-color: #ff8c00;
+            --accent-color: #ffa500;
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --border-color: #30363d;
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+            --success-color: #238636;
+            --error-color: #da3633;
+            --warning-color: #d29922;
+            --gradient-primary: linear-gradient(135deg, #ff6347 0%, #ff8c00 50%, #ffa500 100%);
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --font-primary: 'Poppins', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(255, 99, 71, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 10%, rgba(255, 140, 0, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 20% 80%, rgba(255, 165, 0, 0.12) 0%, transparent 50%),
+                linear-gradient(135deg, #0d1117 0%, #161b22 40%, #21262d 100%);
+            animation: backgroundShift 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-top: 2rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .color-picker-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .color-panel {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .color-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+        }
+
+        .color-panel:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 40px rgba(255, 99, 71, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .color-panel h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .color-panel h2 i {
+            color: var(--primary-color);
+        }
+
+        .color-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .color-preview {
+            width: 100%;
+            height: 150px;
+            border-radius: var(--radius-md);
+            border: 3px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .color-preview:hover {
+            transform: scale(1.02);
+            border-color: var(--primary-color);
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .input-field {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-field label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .input-field input[type="text"] {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-family: monospace;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-field input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 99, 71, 0.1);
+        }
+
+        input[type="color"] {
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            background: transparent;
+        }
+
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        input[type="color"]::-webkit-color-swatch {
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+        }
+
+        .check-btn {
+            width: 100%;
+            padding: 1.2rem;
+            font-size: 1.2rem;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+            margin: 2rem 0;
+        }
+
+        .check-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(255, 99, 71, 0.4);
+        }
+
+        .results-section {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .results-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+        }
+
+        .preview-box {
+            padding: 3rem;
+            border-radius: var(--radius-md);
+            text-align: center;
+            margin-bottom: 2rem;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .preview-text {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .preview-subtext {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .contrast-ratio {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .ratio-display {
+            font-size: 4rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .ratio-label {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .compliance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .compliance-card {
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .compliance-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .compliance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .compliance-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .compliance-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .badge-pass {
+            background: rgba(35, 134, 54, 0.2);
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+
+        .badge-fail {
+            background: rgba(218, 54, 51, 0.2);
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+        }
+
+        .compliance-details {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .compliance-details strong {
+            color: var(--text-primary);
+        }
+
+        .info-card {
+            background: var(--bg-secondary);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .info-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.4rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .info-item {
+            background: var(--bg-tertiary);
+            padding: 1.2rem;
+            border-radius: var(--radius-md);
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .info-item h4 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .info-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--success-color);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            display: none;
+            align-items: center;
+            gap: 0.7rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease-out;
+            z-index: 1000;
+        }
+
+        .toast.error {
+            background: var(--error-color);
+        }
+
+        .toast.show {
+            display: flex;
+        }
+
+                .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        .back-button:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .color-picker-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .ratio-display {
+                font-size: 3rem;
+            }
+            
+            .compliance-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .back-button {
+                top: 1rem;
+                left: 1rem;
+                padding: 0.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+        <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+    
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-palette"></i> Color Contrast Checker</h1>
+            <p class="subtitle">Check if your color combinations meet WCAG AA and AAA accessibility standards for better user experience.</p>
+        </header>
+
+        <div class="color-picker-section">
+            <div class="color-panel">
+                <h2><i class="fas fa-font"></i> Foreground Color</h2>
+                <div class="color-input-group">
+                    <div class="color-preview" id="foregroundPreview"></div>
+                    <div class="input-wrapper">
+                        <input type="color" id="foregroundPicker" value="#000000">
+                        <div class="input-field">
+                            <label for="foregroundInput">Hex Code</label>
+                            <input type="text" id="foregroundInput" value="#000000" placeholder="#000000">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="color-panel">
+                <h2><i class="fas fa-fill-drip"></i> Background Color</h2>
+                <div class="color-input-group">
+                    <div class="color-preview" id="backgroundPreview"></div>
+                    <div class="input-wrapper">
+                        <input type="color" id="backgroundPicker" value="#FFFFFF">
+                        <div class="input-field">
+                            <label for="backgroundInput">Hex Code</label>
+                            <input type="text" id="backgroundInput" value="#FFFFFF" placeholder="#FFFFFF">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="check-btn" id="checkBtn">
+            <i class="fas fa-check-circle"></i>
+            Check Contrast Ratio
+        </button>
+
+        <div class="results-section" id="resultsSection" style="display: none;">
+            <div class="preview-box" id="previewBox">
+                <div class="preview-text" id="previewText">Sample Text</div>
+                <div class="preview-subtext" id="previewSubtext">The quick brown fox jumps over the lazy dog</div>
+            </div>
+
+            <div class="contrast-ratio">
+                <div class="ratio-display" id="ratioDisplay">-</div>
+                <div class="ratio-label">Contrast Ratio</div>
+            </div>
+
+            <div class="compliance-grid" id="complianceGrid">
+                <!-- Compliance cards will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <div class="info-card">
+            <h3><i class="fas fa-info-circle"></i> Understanding WCAG Standards</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h4>WCAG AA - Normal Text</h4>
+                    <p>Minimum contrast ratio of <strong>4.5:1</strong> required for regular text (under 18pt or 14pt bold).</p>
+                </div>
+                <div class="info-item">
+                    <h4>WCAG AA - Large Text</h4>
+                    <p>Minimum contrast ratio of <strong>3:1</strong> required for large text (18pt+ or 14pt+ bold).</p>
+                </div>
+                <div class="info-item">
+                    <h4>WCAG AAA - Normal Text</h4>
+                    <p>Enhanced contrast ratio of <strong>7:1</strong> required for the highest accessibility level.</p>
+                </div>
+                <div class="info-item">
+                    <h4>WCAG AAA - Large Text</h4>
+                    <p>Enhanced contrast ratio of <strong>4.5:1</strong> required for large text at AAA level.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

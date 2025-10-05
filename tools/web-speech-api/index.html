@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Speech API - DevToolkit</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Back button styles */
+    .back-button {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(20px);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-button:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Main container styles */
+    .tool-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .tool-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      margin-top: 3rem;
+    }
+
+    .tool-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .tool-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Speech API Sections */
+    .speech-section {
+      background: var(--bg-secondary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .speech-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient-primary);
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-title i {
+      color: var(--primary-color);
+    }
+
+    /* Text Area */
+    .text-area-container {
+      margin-bottom: 2rem;
+    }
+
+    .text-area-label {
+      display: block;
+      margin-bottom: 0.75rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .text-area {
+      width: 100%;
+      min-height: 200px;
+      padding: 1rem;
+      background: var(--bg-primary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 1rem;
+      font-family: var(--font-primary);
+      resize: vertical;
+      transition: all 0.3s ease;
+    }
+
+    .text-area:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 15px rgba(255, 107, 53, 0.2);
+    }
+
+    /* Control Buttons */
+    .controls-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .control-label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      color: white;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 2px solid var(--primary-color);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-danger {
+      background: transparent;
+      color: var(--error-color);
+      border: 2px solid var(--error-color);
+    }
+
+    .btn-danger:hover:not(:disabled) {
+      background: var(--error-color);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Status Indicators */
+    .status-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      padding: 1rem;
+      background: var(--bg-primary);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      transition: all 0.3s ease;
+    }
+
+    .status-dot.active {
+      background: var(--success-color);
+      box-shadow: 0 0 10px var(--success-color);
+      animation: pulse 2s infinite;
+    }
+
+    .status-dot.error {
+      background: var(--error-color);
+      box-shadow: 0 0 10px var(--error-color);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Settings Panel */
+    .settings-panel {
+      background: var(--bg-primary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .settings-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .setting-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .setting-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .setting-input {
+      padding: 0.5rem;
+      background: var(--bg-secondary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-size: 0.9rem;
+    }
+
+    .setting-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    /* Browser Support Warning */
+    .browser-warning {
+      background: rgba(245, 162, 35, 0.1);
+      border: 1px solid var(--warning-color);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-bottom: 2rem;
+      color: var(--warning-color);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .browser-warning.hidden {
+      display: none;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .tool-container {
+        padding: 1rem;
+      }
+
+      .speech-section {
+        padding: 1.5rem;
+      }
+
+      .controls-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .settings-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .back-button {
+        top: 1rem;
+        left: 1rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .tool-title {
+        font-size: 1.8rem;
+      }
+
+      .tool-subtitle {
+        font-size: 1rem;
+      }
+
+      .speech-section {
+        padding: 1rem;
+      }
+
+      .text-area {
+        min-height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <a href="../../index.html" class="back-button">
+    <i class="fas fa-arrow-left"></i>
+    Back to Tools
+  </a>
+
+  <div class="tool-container">
+    <!-- Header -->
+    <div class="tool-header">
+      <h1 class="tool-title">Web Speech API</h1>
+      <p class="tool-subtitle">
+        Experience the power of speech recognition and synthesis. Convert speech to text and text to speech using your browser's built-in capabilities.
+      </p>
+    </div>
+
+    <!-- Browser Support Warning -->
+    <div class="browser-warning" id="browser-warning">
+      <i class="fas fa-exclamation-triangle"></i>
+      <div>
+        <strong>Browser Support Notice:</strong> The Web Speech API is supported in Chrome, Edge, and Safari. 
+        Some features may not work in Firefox or older browsers.
+      </div>
+    </div>
+
+    <!-- Speech to Text Section -->
+    <div class="speech-section">
+      <h2 class="section-title">
+        <i class="fas fa-microphone"></i>
+        Speech to Text (Dictation)
+      </h2>
+      
+      <div class="text-area-container">
+        <label class="text-area-label">Transcribed Text:</label>
+        <textarea 
+          id="speech-text" 
+          class="text-area" 
+          placeholder="Click 'Start Listening' and speak into your microphone. Your speech will be converted to text here..."
+        ></textarea>
+      </div>
+
+      <div class="controls-container">
+        <div class="control-group">
+          <div class="control-label">
+            <i class="fas fa-microphone-alt"></i>
+            Voice Recognition
+          </div>
+          <div class="button-group">
+            <button id="start-listening" class="btn btn-primary">
+              <i class="fas fa-play"></i>
+              Start Listening
+            </button>
+            <button id="stop-listening" class="btn btn-danger" disabled>
+              <i class="fas fa-stop"></i>
+              Stop Listening
+            </button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <i class="fas fa-language"></i>
+            Language Settings
+          </div>
+          <div class="button-group">
+            <select id="recognition-language" class="setting-input">
+              <option value="en-US">English (US)</option>
+              <option value="en-GB">English (UK)</option>
+              <option value="es-ES">Spanish (Spain)</option>
+              <option value="fr-FR">French (France)</option>
+              <option value="de-DE">German (Germany)</option>
+              <option value="it-IT">Italian (Italy)</option>
+              <option value="pt-BR">Portuguese (Brazil)</option>
+              <option value="ru-RU">Russian (Russia)</option>
+              <option value="ja-JP">Japanese (Japan)</option>
+              <option value="ko-KR">Korean (Korea)</option>
+              <option value="zh-CN">Chinese (China)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="status-container">
+        <div class="status-indicator">
+          <div class="status-dot" id="recognition-status"></div>
+          <span id="recognition-status-text">Ready to listen</span>
+        </div>
+        <div class="status-indicator">
+          <i class="fas fa-clock"></i>
+          <span id="recognition-time">00:00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Text to Speech Section -->
+    <div class="speech-section">
+      <h2 class="section-title">
+        <i class="fas fa-volume-up"></i>
+        Text to Speech (Reading Aloud)
+      </h2>
+      
+      <div class="text-area-container">
+        <label class="text-area-label">Text to Read:</label>
+        <textarea 
+          id="tts-text" 
+          class="text-area" 
+          placeholder="Enter the text you want to be read aloud, then click 'Speak'..."
+        >Hello! Welcome to the Web Speech API demonstrator. This tool can convert your text to speech and speech to text.</textarea>
+      </div>
+
+      <div class="controls-container">
+        <div class="control-group">
+          <div class="control-label">
+            <i class="fas fa-play-circle"></i>
+            Speech Synthesis
+          </div>
+          <div class="button-group">
+            <button id="speak-text" class="btn btn-primary">
+              <i class="fas fa-play"></i>
+              Speak
+            </button>
+            <button id="pause-speech" class="btn btn-secondary" disabled>
+              <i class="fas fa-pause"></i>
+              Pause
+            </button>
+            <button id="stop-speech" class="btn btn-danger" disabled>
+              <i class="fas fa-stop"></i>
+              Stop
+            </button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <i class="fas fa-cog"></i>
+            Voice Settings
+          </div>
+          <div class="button-group">
+            <select id="voice-select" class="setting-input">
+              <option value="">Default Voice</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Voice Settings Panel -->
+      <div class="settings-panel">
+        <div class="settings-title">
+          <i class="fas fa-sliders-h"></i>
+          Voice Customization
+        </div>
+        <div class="settings-grid">
+          <div class="setting-group">
+            <label class="setting-label">Rate (Speed)</label>
+            <input type="range" id="rate-slider" class="setting-input" min="0.5" max="2" step="0.1" value="1">
+            <span class="setting-label" id="rate-value">1.0x</span>
+          </div>
+          <div class="setting-group">
+            <label class="setting-label">Pitch</label>
+            <input type="range" id="pitch-slider" class="setting-input" min="0" max="2" step="0.1" value="1">
+            <span class="setting-label" id="pitch-value">1.0</span>
+          </div>
+          <div class="setting-group">
+            <label class="setting-label">Volume</label>
+            <input type="range" id="volume-slider" class="setting-input" min="0" max="1" step="0.1" value="1">
+            <span class="setting-label" id="volume-value">100%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="status-container">
+        <div class="status-indicator">
+          <div class="status-dot" id="synthesis-status"></div>
+          <span id="synthesis-status-text">Ready to speak</span>
+        </div>
+        <div class="status-indicator">
+          <i class="fas fa-info-circle"></i>
+          <span id="current-voice">Default Voice</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

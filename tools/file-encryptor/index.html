@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>File Encryptor (AES-GCM) - DevToolkit</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #ff6b35;
+      --secondary: #ff9f1c;
+      --bg1: #0d1117;
+      --bg2: #161b22;
+      --bg3: #1f2630;
+      --text: #f0f6fc;
+      --muted: #9aa4b2;
+      --border: #2d3440;
+      --success: #2ea043;
+      --error: #f85149;
+      --radius: 14px;
+      --radius-sm: 10px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --grad: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: radial-gradient(1000px 600px at 10% 10%, rgba(255,107,53,.08), transparent),
+                  radial-gradient(1000px 600px at 90% 90%, rgba(255,159,28,.06), transparent),
+                  linear-gradient(180deg, var(--bg1), var(--bg2));
+      color:var(--text);
+      min-height:100vh;
+    }
+    .container{max-width:1100px;margin:0 auto;padding:64px 32px 32px}
+    header{ text-align:center; margin:20px 0 28px }
+    h1{font-size:2.2rem; margin:0 0 8px; font-weight:700; background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent}
+    p.subtitle{color:var(--muted)}
+
+    /* Back button */
+    .back-button {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      z-index: 1000;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--bg2);
+      color: var(--text);
+      text-decoration: none;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      transition: all .2s ease;
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+    }
+    .back-button:hover {
+      background: var(--primary);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .card{ background: linear-gradient(180deg, var(--bg2), var(--bg3)); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px }
+
+    .grid{ display:grid; grid-template-columns: 1fr 1fr; gap:18px }
+    @media (max-width: 900px){ .grid{ grid-template-columns: 1fr } }
+
+    .panel{ background: #11161d; border:1px solid var(--border); border-radius:var(--radius-sm); padding:18px }
+    .panel h2{ font-size:1.1rem; margin:0 0 12px }
+
+    .field{ margin:12px 0 }
+    .field label{ display:block; font-size:.9rem; color:var(--muted); margin-bottom:6px }
+    .field input[type="password"], .field input[type="text"], .field input[type="number"], .field select{ width:100%; padding:12px 14px; border-radius:10px; background:#0f141a; color:var(--text); border:1px solid var(--border); outline:none }
+        .field select{ appearance:none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px); background-size: 5px 5px, 5px 5px; background-repeat: no-repeat }
+        .field input[type="number"]{ -moz-appearance: textfield }
+        .field input[type="number"]::-webkit-outer-spin-button,
+        .field input[type="number"]::-webkit-inner-spin-button{ -webkit-appearance: none; margin: 0 }
+    .file-drop{ border:2px dashed #2d3744; border-radius:12px; padding:24px; text-align:center; background:#0f141a }
+    .file-drop.drag{ border-color: var(--secondary); background: rgba(255,159,28,.06) }
+    /* Styled link inside file drop to match design */
+    .file-drop a{ color: var(--secondary); text-decoration: none; font-weight: 600; border-bottom: 1px dashed var(--secondary); padding-bottom: 1px; cursor: pointer }
+    .file-drop a:hover{ color: var(--primary); border-bottom-color: var(--primary) }
+
+    .actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:14px }
+    .decrypt-actions { margin-top: 32px;}
+    button{ appearance:none; border:none; padding:12px 16px; border-radius:10px; font-weight:600; cursor:pointer; transition:.2s transform, .2s opacity }
+    button.primary{ background:var(--grad); color:#06121a }
+    button.secondary{ background:#11161d; border:1px solid var(--border); color:var(--text) }
+    button:disabled{ opacity:.6; cursor:not-allowed }
+
+    .status{ margin-top:12px; font-size:.95rem; color:var(--muted) }
+    .status.success{ color:var(--success) }
+    .status.error{ color:var(--error) }
+
+    .result{ margin-top:14px; display:none }
+    .result a{ color:#06121a; text-decoration:none; background:var(--grad); padding:10px 14px; border-radius:10px; display:inline-flex; align-items:center; gap:8px; font-weight:600 }
+    .small{ font-size:.85rem; color:var(--muted) }
+    .note{ margin-top:10px; color:var(--muted); font-size:.9rem }
+    .footer{ margin-top:28px; text-align:center; color:var(--muted); font-size:.9rem }
+    .inline{ display:flex; gap:10px; align-items:center }
+  </style>
+</head>
+<body>
+  <!-- Back Button -->
+  <a href="../../index.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Tools</a>
+  <div class="container">
+    <header>
+      <h1>File Encryptor (AES-GCM)</h1>
+      <p class="subtitle">Encrypt and decrypt files in your browser. Password-based encryption using Web Crypto (AES-GCM + PBKDF2). No uploads.</p>
+    </header>
+
+    <div class="card">
+      <div class="grid">
+        <section class="panel" id="encryptPanel">
+          <h2><i class="fa-solid fa-lock"></i> Encrypt</h2>
+          <div class="field">
+            <label>Choose file to encrypt</label>
+            <div class="file-drop" id="encDrop">
+              <input type="file" id="encFile" style="display:none" />
+              <div>
+                <p><i class="fa-regular fa-file"></i> Drag & drop a file here or <a href="#" id="encBrowse">browse</a></p>
+                <p class="small" id="encFileName">No file selected</p>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <div class="inline">
+              <input type="password" id="encPassword" placeholder="Enter a strong password" />
+              <button class="secondary" id="toggleEncPass" title="Show/Hide"><i class="fa-regular fa-eye"></i></button>
+            </div>
+            <div class="small" id="strength">Tip: longer is stronger. Use a passphrase.</div>
+          </div>
+          <div class="actions">
+            <button class="primary" id="encryptBtn"><i class="fa-solid fa-lock"></i> Encrypt</button>
+            <button class="secondary" id="clearEnc">Clear</button>
+          </div>
+          <div class="status" id="encStatus"></div>
+          <div class="result" id="encResult">
+            <a id="downloadEnc" download><i class="fa-solid fa-download"></i> Download encrypted file</a>
+            <div class="note">Keep the .enc file and your password safe. You'll need both to decrypt.</div>
+          </div>
+        </section>
+
+        <section class="panel" id="decryptPanel">
+          <h2><i class="fa-solid fa-lock-open"></i> Decrypt</h2>
+          <div class="field">
+            <label>Choose encrypted file (.enc)</label>
+            <div class="file-drop" id="decDrop">
+              <input type="file" id="decFile" accept="application/json,.enc,.bin,.txt" style="display:none" />
+              <div>
+                <p><i class="fa-regular fa-file-lines"></i> Drag & drop the encrypted file here or <a href="#" id="decBrowse">browse</a></p>
+                <p class="small" id="decFileName">No file selected</p>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <div class="inline">
+              <input type="password" id="decPassword" placeholder="Enter the same password used for encryption" />
+              <button class="secondary" id="toggleDecPass" title="Show/Hide"><i class="fa-regular fa-eye"></i></button>
+            </div>
+          </div>
+          <div class="actions decrypt-actions">
+            <button class="primary" id="decryptBtn"><i class="fa-solid fa-unlock-keyhole"></i> Decrypt</button>
+            <button class="secondary" id="clearDec">Clear</button>
+          </div>
+          <div class="status" id="decStatus"></div>
+          <div class="result" id="decResult">
+            <a id="downloadDec" download><i class="fa-solid fa-download"></i> Download decrypted file</a>
+          </div>
+        </section>
+      </div>
+
+      <section class="panel" id="advancedPanel" style="margin-top:18px;">
+        <details>
+          <summary style="cursor:pointer; font-weight:600;">Advanced Options (optional)</summary>
+          <div class="field" style="margin-top:12px;">
+            <label for="advIterations">PBKDF2 Iterations</label>
+            <input type="number" id="advIterations" min="10000" step="1000" value="250000" />
+            <div class="small">Higher = slower but stronger. Recommended 200k–600k depending on device.</div>
+          </div>
+          <div class="field">
+            <label for="advKeyLen">AES-GCM Key Length (bits)</label>
+            <select id="advKeyLen">
+              <option value="128">128</option>
+              <option value="192">192</option>
+              <option value="256" selected>256</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="advIvLen">GCM IV Length (bytes)</label>
+            <input type="number" id="advIvLen" min="12" max="32" step="1" value="12" />
+            <div class="small">12 bytes (96 bits) is recommended for AES-GCM.</div>
+          </div>
+        </details>
+      </section>
+
+      <div class="footer">All operations happen locally in your browser via Web Crypto API. Nothing is uploaded.</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

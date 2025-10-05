@@ -41,25 +41,6 @@
 
 ---
 
-## 🛠️ Available Tools
-
-<div align="center">
-
-| Tool | Description | Status | Category |
-|------|-------------|--------|----------|
-| 📝 **Word Counter** | Advanced text analysis with real-time stats | ✅ Live | Text |
-| 🔧 **JSON Formatter** | Format and validate JSON data | 🚧 Coming Soon | Code |
-| 🎨 **Color Picker** | Advanced color selection tool | 🚧 Coming Soon | Utility |
-| 🔐 **Password Generator** | Secure password generation | 🚧 Coming Soon | Security |
-| 📐 **Base64 Encoder** | Encode/decode Base64 strings | ✅ Live | Converter |
-| 🔍 **RegEx Tester** | Test regular expressions | 🚧 Coming Soon | Code |
-
-</div>
-
-> 💡 **Want to add a tool?** Check our [Tool Ideas](CONTRIBUTING.md#-tool-ideas) section!
-
----
-
 ## 🚀 Live Demo
 
 <div align="center">
@@ -200,10 +181,44 @@ Thanks goes to these wonderful people:
     <br />💻
   </td>
   <td align="center">
+    <a href="https://github.com/anshikaverma-av">
+      <img src="https://avatars.githubusercontent.com/u/235557821?v=4" width="100px;" alt="anshikaverma-av"/>
+      <br />
+      <sub><b>anshikaverma-av</b></sub>
+    </a>
+    <br />💻
+  </td>
+  <td align="center">
     <a href="https://github.com/paresh0805">
       <img src="https://avatars.githubusercontent.com/u/192526004?v=4" width="100px;" alt="paresh0805"/>
       <br />
       <sub><b>paresh0805</b></sub>
+    </a>
+    <br />💻
+  </td>
+  <td align="center">
+    <a href="https://github.com/Reterics">
+      <img src="https://avatars.githubusercontent.com/u/13684826?v=4" width="100px;" alt="Reterics"/>
+      <br />
+      <sub><b>Reterics</b></sub>
+    </a>
+    <br />💻
+  </td>
+  <td align="center">
+    <a href="https://github.com/Rupa-Rd">
+      <img src="https://avatars.githubusercontent.com/u/102663541?v=4" width="100px;" alt="Rupa-Rd"/>
+      <br />
+      <sub><b>Rupa-Rd</b></sub>
+    </a>
+    <br />💻
+  </td>
+</tr><tr>
+
+  <td align="center">
+    <a href="https://github.com/codingr15">
+      <img src="https://avatars.githubusercontent.com/u/116160426?v=4" width="100px;" alt="codingr15"/>
+      <br />
+      <sub><b>codingr15</b></sub>
     </a>
     <br />💻
   </td>
@@ -216,10 +231,52 @@ Thanks goes to these wonderful people:
     <br />💻
   </td>
   <td align="center">
+    <a href="https://github.com/Wellitsabhi">
+      <img src="https://avatars.githubusercontent.com/u/99867024?v=4" width="100px;" alt="Wellitsabhi"/>
+      <br />
+      <sub><b>Wellitsabhi</b></sub>
+    </a>
+    <br />💻
+  </td>
+  <td align="center">
+    <a href="https://github.com/Athting">
+      <img src="https://avatars.githubusercontent.com/u/149139084?v=4" width="100px;" alt="Athting"/>
+      <br />
+      <sub><b>Athting</b></sub>
+    </a>
+    <br />💻
+  </td>
+  <td align="center">
     <a href="https://github.com/nikeshadhikari9">
       <img src="https://avatars.githubusercontent.com/u/133838660?v=4" width="100px;" alt="nikeshadhikari9"/>
       <br />
       <sub><b>nikeshadhikari9</b></sub>
+    </a>
+    <br />💻
+  </td>
+  <td align="center">
+    <a href="https://github.com/Aryan-Bhendarkar">
+      <img src="https://avatars.githubusercontent.com/u/177752555?v=4" width="100px;" alt="Aryan-Bhendarkar"/>
+      <br />
+      <sub><b>Aryan-Bhendarkar</b></sub>
+    </a>
+    <br />💻
+  </td>
+</tr><tr>
+
+  <td align="center">
+    <a href="https://github.com/edmer664">
+      <img src="https://avatars.githubusercontent.com/u/64422131?v=4" width="100px;" alt="edmer664"/>
+      <br />
+      <sub><b>edmer664</b></sub>
+    </a>
+    <br />💻
+  </td>
+  <td align="center">
+    <a href="https://github.com/rohan-019">
+      <img src="https://avatars.githubusercontent.com/u/181408629?v=4" width="100px;" alt="rohan-019"/>
+      <br />
+      <sub><b>rohan-019</b></sub>
     </a>
     <br />💻
   </td>
@@ -231,24 +288,74 @@ Thanks goes to these wonderful people:
     </a>
     <br />💻
   </td>
+  <td align="center">
+    <a href="https://github.com/Madhvik007">
+      <img src="https://avatars.githubusercontent.com/u/72201530?v=4" width="100px;" alt="Madhvik007"/>
+      <br />
+      <sub><b>Madhvik007</b></sub>
+    </a>
+    <br />💻
+  </td>
+  <td align="center">
+    <a href="https://github.com/Priyanshiunique">
+      <img src="https://avatars.githubusercontent.com/u/144648015?v=4" width="100px;" alt="Priyanshiunique"/>
+      <br />
+      <sub><b>Priyanshiunique</b></sub>
+    </a>
+    <br />💻
+  </td>
 </tr><tr>
 
   <td align="center">
-    <a href="https://github.com/Athting">
-      <img src="https://avatars.githubusercontent.com/u/149139084?v=4" width="100px;" alt="Athting"/>
+    <a href="https://github.com/Vidhan0206">
+      <img src="https://avatars.githubusercontent.com/u/74712838?v=4" width="100px;" alt="Vidhan0206"/>
       <br />
-      <sub><b>Athting</b></sub>
+      <sub><b>Vidhan0206</b></sub>
     </a>
     <br />💻
   </td>
   <td align="center">
-    <a href="https://github.com/apps/github-actions">
-      <img src="https://avatars.githubusercontent.com/in/15368?v=4" width="100px;" alt="github-actions[bot]"/>
+    <a href="https://github.com/arshiyank">
+      <img src="https://avatars.githubusercontent.com/u/227343491?v=4" width="100px;" alt="arshiyank"/>
       <br />
-      <sub><b>github-actions[bot]</b></sub>
+      <sub><b>arshiyank</b></sub>
     </a>
     <br />💻
   </td>
+  <td align="center">
+    <a href="https://github.com/Himanshubansal-2008">
+      <img src="https://avatars.githubusercontent.com/u/227182109?v=4" width="100px;" alt="Himanshubansal-2008"/>
+      <br />
+      <sub><b>Himanshubansal-2008</b></sub>
+    </a>
+    <br />💻
+  </td>
+  <td align="center">
+    <a href="https://github.com/Krutika-Joshi">
+      <img src="https://avatars.githubusercontent.com/u/167503423?v=4" width="100px;" alt="Krutika-Joshi"/>
+      <br />
+      <sub><b>Krutika-Joshi</b></sub>
+    </a>
+    <br />💻
+  </td>
+  <td align="center">
+    <a href="https://github.com/Vedanshgupta1806">
+      <img src="https://avatars.githubusercontent.com/u/225804248?v=4" width="100px;" alt="Vedanshgupta1806"/>
+      <br />
+      <sub><b>Vedanshgupta1806</b></sub>
+    </a>
+    <br />💻
+  </td>
+  <td align="center">
+    <a href="https://github.com/iamanshikaa">
+      <img src="https://avatars.githubusercontent.com/u/235749231?v=4" width="100px;" alt="iamanshikaa"/>
+      <br />
+      <sub><b>iamanshikaa</b></sub>
+    </a>
+    <br />💻
+  </td>
+</tr><tr>
+
 </tr></table>
 
 <!-- CONTRIBUTORS-END -->

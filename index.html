@@ -98,7 +98,7 @@
     </div>
 
     <!-- Advanced Animated Background -->
-    <div class="animated-bg">
+    <div class="animated-bg">  
         <div class="floating-shapes">
             <div class="shape shape-1"></div>
             <div class="shape shape-2"></div>
@@ -220,9 +220,29 @@
                         <i class="fas fa-link"></i>
                         <span>URL Encoder</span>
                     </a>
+                    <a href="tools/url-query-editor/index.html" class="sidebar-tool-link" data-category="utility">
+                        <i class="fas fa-edit"></i>
+                        <span>URL Query Editor</span>
+                    </a>
                     <a href="tools/percentage-calculator/index.html" class="sidebar-tool-link" data-category="utility">
                         <i class="fas fa-calculator"></i>
                         <span>Percentage Calculator</span>
+                    </a>
+                    <a href="tools/number-squarer-cuber/index.html" class="sidebar-tool-link" data-category="utility">
+                        <i class="fas fa-square-root-alt"></i>
+                        <span>Number Squarer/Cuber</span>
+                    </a>
+                    <a href="tools/kanban-board/index.html" class="sidebar-tool-link" data-category="utility">
+                        <i class="fas fa-columns"></i>
+                        <span>Kanban Board</span>
+                    </a>
+                    <a href="tools/web-speech-api/index.html" class="sidebar-tool-link" data-category="utility">
+                        <i class="fas fa-microphone"></i>
+                        <span>Web Speech API</span>
+                    </a>
+                    <a href="tools/code-diff-viewer/index.html" class="sidebar-tool-link" data-category="code">
+                        <i class="fas fa-code-branch"></i>
+                        <span>Code Diff Viewer</span>
                     </a>
                     <a href="tools/uuid-generator/index.html" class="sidebar-tool-link" data-category="utility">
                         <i class="fas fa-fingerprint"></i>
@@ -237,12 +257,24 @@
                         <i class="fas fa-file-pdf"></i>
                         <span>Image to PDF</span>
                     </a>
+                    <a href="tools/color-contrast-checker/index.html" class="sidebar-tool-link" data-category="utility">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Color Contrast Checker</span>
+                    </a>
                     <a href="tools/xml-to-json-converter/index.html" class="sidebar-tool-link" data-category="utility">
                         <i class="fas fas fa-exchange"></i>
                         <span>XML to JSON Converter</span>
                     </a>
+                    <a href="tools/file-zipper/index.html" class="sidebar-tool-link" data-category="utility">
+                        <i class="fas fas fa-file-zipper"></i>
+                        <span>File Zipper</span>
+                    </a>
+                    <a href="tools/internet-speed/index.html" class="sidebar-tool-link" data-category="utility">
+                        <i class="fas fas fa-file-zipper"></i>
+                        <span>Internet Speed</span>
+                    </a>
                     <div class="sidebar-tool-link disabled" data-category="utility">
-                        <i class="fas fa-palette"></i>
+                        <i class="fas fa-layer-group"></i>
                         <span>Color Picker</span>
                         <small>Coming Soon</small>
                     </div>
@@ -423,13 +455,55 @@
                     <i class="fas fa-code"></i>
                     Date Tools
                 </button>
+                <button class="filter-btn" data-filter="timezone-convertors">
+                    <i class="fas fa-code"></i>
+                    Timezone Tools
+                </button>
+
                 <button class="filter-btn" data-filter="utility">
                     <i class="fas fa-cog"></i>
                     Utilities
                 </button>
             </div>
-
+            <!--Github Profile Card generator-->
             <div id="tools-grid" class="tools-grid">
+                <a href="tools/github-profile-card/index.html" class="tool-card" data-category="utility">
+                    <div class="tool-icon">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">GitHub Profile Card</h3>
+                        <p class="tool-description">
+                        Generate a stylish, shareable GitHub profile card with avatar, bio, and stats.
+                        </p>
+                        <div class="tool-tags">
+                        <span class="tag">API</span>
+                        <span class="tag">GitHub</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!--Discount Calculator-->
+                <a href="tools/SimpleDiscountCalculator/index.html" class="tool-card" data-category="utility">
+                <div class="tool-icon">
+                    <i class="fas fa-percent"></i>
+                </div>
+                <div class="tool-content">
+                    <h3 class="tool-title">Discount Calculator</h3>
+                    <p class="tool-description">Quickly find your final price and savings after applying discounts.</p>
+                    <div class="tool-tags">
+                        <span class="tag">Utility</span>
+                        <span class="tag">Finance</span>
+                    </div>
+                </div>
+                <div class="tool-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+
                 <!-- Word Counter -->
                 <a href="tools/word-counter/index.html" class="tool-card" data-category="text" data-featured="true">
                     <div class="tool-icon">
@@ -450,6 +524,7 @@
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
+
 
                 <!-- Line Sorter & Unique Extractor -->
                 <a href="tools/line-sorter-unique/index.html" class="tool-card" data-category="text">
@@ -513,15 +588,13 @@
 
 
                 <!-- JSON Formatter -->
-                <div class="tool-card" data-category="code">
+                <a href="tools/json-formatter/index.html" class="tool-card" data-category="code">
                     <div class="tool-icon">
                         <i class="fas fa-code"></i>
                     </div>
                     <div class="tool-content">
                         <h3 class="tool-title">JSON Formatter</h3>
-                        <p class="tool-description">Format, validate and beautify JSON data with syntax highlighting and
-                           
-                            error detection.</p>
+                        <p class="tool-description">Format, validate, and beautify JSON data with an interactive tree view and error detection.</p>
                         <div class="tool-tags">
                             <span class="tag">JSON</span>
                             <span class="tag">Format</span>
@@ -530,7 +603,7 @@
                     <div class="tool-arrow">
                         <i class="fas fa-arrow-right"></i>
                     </div>
-                </div>
+                </a>
 
                 <a href="tools/unit-converters/index.html" class="tool-card" data-category="utility">
                     <div class="tool-icon">
@@ -553,6 +626,26 @@
                     </div>
                 </a>
 
+                <!-- Aspect Ratio Calculator -->
+                <a href="tools/aspect-ratio-calculator/index.html" class="tool-card" data-category="utility">
+                    <div class="tool-icon">
+                        <i class="fas fa-expand"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Aspect Ratio Calculator</h3>
+                        <p class="tool-description">
+                            Calculate dimensions based on aspect ratios. Perfect for responsive design, video dimensions, and screen specifications.
+                        </p>
+                        <div class="tool-tags">
+                            <span class="tag">Calculator</span>
+                            <span class="tag">Design</span>
+                            <span class="tag">Utility</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
 
                 <!-- Timer & Stopwatch -->
                 <a href="tools/timer-stopwatch/index.html" class="tool-card" data-category="utility">
@@ -573,6 +666,28 @@
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
+
+                <a href="tools/timezone-converters/index.html" class="tool-card" data-category="timezone-convertors">
+                    <div class="tool-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Timezone Converter</h3>
+                        <p class="tool-description">
+                            Convert dates and times between different timezones with ease.
+                            See UTC offsets, daylight savings adjustments, and compare times instantly.
+                        </p>
+                        <div class="tool-tags">
+                            <span class="tag">Timezone</span>
+                            <span class="tag">Date</span>
+                            <span class="tag">Converter</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
 
                 <a href="tools/date-difference/index.html" class="tool-card" data-category="date">
                     <div class="tool-icon">
@@ -598,7 +713,7 @@
                 <!-- Color Picker -->
                 <div class="tool-card" data-category="utility">
                     <div class="tool-icon">
-                        <i class="fas fa-palette"></i>
+                        <i class="fas fa-layer-group"></i>
                     </div>
                     <div class="tool-content">
                         <h3 class="tool-title">Color Picker</h3>
@@ -615,6 +730,25 @@
                     </div>
                 </div>
 
+                <!-- Random Color Generator -->
+                <a href="tools/random-color-generator/index.html" class="tool-card" data-category="utility">
+                    <div class="tool-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Random Color Generator</h3>
+                        <p class="tool-description">
+                            Generates a random HEX or RGB color on button click. Shows the color code and a preview box.
+                        </p>
+                        <div class="tool-tags">
+                            <span class="tag">Utility</span>
+                            <span class="tag">Color</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
 
                 <!-- Base64 Encoder/Decoder -->
                 <a href="tools/base64-encoder/index.html" class="tool-card" data-category="utility">
@@ -675,6 +809,45 @@
                     </div>
                 </a>
 
+                <!-- Image Cropper -->
+                <a href="tools/image-cropper/index.html" class="tool-card" data-category="utility">
+                    <div class="tool-icon">
+                        <i class="fas fa-crop"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Image Cropper</h3>
+                        <p class="tool-description">Crop your image to the expected size.</p>
+                        <div class="tool-tags">
+                            <span class="tag">Image</span>
+                            <span class="tag">Cropping</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Image Steganography -->
+                <a href="tools/image-steganography/index.html" class="tool-card" data-category="utility">
+                    <div class="tool-icon">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Image Steganography</h3>
+                        <p class="tool-description">
+                            Hide a secret text message inside an image and extract it later using LSB steganography.
+                        </p>
+                        <div class="tool-tags">
+                            <span class="tag">Image</span>
+                            <span class="tag">Security</span>
+                            <span class="tag">Utility</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
                 <!-- URL Encoder/Decoder -->
                 <a href="tools/url-encoder-decoder/index.html" class="tool-card" data-category="utility">
                     <div class="tool-icon">
@@ -695,6 +868,25 @@
                     </div>
                 </a>
 
+                <!-- URL Query Parameter Editor -->
+                <a href="tools/url-query-editor/index.html" class="tool-card" data-category="utility">
+                    <div class="tool-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">URL Query Parameter Editor</h3>
+                        <p class="tool-description">Parse, modify, and rebuild URLs with their query parameters. Add, edit, or remove parameters and generate new URLs with ease.</p>
+                        <div class="tool-tags">
+                            <span class="tag">URL</span>
+                            <span class="tag">Parameters</span>
+                            <span class="tag">Query</span>
+                            <span class="tag">Edit</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
 
                 <!-- Password Generator -->
                 <a href="tools/password-generator/index.html" class="tool-card" data-category="utility">
@@ -814,6 +1006,82 @@
                     </div>
                 </a>
 
+                <!-- Number Squarer/Cuber -->
+                <a href="tools/number-squarer-cuber/index.html" class="tool-card" data-category="utility">
+                    <div class="tool-icon">
+                        <i class="fas fa-square-root-alt"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Number Squarer/Cuber</h3>
+                        <p class="tool-description">Calculate the square and cube of any number instantly. Perfect for mathematical calculations and learning.</p>
+                        <div class="tool-tags">
+                            <span class="tag">Calculator</span>
+                            <span class="tag">Math</span>
+                            <span class="tag">Utility</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Kanban Board -->
+                <a href="tools/kanban-board/index.html" class="tool-card" data-category="utility" data-featured="true">
+                    <div class="tool-icon">
+                        <i class="fas fa-columns"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Kanban Board</h3>
+                        <p class="tool-description">Organize your tasks with a simple drag-and-drop Kanban board. Create, edit, and move tasks between columns with data persistence.</p>
+                        <div class="tool-tags">
+                            <span class="tag">Productivity</span>
+                            <span class="tag">Task Management</span>
+                            <span class="tag">Utility</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Web Speech API -->
+                <a href="tools/web-speech-api/index.html" class="tool-card" data-category="utility" data-featured="true">
+                    <div class="tool-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Web Speech API</h3>
+                        <p class="tool-description">Experience speech recognition and synthesis. Convert speech to text and text to speech using your browser's built-in capabilities.</p>
+                        <div class="tool-tags">
+                            <span class="tag">Speech</span>
+                            <span class="tag">AI</span>
+                            <span class="tag">Utility</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Code Diff Viewer -->
+                <a href="tools/code-diff-viewer/index.html" class="tool-card" data-category="code" data-featured="true">
+                    <div class="tool-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Code Diff Viewer</h3>
+                        <p class="tool-description">Compare code snippets side-by-side with GitHub-style diff highlighting. Upload files or paste code to see detailed differences.</p>
+                        <div class="tool-tags">
+                            <span class="tag">Code</span>
+                            <span class="tag">Diff</span>
+                            <span class="tag">Comparison</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
                 <!-- String Reverser -->
                 <a href="tools/string-reverser/index.html" class="tool-card" data-category="text">
                     <div class="tool-icon">
@@ -907,19 +1175,19 @@
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
-
-                <!-- Image to PDF -->
-                <a href="tools/image-to-pdf/index.html" class="tool-card" data-category="utility">
+                
+                <!-- Palindrome Checker -->
+                <a href="tools/palindrome-checker/index.html" class="tool-card" data-category="text">
                     <div class="tool-icon">
-                        <i class="fas fa-file-pdf"></i>
+                        <i class="fas fa-spell-check"></i>
                     </div>
                     <div class="tool-content">
-                        <h3 class="tool-title">Image to PDF</h3>
+                        <h3 class="tool-title">Palindrome Checker</h3>
                         <p class="tool-description">
-                            A tool to convert your images into pdf. Supoorts multi-image pdf conversion etc.
+                            Check if a word or phrase reads the same forwards and backwards.
                         </p>
                         <div class="tool-tags">
-                            <span class="tag">Converter</span>
+                            <span class="tag">Text</span>
                             <span class="tag">Utility</span>
                         </div>
                     </div>
@@ -927,7 +1195,70 @@
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
-                
+
+                <!-- Character Counter -->
+                <a href="tools/character-count/index.html" class="tool-card" data-category="utility">
+                    <div class="tool-icon">
+                        <i class="fas fa-text-width"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Character Counter</h3>
+                        <p class="tool-description">
+                            Instantly count the number of characters in any text input.
+                        </p>
+                        <div class="tool-tags">
+                            <span class="tag">Text</span>
+                            <span class="tag">Utility</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Number Base Converter -->
+                <a href="tools/number-base-converter/index.html" class="tool-card" data-category="utility">
+                    <div class="tool-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Number Base Converter</h3>
+                        <p class="tool-description">
+                            A simple tool to convert numbers between Decimal, Binary, Octal, and Hexadecimal.
+                        </p>
+                        <div class="tool-tags">
+                            <span class="tag">Binary</span>
+                            <span class="tag">Decimal</span>
+                            <span class="tag">Octal</span>
+                            <span class="tag">Hexadecimal</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- EMI Calculator -->
+                <a href="tools/emi-calculator/index.html" class="tool-card" data-category="utility">
+                    <div class="tool-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">EMI Calculator</h3>
+                        <p class="tool-description">
+                            Calculate monthly EMI, total payment and total interest by entering principal, annual rate and tenure.
+                        </p>
+                        <div class="tool-tags">
+                            <span class="tag">Finance</span>
+                            <span class="tag">EMI</span>
+                            <span class="tag">Calculator</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
                 <!-- JSON-YAML-converter -->
                 <a href="tools/json-yaml-converter/index.html" class="tool-card" data-category="utility">
                     <div class="tool-icon">
@@ -989,10 +1320,12 @@
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
+
                 <!-- Video to GIF Converter -->
+
                 <a href="tools/Video-to-Gif converter/index.html" class="tool-card" data-category="utility">
                     <div class="tool-icon">
-                        <i class="fas fa-film"></i>
+                        <i class="fas fa-file-csv"></i>
                     </div>
                     <div class="tool-content">
                         <h3 class="tool-title">Video to GIF Converter</h3>
@@ -1001,11 +1334,19 @@
                             generate a GIF.
                         </p>
                         <div class="tool-tags">
-                            <span class="tag">Video</span>  
+                            <span class="tag">Video</span>
                         </div>
-                        <div class="tool-arrow">
+                    </div>
+                    <div class="tool-arrow">
                         <i class="fas fa-arrow-right"></i>
                     </div>
+                </a>
+
+
+                <!-- File Zipper -->
+                <a href="tools/file-zipper/index.html" class="tool-card" data-category="utility">
+                    <div class="tool-icon">
+                        <i class="fas fas fa-file-zipper"></i>
                     </div>
                 </div>
                     

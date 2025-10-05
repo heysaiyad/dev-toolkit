@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Color Generator - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1 class="tool-title">Random Color Generator</h1>
+            <p class="tool-subtitle">
+                Generate a random HEX or RGB color with a live preview. Click the button to explore beautiful colors!
+            </p>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <div class="input-area">
+                <button class="btn btn-secondary" id="generateBtn">
+                    <i class="fas fa-paint-brush"></i> Generate Color
+                </button>
+            </div>
+
+            <!-- Output Section -->
+            <div class="output-section">
+                <div class="output" id="colorOutput">#FFFFFF</div>
+                <div class="output-area">
+                    <div class="prev-box" id="colorPreview" style="background-color: #FFFFFF;"></div>
+                    <button class="btn btn-secondary" id="copyBtn">
+                        <i class="fas fa-copy"></i> Copy Color
+                    </button>
+                </div>
+            </div>
+            <div id="message"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

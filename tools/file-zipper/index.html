@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Zipper - DevToolkit</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-color: #ff6347;
+        --secondary-color: #ff8c00;
+        --accent-color: #ffa500;
+        --bg-primary: #0d1117;
+        --bg-secondary: #161b22;
+        --bg-tertiary: #21262d;
+        --border-color: #30363d;
+        --text-primary: #f0f6fc;
+        --text-secondary: #8b949e;
+        --text-muted: #6e7681;
+        --success-color: #238636;
+        --error-color: #da3633;
+        --warning-color: #d29922;
+        --gradient-primary: linear-gradient(
+          135deg,
+          #ff6347 0%,
+          #ff8c00 50%,
+          #ffa500 100%
+        );
+        --radius-md: 12px;
+        --radius-lg: 20px;
+        --font-primary: "Poppins", system-ui, -apple-system, sans-serif;
+      }
+
+      body {
+        font-family: var(--font-primary);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.6;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      .animated-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: radial-gradient(
+            circle at 10% 20%,
+            rgba(255, 99, 71, 0.15) 0%,
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 90% 10%,
+            rgba(255, 140, 0, 0.1) 0%,
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 20% 80%,
+            rgba(255, 165, 0, 0.12) 0%,
+            transparent 50%
+          ),
+          linear-gradient(135deg, #0d1117 0%, #161b22 40%, #21262d 100%);
+        animation: backgroundShift 20s ease-in-out infinite;
+      }
+
+      @keyframes backgroundShift {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding-top: 2rem;
+      }
+
+      h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+        animation: fadeInDown 0.6s ease-out;
+      }
+
+      .subtitle {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        animation: fadeInUp 0.6s ease-out;
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .upload-section {
+        background: var(--bg-secondary);
+        border: 2px dashed var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: 3rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .upload-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--gradient-primary);
+      }
+
+      .upload-section:hover {
+        border-color: var(--primary-color);
+        background: var(--bg-tertiary);
+        transform: translateY(-2px);
+      }
+
+      .upload-section.drag-over {
+        border-color: var(--accent-color);
+        background: var(--bg-tertiary);
+        border-style: solid;
+      }
+
+      .upload-icon {
+        font-size: 4rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+      }
+
+      .upload-text {
+        font-size: 1.3rem;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .upload-subtext {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+      }
+
+      .select-files-btn {
+        margin-top: 1.5rem;
+        padding: 0.8rem 2rem;
+        background: var(--gradient-primary);
+        color: white;
+        border: none;
+        border-radius: var(--radius-md);
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .select-files-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 20px rgba(255, 99, 71, 0.4);
+      }
+
+      #fileInput {
+        display: none;
+      }
+
+      .files-container {
+        background: var(--bg-secondary);
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .files-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--gradient-primary);
+      }
+
+      .files-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .files-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .files-title i {
+        color: var(--primary-color);
+      }
+
+      .files-count {
+        background: var(--bg-tertiary);
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 0.6rem 1.2rem;
+        border: none;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        font-family: var(--font-primary);
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .btn-primary {
+        background: var(--gradient-primary);
+        color: white;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(255, 99, 71, 0.4);
+      }
+
+      .btn-secondary {
+        background: var(--bg-tertiary);
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+      }
+
+      .btn-secondary:hover {
+        background: var(--bg-primary);
+        border-color: var(--primary-color);
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .file-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+      .file-item {
+        background: var(--bg-tertiary);
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        transition: all 0.3s ease;
+        cursor: move;
+      }
+
+      .file-item:hover {
+        border-color: var(--primary-color);
+        transform: translateX(5px);
+      }
+
+      .file-item.dragging {
+        opacity: 0.5;
+        transform: scale(0.98);
+      }
+
+      .file-item.drag-over {
+        border-color: var(--accent-color);
+        border-style: dashed;
+      }
+
+      .drag-handle {
+        color: var(--text-muted);
+        cursor: move;
+        font-size: 1.2rem;
+      }
+
+      .file-icon {
+        font-size: 2rem;
+        min-width: 40px;
+        text-align: center;
+      }
+
+      .file-icon.pdf {
+        color: #e74c3c;
+      }
+      .file-icon.image {
+        color: #3498db;
+      }
+      .file-icon.text {
+        color: #95a5a6;
+      }
+      .file-icon.archive {
+        color: #f39c12;
+      }
+      .file-icon.default {
+        color: var(--text-muted);
+      }
+
+      .file-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .file-name {
+        font-weight: 500;
+        color: var(--text-primary);
+        margin-bottom: 0.2rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .file-size {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+      }
+
+      .file-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .icon-btn {
+        background: var(--bg-primary);
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+        width: 36px;
+        height: 36px;
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .icon-btn:hover {
+        background: var(--error-color);
+        border-color: var(--error-color);
+        color: white;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: var(--text-muted);
+      }
+
+      .empty-state i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+      }
+
+      .info-card {
+        background: var(--bg-secondary);
+        border: 2px dashed var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: 2rem;
+        margin-top: 2rem;
+      }
+
+      .info-card h3 {
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.4rem;
+      }
+
+      .info-list {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      .info-list li {
+        color: var(--text-secondary);
+        padding: 0.8rem 0;
+        display: flex;
+        align-items: start;
+        gap: 0.7rem;
+      }
+
+      .info-list li i {
+        color: var(--accent-color);
+        margin-top: 0.2rem;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: var(--success-color);
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: var(--radius-md);
+        display: none;
+        align-items: center;
+        gap: 0.7rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        animation: slideIn 0.3s ease-out;
+        z-index: 1000;
+      }
+
+      .toast.error {
+        background: var(--error-color);
+      }
+
+      .toast.show {
+        display: flex;
+      }
+
+      .back-button {
+        position: fixed;
+        top: 2rem;
+        left: 2rem;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        text-decoration: none;
+        border-radius: var(--radius-md);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+        backdrop-filter: blur(20px);
+      }
+
+      .back-button:hover {
+        background: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(400px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .upload-section {
+          padding: 2rem 1rem;
+        }
+
+        .files-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+
+        .action-buttons {
+          width: 100%;
+        }
+
+        .btn {
+          flex: 1;
+          justify-content: center;
+        }
+
+        .file-item {
+          flex-wrap: wrap;
+        }
+
+        .back-button {
+          top: 1rem;
+          left: 1rem;
+          padding: 0.5rem 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="animated-bg"></div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+      <i class="fas fa-arrow-left"></i>
+      Back to Tools
+    </a>
+
+    <div class="container">
+      <header>
+        <h1><i class="fas fa-file-archive"></i> File Zipper</h1>
+        <p class="subtitle">
+          Upload multiple files and compress them into a single ZIP file. Drag
+          to reorder files before zipping.
+        </p>
+      </header>
+
+      <div class="upload-section" id="uploadSection">
+        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+        <div class="upload-text">Drop your files here</div>
+        <div class="upload-subtext">or click to browse</div>
+        <button class="select-files-btn" id="selectFilesBtn">
+          <i class="fas fa-folder-open"></i>
+          Select Files
+        </button>
+        <input type="file" id="fileInput" multiple />
+      </div>
+
+      <div class="files-container" id="filesContainer" style="display: none">
+        <div class="files-header">
+          <div>
+            <div class="files-title">
+              <i class="fas fa-list"></i>
+              Uploaded Files
+            </div>
+            <div class="files-count" id="filesCount">0 files</div>
+          </div>
+          <div class="action-buttons">
+            <button class="btn btn-secondary" id="clearAllBtn">
+              <i class="fas fa-trash"></i>
+              Clear All
+            </button>
+            <button class="btn btn-primary" id="createZipBtn" disabled>
+              <i class="fas fa-file-archive"></i>
+              Create ZIP
+            </button>
+          </div>
+        </div>
+
+        <div class="file-list" id="fileList"></div>
+      </div>
+
+      <div class="info-card">
+        <h3><i class="fas fa-info-circle"></i> How to Use</h3>
+        <ul class="info-list">
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span
+              ><strong>Upload Files:</strong> Drag and drop files or click to
+              browse. You can upload any file type.</span
+            >
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span
+              ><strong>Reorder Files:</strong> Drag the handle icon to rearrange
+              files in your desired order.</span
+            >
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span
+              ><strong>Remove Files:</strong> Click the trash icon to remove
+              individual files from the list.</span
+            >
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span
+              ><strong>Create ZIP:</strong> Click the "Create ZIP" button to
+              compress all files into a downloadable ZIP archive.</span
+            >
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span
+              ><strong>Privacy First:</strong> All processing happens in your
+              browser. No files are uploaded to any server.</span
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="toast" id="toast">
+      <i class="fas fa-check-circle"></i>
+      <span id="toastMessage"></span>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

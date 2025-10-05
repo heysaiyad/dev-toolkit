@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CSV Viewer - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #0a0f1e 0%, #1a1f2e 100%);
+        color: var(--text-primary);
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+      }
+      .tool-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      .tool-header {
+        text-align: center;
+        margin-bottom: 1.25rem;
+      }
+      .tool-title {
+        font-size: clamp(1.6rem, 4vw, 2.6rem);
+        font-weight: 700;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0.5rem;
+      }
+      textarea {
+        width: 100%;
+        padding: 1rem;
+        background: var(--bg-primary);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+        font-family: monospace;
+        min-height: 140px;
+      }
+      .button-group {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+      }
+      button {
+        background: var(--primary-color);
+        border: none;
+        padding: 0.7rem 1rem;
+        color: #fff;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .result-box {
+        padding: 1rem;
+        background: var(--bg-secondary);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        min-height: 120px;
+        overflow: auto;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 0.5rem 0.65rem;
+        text-align: left;
+      }
+      th {
+        background: rgba(255, 255, 255, 0.03);
+        position: sticky;
+        top: 0;
+      }
+      td[contenteditable] {
+        outline: none;
+      }
+      .small {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.75);
+        margin-top: 0.25rem;
+      }
+      .back-button {
+        position: fixed;
+        top: 2rem;
+        left: 2rem;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        text-decoration: none;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+      }
+      .back-button:hover {
+        background: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../../index.html" class="back-button"
+      ><i class="fas fa-arrow-left"></i> Back to Tools</a
+    >
+
+    <div class="tool-container">
+      <div class="tool-header">
+        <h1 class="tool-title">CSV Viewer & Editor</h1>
+        <p class="small">
+          Paste CSV on the left, parse to view/edit in a table, and export back
+          to CSV.
+        </p>
+      </div>
+
+      <textarea
+        id="csv-input"
+        placeholder="name,age,city
+John Doe,30,New York
+Jane Smith,25,Los Angeles"
+      ></textarea>
+
+      <div class="button-group">
+        <button id="parse-btn"><i class="fas fa-play"></i> Parse CSV</button>
+        <button id="sample-btn">
+          <i class="fas fa-file-import"></i> Load Sample
+        </button>
+        <button id="export-btn">
+          <i class="fas fa-file-export"></i> Export CSV
+        </button>
+        <button id="clear-btn"><i class="fas fa-trash"></i> Clear</button>
+      </div>
+
+      <h3>Table:</h3>
+      <div id="table-wrapper" class="result-box">
+        No data — paste CSV and click Parse CSV.
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
