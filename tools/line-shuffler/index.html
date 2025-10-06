@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line Shuffler - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .input-section textarea {
+            width: 100%;
+            height: 200px;
+            font-family: monospace;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            resize: vertical;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--radius-md);
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1 class="tool-title">Line Shuffler</h1>
+            <p class="tool-subtitle">
+                Enter a list of items (one per line) and shuffle them into a random order.
+            </p>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <label for="inputArea">Enter items:</label>
+            <textarea id="inputArea" placeholder="One item per line"></textarea>
+            <button class="btn btn-primary" id="shuffleBtn">
+                <i class="fas fa-random"></i> Shuffle
+            </button>
+        </div>
+
+        <!-- Output Section -->
+        <div class="input-section">
+            <label for="outputArea">Shuffled result:</label>
+            <textarea id="outputArea" readonly></textarea>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

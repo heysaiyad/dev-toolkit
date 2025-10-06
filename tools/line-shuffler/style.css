@@ -1,0 +1,94 @@
+/* ===== Line Shuffler Tool Styles ===== */
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+}
+
+.tool-container {
+    max-width: 800px;
+    margin: 4rem auto 2rem auto;
+    padding: 2rem;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.tool-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.tool-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text; /* For WebKit browsers */
+    background-clip: text;         /* Standard property */
+    -webkit-text-fill-color: transparent; /* For WebKit browsers */
+    color: transparent;            /* Standard property */
+}
+
+
+.tool-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0.5rem auto 0 auto;
+}
+
+/* Input/Output Sections */
+.input-section {
+    margin-bottom: 2rem;
+}
+
+.input-section label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+textarea {
+    width: 100%;
+    min-height: 180px;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-family: monospace;
+    resize: vertical;
+}
+
+/* Shuffle Button */
+#shuffleBtn {
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--radius-md);
+    background: var(--gradient-primary);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#shuffleBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    background: var(--primary-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tool-container {
+        margin: 2rem 1rem;
+        padding: 1.5rem;
+    }
+    textarea {
+        min-height: 140px;
+    }
+}
