@@ -306,6 +306,24 @@ body {
 .theme-toggle-btn .fa-sun { display: none; }
 .theme-toggle-btn .fa-moon { display: block; }
 
+/* Theme label (next to the toggle) */
+.theme-label {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    background: transparent;
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    transition: all 0.25s ease;
+    user-select: none;
+}
+
+.theme-label:hover {
+    color: var(--primary-color);
+}
+
 .mobile-menu-toggle {
     display: none;
     background: none;
@@ -3089,6 +3107,10 @@ body.light-mode .contributors-badge {
 
 body.light-mode .theme-toggle-btn .fa-sun { display: block; }
 body.light-mode .theme-toggle-btn .fa-moon { display: none; }
+
+body.light-mode .theme-label {
+    color: var(--text-secondary);
+}
 
 body.light-mode .btn-secondary {
     color: var(--text-primary);

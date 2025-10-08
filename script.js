@@ -90,31 +90,62 @@ function hideLoadingScreen() {
 }
 // Dark Mode Toggle Functionality
 function initDarkModeToggle() {
-    const themeToggleButton = document.getElementById('theme-toggle');
-    if (!themeToggleButton) return;
+  const themeToggleButton = document.getElementById('theme-toggle');
+  if (!themeToggleButton) return;
 
-    // Function to apply the theme based on the mode
-    const applyTheme = (theme) => {
-        if (theme === 'light') {
-            document.body.classList.add('light-mode');
-        } else {
-            document.body.classList.remove('light-mode');
-        }
+  const STORAGE_KEY = 'ui-mode';
+
+  // Apply theme by toggling a single class on the body.
+  const applyTheme = (theme) => {
+    if (theme === 'light') {
+      document.body.classList.add('light-mode');
+      themeToggleButton.setAttribute('aria-pressed', 'true');
+      themeToggleButton.setAttribute('aria-label', 'Switch to dark theme');
+      const label = document.getElementById('theme-label');
+      if (label) label.textContent = 'Light';
+    } else {
+      document.body.classList.remove('light-mode');
+      themeToggleButton.setAttribute('aria-pressed', 'false');
+      themeToggleButton.setAttribute('aria-label', 'Switch to light theme');
+      const label = document.getElementById('theme-label');
+      if (label) label.textContent = 'Dark';
+    }
+  };
+
+  // Determine initial theme: saved preference > system preference > default dark
+  const savedTheme = localStorage.getItem(STORAGE_KEY);
+  const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+  const initial = savedTheme ? savedTheme : (prefersLight ? 'light' : 'dark');
+  applyTheme(initial);
+
+  // Toggle handler — flips between light and dark and persists choice
+  themeToggleButton.addEventListener('click', () => {
+    const current = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+    const next = current === 'light' ? 'dark' : 'light';
+    applyTheme(next);
+    try {
+      localStorage.setItem(STORAGE_KEY, next);
+    } catch (e) {
+      // Storage may be unavailable in some privacy modes
+      console.warn('Could not persist theme preference', e);
+    }
+  });
+
+  // If the user hasn't explicitly chosen a theme, respond to system changes
+  if (window.matchMedia) {
+    const mq = window.matchMedia('(prefers-color-scheme: light)');
+    const systemListener = (e) => {
+      if (!localStorage.getItem(STORAGE_KEY)) {
+        applyTheme(e.matches ? 'light' : 'dark');
+      }
     };
-    
-    // Check for saved user preference on load
-    // Use 'ui-mode' to not conflict with the existing theme system
-    const savedTheme = localStorage.getItem('ui-mode') || 'dark';
-    applyTheme(savedTheme);
 
-    // Add event listener for the toggle button
-    themeToggleButton.addEventListener('click', () => {
-        const isLight = document.body.classList.contains('light-mode');
-        const newTheme = isLight ? 'dark' : 'light';
-        
-        applyTheme(newTheme);
-        localStorage.setItem('ui-mode', newTheme);
-    });
+    if (typeof mq.addEventListener === 'function') {
+      mq.addEventListener('change', systemListener);
+    } else if (typeof mq.addListener === 'function') {
+      mq.addListener(systemListener);
+    }
+  }
 }
 // Typing Effect Animation with performance optimization
 function initTypingEffect() {
