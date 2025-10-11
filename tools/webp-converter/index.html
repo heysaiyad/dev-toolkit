@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebP Image Converter - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <meta name="description" content="Convert images to WebP format directly in your browser. Upload JPG, PNG, and other formats to get optimized WebP files.">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1 class="tool-title">WebP Image Converter</h1>
+            <p class="tool-subtitle">
+                Convert images to WebP format for better web performance.<br>Upload JPG, PNG, GIF, and other formats to get optimized WebP files.
+            </p>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="webp-upload-section">
+            <div class="webp-upload-area" id="upload-area">
+                <div class="webp-upload-content">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Drop images here or click to browse</h3>
+                    <p>Supports JPG, PNG, GIF, BMP, and other common formats</p>
+                    <input type="file" id="file-input" multiple accept="image/*" hidden>
+                    <button class="webp-btn-upload" id="upload-btn">
+                        <i class="fas fa-folder-open"></i>
+                        Choose Images
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Conversion Options -->
+            <div class="webp-options">
+                <div class="webp-option-group">
+                    <label class="webp-option-label"><i class="fas fa-cog"></i> Conversion Options</label>
+                    <div class="webp-options-row">
+                        <div class="webp-option-item">
+                            <label for="quality">Quality</label>
+                            <input type="range" id="quality" min="0.1" max="1" step="0.1" value="0.8">
+                            <span id="quality-value">80%</span>
+                        </div>
+                        <div class="webp-option-item" style="margin-bottom: 1rem;">
+                            <label for="max-width">Max Width</label>
+                            <input type="number" id="max-width" placeholder="1920" min="100" max="4000">
+                        </div>
+                        <div class="webp-option-item" style="margin-bottom: 1rem;">
+                            <label for="max-height">Max Height</label>
+                            <input type="number" id="max-height" placeholder="1080" min="100" max="4000">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Convert Button -->
+        <div class="webp-convert">
+            <button class="webp-btn-convert" id="convert-btn" disabled>
+                <i class="fas fa-magic"></i>
+                Convert to WebP
+            </button>
+        </div>
+
+        <!-- Results Section -->
+        <div class="webp-results" id="results-section" style="display: none;">
+            <div class="webp-results-header">
+                <div class="webp-results-label">
+                    <i class="fas fa-images"></i>
+                    Converted Images
+                </div>
+                <div class="webp-results-actions">
+                    <button class="webp-btn-action" id="download-all-btn">
+                        <i class="fas fa-download"></i>
+                        Download All
+                    </button>
+                    <button class="webp-btn-action" id="clear-all-btn">
+                        <i class="fas fa-trash"></i>
+                        Clear All
+                    </button>
+                </div>
+            </div>
+            <div id="webp-results" class="webp-results-grid">
+                <!-- Results will be populated here -->
+            </div>
+        </div>
+
+        <!-- Progress Section -->
+        <div class="webp-progress" id="progress-section" style="display: none;">
+            <div class="webp-progress-content">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span id="progress-text">Converting images...</span>
+                <div class="webp-progress-bar">
+                    <div class="webp-progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
