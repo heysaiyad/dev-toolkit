@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gantt Chart Generator - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Tool-specific styles */
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            margin-top: 2rem;
+            padding-top: 1rem;
+        }
+
+        .tool-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .tool-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .input-section {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .input-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-primary);
+        }
+
+        .input-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .input-label i {
+            color: var(--primary-color);
+        }
+
+        #json-input {
+            width: 100%;
+            min-height: 300px;
+            background: var(--bg-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            resize: vertical;
+            transition: all 0.3s ease;
+            line-height: 1.6;
+        }
+
+        #json-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+        }
+
+        #json-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-primary);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .sample-data {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: var(--radius-md);
+        }
+
+        .sample-data h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .sample-data pre {
+            background: var(--bg-primary);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            overflow-x: auto;
+            font-size: 0.8rem;
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        .chart-container {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            display: none;
+        }
+
+        .chart-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-primary);
+        }
+
+        .chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chart-title i {
+            color: var(--primary-color);
+        }
+
+        .chart-info {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        #gantt-chart {
+            width: 100%;
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-x: auto;
+            overflow-y: hidden;
+            position: relative;
+        }
+
+        .mobile-scroll-hint {
+            display: none;
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            background: rgba(255, 107, 53, 0.9);
+            color: white;
+            padding: 0.5rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.7rem;
+            z-index: 50;
+            animation: pulse 2s infinite;
+            pointer-events: none;
+        }
+
+        .mobile-scroll-hint::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 5px 5px 5px 0;
+            border-color: transparent rgba(255, 107, 53, 0.9) transparent transparent;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        /* Smooth scrolling for all browsers */
+        #gantt-chart {
+            scroll-behavior: smooth;
+        }
+
+        /* Better focus styles for accessibility */
+        .btn:focus,
+        #json-input:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        .gantt-timeline {
+            display: flex;
+            flex-direction: column;
+            min-width: 100%;
+        }
+
+        .gantt-header {
+            display: flex;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .gantt-task-header {
+            min-width: 200px;
+            padding: 0 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .gantt-dates-header {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 1rem;
+        }
+
+        .gantt-date-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            transform: rotate(-45deg);
+            transform-origin: center;
+            white-space: nowrap;
+        }
+
+        .gantt-row {
+            display: flex;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            min-height: 60px;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .gantt-row:hover {
+            background: rgba(255, 107, 53, 0.05);
+        }
+
+        .gantt-task-name {
+            min-width: 200px;
+            padding: 0 1rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            min-height: 60px;
+        }
+
+        .gantt-timeline-area {
+            flex: 1;
+            position: relative;
+            padding: 0 1rem;
+            display: flex;
+            align-items: center;
+            min-height: 60px;
+        }
+
+        .gantt-bar {
+            height: 24px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-sm);
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+            cursor: pointer;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .gantt-bar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(255, 107, 53, 0.4);
+        }
+
+        .gantt-bar-text {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0 8px;
+        }
+
+        .error-message {
+            background: rgba(208, 2, 27, 0.1);
+            border: 1px solid rgba(208, 2, 27, 0.3);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            color: var(--error-color);
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .error-message i {
+            margin-right: 0.5rem;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        .back-button:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(0, 129, 180, 0.1));
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .feature-highlight h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-highlight p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .tool-container {
+                padding: 1rem;
+                margin: 0;
+            }
+
+            .back-button {
+                top: 0.75rem;
+                left: 0.75rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+                background: rgba(26, 26, 46, 0.95);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.15);
+            }
+
+            .tool-header {
+                margin-bottom: 2rem;
+                margin-top: 4.5rem;
+                padding-top: 0.5rem;
+            }
+
+            .tool-title {
+                font-size: clamp(1.5rem, 6vw, 2.5rem);
+            }
+
+            .tool-subtitle {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+
+            .input-section {
+                padding: 1.5rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .btn {
+                justify-content: center;
+                width: 100%;
+                padding: 1rem 1.5rem;
+            }
+
+            .chart-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.75rem;
+                text-align: center;
+            }
+
+            .chart-title {
+                font-size: 1.25rem;
+                justify-content: center;
+            }
+
+            .chart-info {
+                font-size: 0.85rem;
+                text-align: center;
+            }
+
+            #gantt-chart {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                border-radius: var(--radius-md);
+                box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .mobile-scroll-hint {
+                display: block;
+            }
+
+            .gantt-timeline {
+                min-width: 600px;
+            }
+
+            .gantt-task-header,
+            .gantt-task-name {
+                min-width: 140px;
+                font-size: 0.9rem;
+                padding: 0 0.75rem;
+            }
+
+            .gantt-dates-header {
+                padding: 0 0.5rem;
+                min-width: 460px;
+            }
+
+            .gantt-date-label {
+                font-size: 0.7rem;
+            }
+
+            .gantt-timeline-area {
+                padding: 0 0.5rem;
+                min-width: 460px;
+            }
+
+            .gantt-row {
+                min-height: 50px;
+            }
+
+            .gantt-bar {
+                height: 22px;
+                font-size: 0.75rem;
+            }
+
+            .sample-data {
+                margin-top: 1rem;
+            }
+
+            .sample-data pre {
+                font-size: 0.75rem;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .error-message {
+                font-size: 0.9rem;
+                padding: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-container {
+                padding: 0.75rem;
+            }
+
+            .tool-header {
+                margin-top: 5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .tool-title {
+                font-size: clamp(1.25rem, 7vw, 2rem);
+                margin-bottom: 0.75rem;
+            }
+
+            .tool-subtitle {
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+
+            .input-section {
+                padding: 1rem;
+            }
+
+            .input-label {
+                font-size: 1rem;
+            }
+
+            #json-input {
+                min-height: 180px;
+                font-size: 0.8rem;
+                padding: 1rem;
+            }
+
+            .btn {
+                padding: 0.875rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .chart-container {
+                padding: 1rem;
+            }
+
+            .chart-title {
+                font-size: 1.1rem;
+            }
+
+            .chart-info {
+                font-size: 0.8rem;
+                line-height: 1.3;
+            }
+
+            .gantt-timeline {
+                min-width: 500px;
+            }
+
+            .gantt-task-header,
+            .gantt-task-name {
+                min-width: 120px;
+                font-size: 0.85rem;
+                padding: 0 0.5rem;
+            }
+
+            .gantt-dates-header {
+                min-width: 380px;
+                padding: 0 0.25rem;
+            }
+
+            .gantt-timeline-area {
+                min-width: 380px;
+                padding: 0 0.25rem;
+            }
+
+            .gantt-date-label {
+                font-size: 0.65rem;
+            }
+
+            .gantt-bar {
+                height: 20px;
+                font-size: 0.7rem;
+            }
+
+            .gantt-bar-text {
+                padding: 0 4px;
+            }
+
+            .sample-data h4 {
+                font-size: 0.85rem;
+            }
+
+            .sample-data pre {
+                font-size: 0.7rem;
+                padding: 0.75rem;
+            }
+
+            .feature-highlight {
+                padding: 1rem;
+                margin: 1.5rem 0;
+            }
+
+            .feature-highlight h4 {
+                font-size: 1rem;
+            }
+
+            .feature-highlight p {
+                font-size: 0.85rem;
+                line-height: 1.4;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .tool-container {
+                padding: 0.5rem;
+            }
+
+            .tool-header {
+                margin-top: 5.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .back-button {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+                top: 0.5rem;
+                left: 0.5rem;
+            }
+
+            .tool-title {
+                font-size: clamp(1.1rem, 8vw, 1.75rem);
+            }
+
+            .gantt-timeline {
+                min-width: 450px;
+            }
+
+            .gantt-task-header,
+            .gantt-task-name {
+                min-width: 100px;
+                font-size: 0.8rem;
+            }
+
+            .gantt-dates-header,
+            .gantt-timeline-area {
+                min-width: 350px;
+            }
+
+            .gantt-bar {
+                height: 18px;
+                font-size: 0.65rem;
+            }
+
+            .btn {
+                padding: 0.75rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1 class="tool-title">Gantt Chart Generator</h1>
+            <p class="tool-subtitle">
+                Create beautiful Gantt charts from JSON data. Visualize project timelines, track task dependencies, and manage project schedules with ease.
+            </p>
+        </div>
+
+        <!-- JSON Input Section -->
+        <div class="input-section">
+            <div class="input-label">
+                <i class="fas fa-code"></i>
+                JSON Data Input
+            </div>
+            <textarea id="json-input" placeholder="Paste your JSON data here or click 'Load Sample Data' to see an example..."></textarea>
+            
+            <div class="sample-data">
+                <h4><i class="fas fa-info-circle"></i> Expected JSON Format</h4>
+                <pre>{
+  "title": "Project Name",
+  "tasks": [
+    {
+      "name": "Task Name",
+      "start_date": "2024-01-01",
+      "end_date": "2024-01-15"
+    }
+  ]
+}</pre>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button class="btn btn-primary" onclick="generateChart()">
+                <i class="fas fa-chart-gantt"></i>
+                Generate Chart
+            </button>
+            <button class="btn btn-secondary" onclick="loadSampleData()">
+                <i class="fas fa-file-alt"></i>
+                Load Sample Data
+            </button>
+            <button class="btn btn-secondary" onclick="exportChart()" id="export-btn" style="display: none;">
+                <i class="fas fa-download"></i>
+                Export Chart
+            </button>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" id="error-message">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span id="error-text"></span>
+        </div>
+
+        <!-- Chart Container -->
+        <div class="chart-container" id="chart-container">
+            <div class="chart-header">
+                <h3 class="chart-title">
+                    <i class="fas fa-chart-gantt"></i>
+                    <span id="chart-project-title">Project Timeline</span>
+                </h3>
+                <div class="chart-info" id="chart-info"></div>
+            </div>
+            <div id="gantt-chart">
+                <div class="mobile-scroll-hint" id="scroll-hint">
+                    <i class="fas fa-arrows-alt-h"></i> Scroll →
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Highlight -->
+        <div class="feature-highlight">
+            <h4>✨ Dynamic Visualization</h4>
+            <p>Transform your project data into interactive Gantt charts with automatic timeline calculation and responsive design.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
