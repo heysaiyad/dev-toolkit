@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript AST Explorer - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta
+      name="description"
+      content="Parse JavaScript code and explore its Abstract Syntax Tree (AST) in an interactive browser."
+    />
+  </head>
+
+  <body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+      <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+        <div class="shape shape-5"></div>
+      </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+      <i class="fas fa-arrow-left"></i>
+      Back to Tools
+    </a>
+
+    <div class="tool-container">
+      <!-- Header -->
+      <div class="tool-header">
+        <h1 class="tool-title">JavaScript AST Explorer</h1>
+        <p class="tool-subtitle">
+          Parse JavaScript code and explore its Abstract Syntax Tree (AST).<br />Paste
+          your JavaScript code to see its structure in an interactive tree
+          format.
+        </p>
+      </div>
+
+      <!-- Input Section -->
+      <div class="ast-input-section">
+        <div class="ast-group">
+          <label class="ast-label"
+            ><i class="fas fa-code"></i> JavaScript Code</label
+          >
+          <textarea
+            id="code-input"
+            class="ast-textarea"
+            rows="8"
+            placeholder="// Paste your JavaScript code here
+function greet(name) {
+    return `Hello, ${name}!`;
+}
+
+const message = greet('World');
+console.log(message);"
+          ></textarea>
+        </div>
+        <div class="ast-options">
+          <div class="ast-option-group">
+            <label class="ast-option-label"
+              ><i class="fas fa-cog"></i> Parser Options</label
+            >
+            <div class="ast-options-row">
+              <label class="ast-option">
+                <input type="checkbox" id="tolerant-parsing" checked />
+                <span>Tolerant Parsing</span>
+              </label>
+              <label class="ast-option">
+                <input type="checkbox" id="include-comments" checked />
+                <span>Include Comments</span>
+              </label>
+              <label class="ast-option">
+                <input type="checkbox" id="include-locations" />
+                <span>Include Locations</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Parse Button -->
+      <div class="ast-convert">
+        <button class="ast-btn-parse" id="parse-btn">
+          <i class="fas fa-tree"></i>
+          Parse AST
+        </button>
+      </div>
+
+      <!-- Output Section -->
+      <div class="ast-output">
+        <div class="ast-output-header">
+          <div class="ast-output-label">
+            <i class="fas fa-sitemap"></i>
+            Abstract Syntax Tree
+          </div>
+          <div class="ast-output-actions">
+            <button class="ast-btn-action" id="expand-all-btn">
+              <i class="fas fa-expand-arrows-alt"></i>
+              Expand All
+            </button>
+            <button class="ast-btn-action" id="collapse-all-btn">
+              <i class="fas fa-compress-arrows-alt"></i>
+              Collapse All
+            </button>
+            <button class="ast-btn-copy" id="copy-ast-btn" disabled>
+              <i class="fas fa-copy"></i>
+              Copy JSON
+            </button>
+          </div>
+        </div>
+        <div id="ast-output" class="ast-result">
+          <div class="ast-placeholder">
+            <i class="fas fa-code-branch"></i>
+            <p>
+              Enter JavaScript code above and click "Parse AST" to see the tree
+              structure.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Esprima Parser Library -->
+    <script
+      src="https://unpkg.com/esprima@~4.0/dist/esprima.js"
+      onerror="this.onerror=null; this.src='https://cdnjs.cloudflare.com/ajax/libs/esprima/4.0.1/esprima.min.js'"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>
