@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Flexbox Playground - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Tool-specific styles go here */
+        .tool-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .tool-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .tool-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        .back-button:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: row;
+        }
+
+        input[type='range'] {
+            accent-color: var(--accent-color);
+        }
+
+        .playground-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            grid-column-gap: 5px;
+            grid-row-gap: 5px;
+        }
+
+        .playground-preview {
+            grid-area: 1 / 1 / 4 / 2;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+
+        .playground-preview-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            margin: 1rem;
+        }
+
+        .flex-container {
+            position: absolute;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: stretch;
+            gap: 10px;
+            border: 2px dashed var(--text-secondary);
+            padding: 1rem;
+            max-height: 90%;
+            max-width: 96%;
+            min-width: 96%;
+            margin: 2%;
+        }
+
+        .flex-item {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            flex: 1 1 auto;
+        }
+
+        .playground-controls {
+            grid-area: 1 / 2 / 3 / 3;
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .playground-controls label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            width: 40%;
+        }
+        .playground-controls select,
+        .playground-controls input[type="range"] {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            width: 60%;
+        }
+
+        .playground-controls button {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .playground-controls button:hover {
+            background: var(--primary-color-dark);
+        }
+
+        .playground-css-result {
+            grid-area: 3 / 2 / 4 / 3;
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+        }
+
+        .playground-css-result pre {
+            background: var(--bg-primary);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            overflow-x: auto;
+        }
+        .playground-css-result code {
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--text-primary);
+        }
+
+        .btn-control {
+            display: inline;
+            width: 32px;
+            height: 32px;
+            text-align: center;
+            padding: 0;
+            margin: 0 5px;
+            border-color: var(--border-color);
+        }
+
+        .clicked {
+            transform: scale(0.95);
+            transition: transform 0.1s;
+        }
+        /* Add your custom styles here */
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1 class="tool-title">CSS Flexbox Playground</h1>
+            <p class="tool-subtitle">
+                Learn CSS Flexbox by experimenting with live examples.
+                <br>
+                Change alignment, direction, and spacing to instantly see how Flexbox layouts adapt.
+            </p>
+        </div>
+
+        <!-- Your tool content goes here -->
+        <div class="playground-container">
+            <div class="playground-preview">
+                <div class="playground-preview-controls">
+                    <h3>Preview</h3>
+                    <div>
+                        <button class="btn btn-secondary btn-control" id="remove-item-btn" aria-label="Remove item">
+                            -
+                        </button>
+                        <span id="nb-elements-result">5</span>
+                        <button class="btn btn-secondary btn-control" id="add-item-btn" aria-label="Add item">
+                            +
+                        </button>
+                    </div>
+                </div>
+                <div class="flex-container" id="flex-container">
+                    <!-- Flex items will be dynamically added here -->
+                </div>
+            </div>
+            <div class="playground-controls">
+                <h2>Flexbox Controls</h2>
+
+                <div class="input-group">
+                    <label for="fix-width-block">Sizing block ?</label>
+                    <input type="checkbox" id="check-sizing-blocks" aria-label="Toggle sizing blocks">
+                    <input type="range" id="size-blocks-range" min="30" max="150"  style="width: 50%; margin: 0 auto;" disabled aria-label="Size of blocks (px)">
+                </div>
+
+                <div class="input-group">
+                    <label for="flex-direction">Flex Direction:</label>
+                    <select id="flex-direction" aria-label="Select flex direction">
+                        <option value="row">Row</option>
+                        <option value="row-reverse">Row Reverse</option>
+                        <option value="column">Column</option>
+                        <option value="column-reverse">Column Reverse</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="flex-wrap">Flex Wrap:</label>
+                    <select id="flex-wrap" aria-label="Select flex wrap">
+                        <option value="nowrap">No Wrap</option>
+                        <option value="wrap">Wrap</option>
+                        <option value="wrap-reverse">Wrap Reverse</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="justify-content">Justify Content:</label>
+                    <select id="justify-content" aria-label="Select justify content">
+                        <option value="flex-start">Flex Start</option>
+                        <option value="flex-end">Flex End</option>
+                        <option value="center">Center</option>
+                        <option value="space-between">Space Between</option>
+                        <option value="space-around">Space Around</option>
+                        <option value="space-evenly">Space Evenly</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="align-items">Align Items:</label>
+                    <select id="align-items" aria-label="Select align items">
+                        <option value="stretch">Stretch</option>
+                        <option value="flex-start">Flex Start</option>
+                        <option value="flex-end">Flex End</option>
+                        <option value="center">Center</option>
+                        <option value="baseline">Baseline</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="align-content">Align Content:</label>
+                    <select id="align-content" aria-label="Select align content">
+                        <option value="stretch">Stretch</option>
+                        <option value="flex-start">Flex Start</option>
+                        <option value="flex-end">Flex End</option>
+                        <option value="center">Center</option>
+                        <option value="space-between">Space Between</option>
+                        <option value="space-around">Space Around</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="gap">Gap (px):</label>
+                    <input type="range" id="gap" value="10" min="0" max="100" aria-label="Gap size">
+                </div>
+
+                <button id="reset-btn">Reset to Default</button>
+            </div>
+            <div class="playground-css-result">
+                <h2>Generated CSS</h2>
+                <div style="position: relative;">
+                    <a href="javascript:void(0)" id="btn-css-copy" title="Copy to clipboard" style="position: absolute; top: 1rem; right: 1rem; color: var(--text-primary);">
+                        <i class="fa fa-copy"></i>
+                    </a>
+                    <pre><code id="css-code"><!-- Auto generated --></code></pre>
+                </div>
+            </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
