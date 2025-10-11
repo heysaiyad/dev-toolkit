@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meme Generator - DevToolkit</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .tool-container {
+        max-width: 1500px;
+        margin: 0 auto;
+        padding: 2rem 4rem;
+    }
+
+    .tool-header {
+        margin-bottom: 2.5rem;
+        text-align: center;
+        animation: fadeInDown 1s ease;
+    }
+
+    .tool-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 700;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.75rem;
+    }
+
+    .tool-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+    }
+
+    .upload-section {
+      background: var(--bg-secondary);
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .upload-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gradient-primary);
+    }
+
+    .upload-section:hover {
+      border-color: var(--primary-color);
+      background: var(--bg-tertiary);
+      transform: translateY(-2px);
+    }
+
+    .upload-section.drag-over {
+      border-color: var(--accent-color);
+      background: var(--bg-tertiary);
+      border-style: solid;
+    }
+
+    .select-files-btn {
+      padding: 0.7rem 1.5rem;
+      border: none;
+      background: var(--primary-color);
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background 0.3s;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-top: 2rem;
+    }
+
+    .select-files-btn:hover {
+      background: #ff4d2e;
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    .meme-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .meme-input {
+      padding: 0.8rem;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+    }
+
+    .generate-btn, .download-btn {
+      padding: 0.8rem;
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .generate-btn:hover, .download-btn:hover {
+      background: #ff5722;
+    }
+
+    .meme-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .meme-title i {
+      color: var(--primary-color);
+    }
+
+    canvas {
+      margin-top: 2rem;
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .back-button {
+      top: 1rem;
+      left: 1rem;
+      padding: 0.5rem 1rem;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(20px);
+    }
+
+    .back-button:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(
+          circle at 10% 20%,
+          rgba(255, 99, 71, 0.15) 0%,
+          transparent 40%
+        ),
+        radial-gradient(
+          circle at 90% 10%,
+          rgba(255, 140, 0, 0.1) 0%,
+          transparent 40%
+        ),
+        radial-gradient(
+          circle at 20% 80%,
+          rgba(255, 165, 0, 0.12) 0%,
+          transparent 50%
+        ),
+        linear-gradient(135deg, #0d1117 0%, #161b22 40%, #21262d 100%);
+      animation: backgroundShift 20s ease-in-out infinite;
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="animated-bg"></div>
+
+  <!-- Back Button -->
+  <a href="../../index.html" class="back-button">
+    <i class="fas fa-arrow-left"></i>
+    Back to Tools
+  </a>
+
+  <div class="tool-container">
+    <div class="tool-header">
+        <h1 class="tool-title">Meme Generator</h1>
+        <p class="tool-subtitle">
+            Create custom forms with drag and drop interface. Get clean HTML code instantly.
+        </p>
+    </div>
+
+    <div class="upload-section" onclick="document.getElementById('fileInput').click()">
+      <i class="fas fa-cloud-upload-alt upload-icon" style="font-size: 2rem;"></i>
+      <div class="upload-text">Drop your files here</div>
+      <div class="upload-subtext">or click to browse</div>
+      <button class="select-files-btn"><i class="fas fa-folder-open"></i> Select File</button>
+      <input type="file" id="fileInput" accept="image/*" />
+    </div>
+
+    <canvas id="memeCanvas"></canvas>
+
+    <div class="meme-controls">
+      <input type="text" id="topText" placeholder="Top text" class="meme-input">
+      <input type="text" id="bottomText" placeholder="Bottom text" class="meme-input">
+      <button id="generateMemeBtn" class="generate-btn">
+        <i class="fas fa-wand-magic-sparkles"></i> Generate Meme
+      </button>
+      <button id="downloadMemeBtn" class="download-btn" style="display:none;">
+        <i class="fas fa-download"></i> Download Meme
+      </button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
