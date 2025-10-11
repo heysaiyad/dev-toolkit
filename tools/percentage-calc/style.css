@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+body {
+  margin: 0;
+  background-color: #0f0f0f;
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  width: 90%;
+  max-width: 600px;
+  background: #1a1a1a;
+  border: 2px solid #ff6600;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 0 30px #ff660044;
+}
+
+h1 {
+  text-align: center;
+  color: #ff6600;
+  text-shadow: 0 0 15px #ff660099;
+}
+
+.calc-box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+select, input {
+  width: 100%;
+  background: #111;
+  border: 2px solid #ff6600;
+  border-radius: 10px;
+  color: #fff;
+  padding: 10px;
+  font-size: 16px;
+  outline: none;
+  transition: box-shadow 0.3s ease;
+}
+
+select:focus, input:focus {
+  box-shadow: 0 0 15px #ff6600;
+}
+
+button {
+  background: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #ff8533;
+  box-shadow: 0 0 20px #ff660099;
+}
+
+.result-box {
+  background: #222;
+  border-radius: 12px;
+  padding: 15px;
+  border: 1px solid #ff6600;
+  text-align: center;
+}
+
+.result-box p {
+  font-size: 18px;
+  margin: 8px 0;
+}
+
+strong {
+  color: #ff6600;
+}

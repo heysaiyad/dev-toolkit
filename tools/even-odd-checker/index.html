@@ -3,141 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Even Odd Checker - DevToolkit</title>
-    <link rel="stylesheet" href="../../style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #0a0f1e 0%, #1a1f2e 100%);
-            color: var(--text-primary);
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
-        }
+    <title>Even or Odd Checker | DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style> 
+        /* Inherit theme variables from the main project */
+:root {
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --text-primary: #f0f6fc;
+    --text-secondary: #8b949e;
+    --error-color: #da3633;
+    --success-color: #238636;
+    --info-color: #4a90e2;
+    --primary-color: #ff6347;
+    --border-color: #30363d;
+    --gradient-primary: linear-gradient(135deg, #ff6347 0%, #ff8c00 100%);
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+    --font-primary: 'Poppins', system-ui, sans-serif;
+}
 
-        /* Animated Background Styles */
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            background: linear-gradient(45deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-        }
 
-        /* Tool-specific styles */
-        .tool-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
+/* Base styles */
+body {
+    font-family: var(--font-primary);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 20px;
+}
 
-        .tool-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
+.back-button {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
 
-        .tool-title {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
-        }
+.back-button:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
 
-        .input-section {
-            background: var(--bg-secondary);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
+/* Main container styles */
+.tool-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+}
 
-        .input-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--gradient-primary);
-        }
+.tool-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+}
 
-        #numberInput {
-            width: 100%;
-            padding: 1rem;
-            background: var(--bg-primary);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-md);
-            color: var(--text-primary);
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-        }
+.tool-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+}
 
-        #numberInput:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
-        }
+.tool-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
 
-        #result {
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--text-primary);
-            padding: 1rem;
-            border-radius: var(--radius-md);
-            margin-top: 1rem;
-            background: var(--bg-primary);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
+.checker-section {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+}
 
-        .result-even {
-            border-color: var(--success-color) !important;
-            background: rgba(40, 167, 69, 0.1) !important;
-        }
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
 
-        .result-odd {
-            border-color: var(--primary-color) !important;
-            background: rgba(255, 107, 53, 0.1) !important;
-        }
+input {
+    flex-grow: 1;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    min-width: 200px;
+}
 
-        .back-button {
-            position: fixed;
-            top: 2rem;
-            left: 2rem;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            text-decoration: none;
-            border-radius: var(--radius-md);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(20px);
-        }
+input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(255, 107, 53, 0.2);
+}
 
-        .back-button:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
+.btn {
+    padding: 1rem 2rem;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 99, 71, 0.3);
+}
+
+.result-container {
+    margin-top: 2rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.result-container.even {
+    border-left: 5px solid var(--success-color);
+}
+
+.result-container.odd {
+    border-left: 5px solid var(--info-color);
+}
+
+.result-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.result-container.even .result-icon { color: var(--success-color); }
+.result-container.odd .result-icon { color: var(--info-color); }
+
+.result-text {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+.result-container.even .result-text { color: var(--success-color); }
+.result-container.odd .result-text { color: var(--info-color); }
+
+.result-explanation {
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+}
+
+.error-message {
+    text-align: center;
+    font-size: 1rem;
+    color: var(--error-color);
+    margin-top: 1.5rem;
+    padding: 0.75rem;
+    background-color: rgba(218, 54, 51, 0.1);
+    border: 1px solid rgba(218, 54, 51, 0.3);
+    border-radius: var(--radius-md);
+    display: none; /* Hide by default */
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .tool-container { padding: 1rem; }
+    .back-button { top: 1rem; left: 1rem; }
+    .input-group { flex-direction: column; align-items: stretch; }
+    input { width: 100%; box-sizing: border-box; }
+}
+@media (max-width: 480px) {
+    .checker-section { padding: 1.5rem; }
+    .btn { width: 100%; justify-content: center; }
+}
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <header class="tool-header">
+            <h1 class="tool-title">Even or Odd Checker</h1>
+            <p class="tool-subtitle">A simple tool to check if a whole number is even or odd.</p>
+        </header>
+        
+<!-- Animated Background -->
     <div class="animated-bg">
         <div class="floating-shapes">
             <div class="shape shape-1"></div>
@@ -146,24 +233,24 @@
         </div>
     </div>
 
-    <!-- Back Button -->
-    <a href="../../index.html" class="back-button">
-        <i class="fas fa-arrow-left"></i>
-        Back to Tools
-    </a>
 
-    <div class="tool-container">
-        <div class="tool-header">
-            <h1 class="tool-title">Even or Odd Checker</h1>
-            <p class="tool-subtitle">
-                Quickly check if a number is even or odd with this simple tool.
-            </p>
-        </div>
+        <main class="checker-section">
+            <div class="input-group">
+                <input type="number" id="numberInput" placeholder="Enter a whole number..." autofocus>
+                <button id="checkBtn" class="btn">
+                Check Number
+                </button>
+            </div>
+            
+            <div id="resultContainer" class="result-container hidden">
+                <i id="resultIcon" class="fas result-icon"></i>
+                <p id="resultText" class="result-text"></p>
+                <p id="resultExplanation" class="result-explanation"></p>
+            </div>
 
-        <div class="input-section">
-            <input type="number" id="numberInput" placeholder="Enter a number" autofocus>
-            <p id="result"></p>
-        </div>
+            <div id="error" class="error-message">
+                </div>
+        </main>
     </div>
 
     <script src="script.js"></script>

@@ -1,3 +1,7 @@
+*, *::before, *::after {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
 /* CSS Reset and Global Styles */
 * {
     margin: 0;
@@ -15,7 +19,7 @@
     --warning-color: #d29922;
     --error-color: #da3633;
     
-    /* Open Source Theme */
+    /* Open Source Theme (Default Dark) */
     --bg-primary: #0d1117;
     --bg-secondary: #161b22;
     --bg-tertiary: #21262d;
@@ -54,6 +58,7 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     scroll-behavior: smooth;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* Advanced Animated Background */
@@ -71,6 +76,7 @@ body {
         radial-gradient(circle at 80% 60%, rgba(218, 165, 32, 0.08) 0%, transparent 40%),
         linear-gradient(135deg, #0d1117 0%, #161b22 40%, #21262d 100%);
     animation: backgroundShift 20s ease-in-out infinite;
+    transition: background 0.5s ease;
 }
 
 @keyframes backgroundShift {
@@ -275,6 +281,30 @@ body {
     color: white;
 }
 
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1.1rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.theme-toggle-btn:hover {
+    color: var(--primary-color);
+    background: rgba(255, 107, 53, 0.1);
+}
+
+/* Theme toggle removed */
+
 .mobile-menu-toggle {
     display: none;
     background: none;
@@ -329,6 +359,7 @@ body {
     gap: 1.5rem;
 }
 
+
 /* ============================================
    FIXED SIDEBAR NAVIGATION
    ============================================ */
@@ -343,7 +374,7 @@ body {
     backdrop-filter: blur(20px);
     border-left: 1px solid rgba(255, 255, 255, 0.1);
     z-index: 1100;
-    transition: right 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: right 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, border-color 0.3s ease;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -360,6 +391,7 @@ body {
     padding: 1.5rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(15, 15, 35, 0.8);
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .sidebar-header h3 {
@@ -441,6 +473,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: border-color 0.3s ease;
 }
 
 .sidebar-category i {
@@ -514,6 +547,7 @@ body {
     padding: 1.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(15, 15, 35, 0.5);
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .sidebar-contribute-btn {
@@ -900,6 +934,7 @@ body {
         rgba(21, 32, 43, 0.95) 100%);
     border-top: 1px solid rgba(255, 140, 0, 0.1);
     border-bottom: 1px solid rgba(255, 140, 0, 0.1);
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .contribution-content {
@@ -994,12 +1029,15 @@ body {
 
 /* GitHub Repository Card */
 .github-card {
-    background: rgba(13, 17, 23, 0.8);
-    border: 1px solid rgba(240, 246, 252, 0.1);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: 1.5rem;
     backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-md); /* Added a subtle shadow */
+    transition: background 0.3s ease, border-color 0.3s ease; /* For smooth theme switching */
 }
+
 
 .repo-header {
     display: flex;
@@ -1201,6 +1239,7 @@ body {
     max-height: 300px;
     overflow-y: auto;
     display: none;
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .search-suggestions.show {
@@ -2191,6 +2230,7 @@ body {
     background: var(--bg-primary);
     position: relative;
     overflow: hidden;
+    transition: background 0.3s ease;
 }
 
 .creator-section::before {
@@ -2202,6 +2242,7 @@ body {
     height: 100%;
     background: radial-gradient(circle at 30% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
     z-index: 0;
+    transition: background 0.3s ease;
 }
 
 .creator-content {
@@ -2341,6 +2382,7 @@ body {
     line-height: 1.8;
     position: relative;
     overflow: hidden;
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .code-animation::before {
@@ -2409,6 +2451,7 @@ body {
     background: var(--bg-primary);
     padding: 3rem 0 1rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .footer-content {
@@ -2451,6 +2494,7 @@ body {
     padding-top: 2rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     color: var(--text-muted);
+    transition: border-color 0.3s ease;
 }
 
 /* Animations */
@@ -2576,23 +2620,6 @@ body {
     overflow: hidden;
     transform-style: preserve-3d;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.tool-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(255, 107, 53, 0.05) 0%, rgba(0, 129, 180, 0.05) 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-.tool-card:hover::after {
-    opacity: 1;
 }
 
 .tool-card:hover {
@@ -2739,36 +2766,6 @@ body {
     -webkit-backdrop-filter: blur(20px);
 }
 
-.tool-card {
-    background: rgba(26, 26, 46, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.tool-card:hover {
-    background: rgba(26, 26, 46, 0.9);
-    border: 1px solid rgba(255, 107, 53, 0.3);
-}
-
-/* Enhanced Loading States */
-.loading-skeleton {
-    background: linear-gradient(90deg, 
-        rgba(255, 255, 255, 0.1) 25%, 
-        rgba(255, 255, 255, 0.2) 50%, 
-        rgba(255, 255, 255, 0.1) 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-    border-radius: var(--radius-md);
-}
-
-@keyframes shimmer {
-    0% {
-        background-position: 200% 0;
-    }
-    100% {
-        background-position: -200% 0;
-    }
-}
-
 /* Micro-interactions for all interactive elements */
 .btn,
 .filter-btn,
@@ -2799,51 +2796,6 @@ body {
 
 .floating {
     animation: float 3s ease-in-out infinite;
-}
-
-/* Subtle pulsing animation for attention */
-@keyframes pulse-subtle {
-    0%, 100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 0.8;
-        transform: scale(1.02);
-    }
-}
-
-.pulse-subtle {
-    animation: pulse-subtle 2s ease-in-out infinite;
-}
-
-/* Smooth scaling for interactive elements */
-.scale-on-hover {
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.scale-on-hover:hover {
-    transform: scale(1.05);
-}
-
-/* Gentle glow effect for focused elements */
-.glow-focus:focus,
-.glow-focus:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.3);
-    animation: gentleGlow 1s ease-out;
-}
-
-@keyframes gentleGlow {
-    0% {
-        box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.3);
-    }
-    50% {
-        box-shadow: 0 0 0 8px rgba(255, 107, 53, 0.1);
-    }
-    100% {
-        box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.3);
-    }
 }
 
 /* Staggered reveal animation for grid items */
@@ -3077,4 +3029,169 @@ body {
         font-size: 1rem;
         border-radius: 50%;
     }
+}
+
+/* ============================================
+   LIGHT MODE STYLES
+   ============================================ */
+body.light-mode {
+    /* Light Theme Color Palette */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f6f8fa;
+    --bg-tertiary: #f0f2f5;
+    --border-color: #d0d7de;
+    --text-primary: #1f2328;
+    --text-secondary: #57606a;
+    --text-muted: #6e7681;
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Light Mode Overrides --- */
+
+body.light-mode .animated-bg {
+    background: 
+       radial-gradient(circle at 10% 20%, rgba(255, 99, 71, 0.1) 0%, transparent 40%),
+       radial-gradient(circle at 90% 10%, rgba(255, 140, 0, 0.08) 0%, transparent 40%),
+       linear-gradient(135deg, #ffffff 0%, #f6f8fa 100%);
+}
+
+body.light-mode .shape {
+   background: linear-gradient(45deg, rgba(255, 107, 53, 0.1) 0%, rgba(0, 129, 180, 0.1) 50%, rgba(255, 140, 66, 0.1) 100%);
+   box-shadow: 0 0 50px rgba(255, 107, 53, 0.15);
+}
+
+body.light-mode .navbar,
+body.light-mode .navbar.enhanced {
+   background: rgba(255, 255, 255, 0.85);
+   border-bottom: 1px solid var(--border-color);
+   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+body.light-mode .nav-logo { color: var(--text-primary); }
+body.light-mode .nav-link,
+body.light-mode .sidebar-toggle,
+body.light-mode .mobile-menu-toggle,
+body.light-mode .theme-toggle-btn {
+    color: var(--text-secondary);
+}
+
+body.light-mode .github-link { border-color: var(--border-color); }
+body.light-mode .github-link:hover { color: white; }
+
+body.light-mode .github-badge,
+body.light-mode .contributors-badge {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+body.light-mode .theme-toggle-btn .fa-sun { display: block; }
+body.light-mode .theme-toggle-btn .fa-moon { display: none; }
+
+body.light-mode .btn-secondary {
+    color: var(--text-primary);
+}
+
+/* Sidebar Light */
+body.light-mode .tools-sidebar {
+    background: rgba(255, 255, 255, 0.95);
+    border-left: 1px solid var(--border-color);
+}
+body.light-mode .sidebar-header {
+    background: rgba(246, 248, 250, 0.8);
+    border-bottom: 1px solid var(--border-color);
+}
+body.light-mode .sidebar-close:hover { background: rgba(0, 0, 0, 0.05); }
+body.light-mode .sidebar-search-input {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+body.light-mode .sidebar-category { border-bottom-color: var(--border-color); }
+body.light-mode .sidebar-tool-link { color: var(--text-secondary); }
+body.light-mode .sidebar-tool-link:hover { background: rgba(255, 99, 71, 0.1); }
+body.light-mode .sidebar-tool-link i { color: var(--text-muted); }
+body.light-mode .sidebar-footer {
+    background: rgba(246, 248, 250, 0.5);
+    border-top: 1px solid var(--border-color);
+}
+
+/* Sections Light */
+body.light-mode .contribution-section {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+}
+body.light-mode .creator-section { background: #fff; }
+body.light-mode .creator-section::before {
+    background: radial-gradient(circle at 30% 50%, rgba(255, 99, 71, 0.05) 0%, transparent 50%);
+}
+body.light-mode .code-animation {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+}
+body.light-mode .footer {
+    background: var(--bg-secondary);
+    border-top-color: var(--border-color);
+}
+body.light-mode .footer-bottom { border-top-color: var(--border-color); }
+
+/* Tools & Search Light */
+body.light-mode .search-input {
+    background: #fff;
+    border: 2px solid var(--border-color);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+body.light-mode .search-input:focus {
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(255, 99, 71, 0.2), 0 4px 8px rgba(0,0,0,0.1);
+}
+body.light-mode .search-suggestions {
+    background: #fff;
+    border-color: var(--border-color);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+body.light-mode .suggestion-item:hover { background: #f6f8fa; }
+body.light-mode .filter-btn {
+    background: #fff;
+    border-color: var(--border-color);
+}
+body.light-mode .filter-btn:hover, body.light-mode .filter-btn.active {
+    color: white;
+}
+body.light-mode .tool-card {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+body.light-mode .tool-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1), 0 0 0 1px var(--primary-color);
+    background: #fff;
+}
+body.light-mode .tool-card::before,
+body.light-mode .tool-card::after {
+   display: none;
+}
+body.light-mode .tool-card:hover .tool-description { color: var(--text-secondary); }
+body.light-mode .tag {
+    background: rgba(255, 99, 71, 0.1);
+    color: #c93c22;
+    border: 1px solid transparent;
+    box-shadow: none;
+}
+body.light-mode .tool-card:hover .tag {
+    background: var(--primary-color);
+    color: white;
+}
+body.light-mode .tool-arrow {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+}
+body.light-mode .add-tool-card {
+    background: var(--bg-secondary);
+}
+body.light-mode .back-to-top {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    border-color: transparent;
 }

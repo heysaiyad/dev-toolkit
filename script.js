@@ -1,5 +1,6 @@
 // Modern Dev Toolkit JavaScript
 // Interactive elements and animations
+// Updated: 2024-12-19 - Added Credit Card Validator tool
 
 // Global error handling
 window.addEventListener('error', function (e) {
@@ -28,7 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
     initSmoothScrolling();
     initParallaxEffect();
     initAdvancedSearch();
-    initThemeSystem();
     initPerformanceMonitoring();
     initMobileMenu();
     initSidebar();
@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     initMicroAnimations();
     initSectionAnimations();
     initBackToTop();
+  // Theme system removed per user request
 
     // Hide loading screen after initialization
     setTimeout(hideLoadingScreen, 1500);
@@ -87,7 +88,8 @@ function hideLoadingScreen() {
     }, 800);
   }
 }
-
+// Dark Mode Toggle Functionality
+// Theme functions removed
 // Typing Effect Animation with performance optimization
 function initTypingEffect() {
   const typingText = document.querySelector(".typing-text");
@@ -251,6 +253,8 @@ function initScrollAnimations() {
 }
 
 // Navbar Scroll Effect
+// script.js
+
 function initNavbarScroll() {
   const navbar = document.querySelector(".navbar");
   let lastScrollTop = 0;
@@ -258,15 +262,14 @@ function initNavbarScroll() {
   window.addEventListener("scroll", () => {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
+    // ✅ FIXED: Toggle a class instead of setting inline styles
     if (scrollTop > 100) {
-      navbar.style.background = "rgba(15, 15, 35, 0.98)";
-      navbar.style.backdropFilter = "blur(30px)";
+      navbar.classList.add('scrolled');
     } else {
-      navbar.style.background = "rgba(15, 15, 35, 0.95)";
-      navbar.style.backdropFilter = "blur(20px)";
+      navbar.classList.remove('scrolled');
     }
 
-    // Hide navbar on scroll down, show on scroll up
+    // This part for hiding/showing the navbar is fine and can stay
     if (scrollTop > lastScrollTop && scrollTop > 100) {
       navbar.style.transform = "translateY(-100%)";
     } else {
@@ -276,7 +279,6 @@ function initNavbarScroll() {
     lastScrollTop = scrollTop;
   });
 }
-
 // Smooth Scrolling for Navigation Links
 function initSmoothScrolling() {
   const navLinks = document.querySelectorAll('a[href^="#"]');
@@ -658,6 +660,15 @@ function initAdvancedSearch() {
       url: "tools/random-number-generator/index.html",
     },
     {
+      name: "Morse Code Translator",
+      description: "Convert text to Morse code and Morse code back to text — supports letters, numbers, and punctuation.",
+      category: "text",
+      keywords: ["morse", "code", "translator", "text", "signal", "dot", "dash", "convert", "communication"],
+      icon: "fas fa-wave-square",
+      url: "tools/morse-code-translator/index.html",
+    },
+
+    {
       name: "Even Odd Checker",
       description:
         "A simple tool to check whether a number is even or odd. Perfect for quick mathematical verifications.",
@@ -785,6 +796,14 @@ function initAdvancedSearch() {
       keywords: ["text", "extraction", "pdf", "word", "image"],
       icon: "fas fa-file-alt",
       url: "tools/text-extractor/index.html",
+    },
+    {
+      name: "Credit Card Validator",
+      description: "Validate credit card numbers using the Luhn algorithm. Check if a card number is valid without storing any data - completely secure and private.",
+      category: "utility",
+      keywords: ["credit", "card", "validator", "validation", "luhn", "algorithm", "security", "payment", "check", "verify"],
+      icon: "fas fa-credit-card",
+      url: "tools/credit-card-validator/index.html",
     }
   ];
 
@@ -811,6 +830,14 @@ function initAdvancedSearch() {
 
   function handleSearch(query) {
     const results = fuzzySearch(query, toolsDatabase);
+    
+    // Debug logging
+    if (query.toLowerCase().includes('credit')) {
+      console.log('Search query:', query);
+      console.log('Search results:', results);
+      console.log('Credit Card Validator in results:', results.find(r => r.name === 'Credit Card Validator'));
+    }
+    
     updateToolDisplay(results, query);
 
     if (query.length > 0) {
@@ -966,9 +993,18 @@ function initAdvancedSearch() {
         (result) => result.name.toLowerCase() === toolName.toLowerCase()
       );
 
+      // Debug logging for Credit Card Validator
+      if (toolName === 'Credit Card Validator') {
+        console.log('Credit Card Validator card found:', card);
+        console.log('Query:', query);
+        console.log('Results:', results);
+        console.log('Is match:', isMatch);
+      }
+
       if (query.length === 0 || isMatch) {
         card.style.display = "flex";
         card.style.animation = "fadeInUp 0.5s ease-out";
+        visibleCount++;
       } else {
         card.style.display = "none";
         card.classList.add('hidden');

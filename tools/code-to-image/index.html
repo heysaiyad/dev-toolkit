@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code to Image - DevToolkit</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #f7931e;
+            --success-color: #10b981;
+            --bg-primary: #0a0e27;
+            --bg-secondary: #151932;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --gradient-primary: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+            --font-primary: 'Poppins', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--bg-primary);
+            overflow: hidden;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--gradient-primary);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background: var(--gradient-primary);
+            top: 60%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            background: var(--gradient-primary);
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 10s;
+        }
+
+        .shape-4 {
+            width: 250px;
+            height: 250px;
+            background: var(--gradient-primary);
+            top: 40%;
+            right: 30%;
+            animation-delay: 7s;
+        }
+
+        .shape-5 {
+            width: 180px;
+            height: 180px;
+            background: var(--gradient-primary);
+            bottom: 10%;
+            right: 20%;
+            animation-delay: 3s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(30px, -30px) rotate(90deg);
+            }
+            50% {
+                transform: translate(-20px, 20px) rotate(180deg);
+            }
+            75% {
+                transform: translate(40px, 10px) rotate(270deg);
+            }
+        }
+
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .tool-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .tool-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        .back-button:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .input-section {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .input-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-primary);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .label-text {
+            color: var(--text-secondary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        select, input[type="text"], input[type="number"], input[type="color"] {
+            background: var(--bg-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        input[type="color"] {
+            height: 45px;
+            cursor: pointer;
+        }
+
+        textarea {
+            background: var(--bg-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            color: var(--text-primary);
+            font-family: var(--font-code);
+            font-size: 0.95rem;
+            min-height: 300px;
+            resize: vertical;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .preview-section {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .preview-label {
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .preview-container {
+            background: #1a1a2e;
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #code-canvas {
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            max-width: 100%;
+            height: auto;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 2rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: var(--font-primary);
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gradient-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .info-section {
+            margin-top: 2rem;
+        }
+
+        .info-card {
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .info-card i {
+            color: var(--primary-color);
+            font-size: 1.25rem;
+            margin-top: 0.25rem;
+        }
+
+        .info-card p {
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .tool-container {
+                padding: 1rem;
+            }
+
+            .input-section, .preview-section {
+                padding: 1.5rem;
+            }
+
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+   
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+   
+    <a href="#" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+      
+        <div class="tool-header">
+            <h1 class="tool-title">Code to Image</h1>
+            <p class="tool-subtitle">
+                Transform your code snippets into beautiful, shareable images. Perfect for social media, documentation, and presentations.
+            </p>
+        </div>
+
+     
+        <div class="input-section">
+            <div class="input-grid">
+                <div class="input-group">
+                    <label class="label-text">
+                        <i class="fas fa-code"></i>
+                        Language
+                    </label>
+                    <select id="language">
+                        <option value="javascript">JavaScript</option>
+                        <option value="python">Python</option>
+                        <option value="java">Java</option>
+                        <option value="cpp">C++</option>
+                        <option value="html">HTML</option>
+                        <option value="css">CSS</option>
+                        <option value="typescript">TypeScript</option>
+                        <option value="php">PHP</option>
+                        <option value="ruby">Ruby</option>
+                        <option value="go">Go</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label class="label-text">
+                        <i class="fas fa-palette"></i>
+                        Theme
+                    </label>
+                    <select id="theme">
+                        <option value="dracula">Dracula</option>
+                        <option value="monokai">Monokai</option>
+                        <option value="nord">Nord</option>
+                        <option value="github">GitHub Light</option>
+                        <option value="vscode">VS Code Dark</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label class="label-text">
+                        <i class="fas fa-fill-drip"></i>
+                        Background Color
+                    </label>
+                    <input type="color" id="bgColor" value="#282a36">
+                </div>
+
+                <div class="input-group">
+                    <label class="label-text">
+                        <i class="fas fa-text-height"></i>
+                        Font Size
+                    </label>
+                    <input type="number" id="fontSize" value="16" min="10" max="32">
+                </div>
+
+                <div class="input-group">
+                    <label class="label-text">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                        Padding
+                    </label>
+                    <input type="number" id="padding" value="40" min="10" max="100">
+                </div>
+
+                <div class="input-group">
+                    <label class="label-text">
+                        <i class="fas fa-border-style"></i>
+                        Border Radius
+                    </label>
+                    <input type="number" id="borderRadius" value="12" min="0" max="50">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label class="label-text">
+                    <i class="fas fa-keyboard"></i>
+                    Your Code
+                </label>
+                <textarea id="codeInput" placeholder="Paste your code here...">// Example JavaScript code
+function greet(name) {
+    return `Hello, ${name}!`;
+}
+
+const message = greet('World');
+console.log(message);</textarea>
+            </div>
+        </div>
+
+        
+        <div class="preview-section">
+            <div class="preview-label">
+                <i class="fas fa-eye"></i>
+                Preview
+            </div>
+            <div class="preview-container">
+                <canvas id="code-canvas"></canvas>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="generateBtn">
+                    <i class="fas fa-magic"></i>
+                    Generate Image
+                </button>
+                <button class="btn btn-secondary" id="downloadBtn">
+                    <i class="fas fa-download"></i>
+                    Download PNG
+                </button>
+                <button class="btn btn-secondary" id="copyBtn">
+                    <i class="fas fa-copy"></i>
+                    Copy to Clipboard
+                </button>
+            </div>
+        </div>
+
+        
+        <div class="info-section">
+            <div class="info-card">
+                <i class="fas fa-info-circle"></i>
+                <p>
+                    <strong>Tip:</strong> Customize your code image with different themes, colors, and padding. 
+                    Perfect for sharing on Twitter, GitHub, or in your technical documentation!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        const themes = {
+            dracula: {
+                bg: '#282a36',
+                text: '#f8f8f2',
+                keyword: '#ff79c6',
+                string: '#f1fa8c',
+                comment: '#6272a4',
+                function: '#50fa7b',
+                number: '#bd93f9'
+            },
+            monokai: {
+                bg: '#272822',
+                text: '#f8f8f2',
+                keyword: '#f92672',
+                string: '#e6db74',
+                comment: '#75715e',
+                function: '#a6e22e',
+                number: '#ae81ff'
+            },
+            nord: {
+                bg: '#2e3440',
+                text: '#d8dee9',
+                keyword: '#81a1c1',
+                string: '#a3be8c',
+                comment: '#616e88',
+                function: '#88c0d0',
+                number: '#b48ead'
+            },
+            github: {
+                bg: '#ffffff',
+                text: '#24292e',
+                keyword: '#d73a49',
+                string: '#032f62',
+                comment: '#6a737d',
+                function: '#6f42c1',
+                number: '#005cc5'
+            },
+            vscode: {
+                bg: '#1e1e1e',
+                text: '#d4d4d4',
+                keyword: '#569cd6',
+                string: '#ce9178',
+                comment: '#6a9955',
+                function: '#dcdcaa',
+                number: '#b5cea8'
+            }
+        };
+
+        const canvas = document.getElementById('code-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function generateImage() {
+            const code = document.getElementById('codeInput').value;
+            const theme = themes[document.getElementById('theme').value];
+            const bgColor = document.getElementById('bgColor').value;
+            const fontSize = parseInt(document.getElementById('fontSize').value);
+            const padding = parseInt(document.getElementById('padding').value);
+            const borderRadius = parseInt(document.getElementById('borderRadius').value);
+
+           
+            ctx.font = `${fontSize}px 'Fira Code', monospace`;
+            const lines = code.split('\n');
+            const lineHeight = fontSize * 1.5;
+            
+         
+            let maxWidth = 0;
+            lines.forEach(line => {
+                const width = ctx.measureText(line).width;
+                if (width > maxWidth) maxWidth = width;
+            });
+
+            canvas.width = maxWidth + (padding * 2);
+            canvas.height = (lines.length * lineHeight) + (padding * 2);
+
+            
+            ctx.fillStyle = bgColor;
+            roundRect(ctx, 0, 0, canvas.width, canvas.height, borderRadius);
+            ctx.fill();
+
+            
+            ctx.font = `${fontSize}px 'Fira Code', monospace`;
+            ctx.textBaseline = 'top';
+
+            lines.forEach((line, index) => {
+                const y = padding + (index * lineHeight);
+                highlightSyntax(line, padding, y, theme);
+            });
+        }
+
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+
+        function highlightSyntax(line, x, y, theme) {
+            
+            const keywords = /\b(function|const|let|var|return|if|else|for|while|class|import|export|from|async|await|try|catch|def|print)\b/g;
+            const strings = /(["'`])(?:(?=(\\?))\2.)*?\1/g;
+            const comments = /(\/\/.*$|\/\*[\s\S]*?\*\/|#.*$)/g;
+            const numbers = /\b\d+\.?\d*\b/g;
+            const functions = /\b([a-zA-Z_]\w*)\s*\(/g;
+
+            let lastIndex = 0;
+            const tokens = [];
+
+            
+            let match;
+            
+           
+            while ((match = comments.exec(line)) !== null) {
+                tokens.push({ start: match.index, end: match.index + match[0].length, type: 'comment', text: match[0] });
+            }
+
+         
+            while ((match = strings.exec(line)) !== null) {
+                tokens.push({ start: match.index, end: match.index + match[0].length, type: 'string', text: match[0] });
+            }
+
+          // Keywords
+            while ((match = keywords.exec(line)) !== null) {
+                tokens.push({ start: match.index, end: match.index + match[0].length, type: 'keyword', text: match[0] });
+            }
+
+         
+            while ((match = numbers.exec(line)) !== null) {
+                tokens.push({ start: match.index, end: match.index + match[0].length, type: 'number', text: match[0] });
+            }
+
+        
+            while ((match = functions.exec(line)) !== null) {
+                tokens.push({ start: match.index, end: match.index + match[1].length, type: 'function', text: match[1] });
+            }
+
+            
+            tokens.sort((a, b) => a.start - b.start);
+
+           
+            let currentX = x;
+            lastIndex = 0;
+
+            tokens.forEach(token => {
+                
+                if (token.start > lastIndex) {
+                    const beforeText = line.substring(lastIndex, token.start);
+                    ctx.fillStyle = theme.text;
+                    ctx.fillText(beforeText, currentX, y);
+                    currentX += ctx.measureText(beforeText).width;
+                }
+
+               
+                ctx.fillStyle = theme[token.type] || theme.text;
+                ctx.fillText(token.text, currentX, y);
+                currentX += ctx.measureText(token.text).width;
+
+                lastIndex = token.end;
+            });
+
+           
+            if (lastIndex < line.length) {
+                const remainingText = line.substring(lastIndex);
+                ctx.fillStyle = theme.text;
+                ctx.fillText(remainingText, currentX, y);
+            }
+        }
+
+       
+        document.getElementById('generateBtn').addEventListener('click', generateImage);
+
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'code-snippet.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+
+        document.getElementById('copyBtn').addEventListener('click', async () => {
+            try {
+                canvas.toBlob(async (blob) => {
+                    await navigator.clipboard.write([
+                        new ClipboardItem({ 'image/png': blob })
+                    ]);
+                    
+                    const btn = document.getElementById('copyBtn');
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    btn.style.background = 'var(--success-color)';
+                    btn.style.borderColor = 'var(--success-color)';
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.background = '';
+                        btn.style.borderColor = '';
+                    }, 2000);
+                });
+            } catch (err) {
+                alert('Failed to copy image to clipboard. Please use the download button instead.');
+            }
+        });
+
+      
+        document.getElementById('codeInput').addEventListener('input', generateImage);
+        document.getElementById('language').addEventListener('change', generateImage);
+        document.getElementById('theme').addEventListener('change', generateImage);
+        document.getElementById('bgColor').addEventListener('change', generateImage);
+        document.getElementById('fontSize').addEventListener('change', generateImage);
+        document.getElementById('padding').addEventListener('change', generateImage);
+        document.getElementById('borderRadius').addEventListener('change', generateImage);
+
+      
+        generateImage();
+    </script>
+</body>
+</html>

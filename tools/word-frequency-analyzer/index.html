@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Word Frequency Analyzer - DevToolkit</title>
+  <link rel="stylesheet" href="../../style.css">
+  <style>
+    .wfa-container { max-width: 900px; margin: 4rem auto; padding: 2rem; }
+    .wfa-controls { display:flex; gap:1rem; align-items:center; margin-bottom:1rem; }
+    .wfa-controls input, .wfa-controls select { padding:0.6rem 0.8rem; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-secondary); color:var(--text-primary); }
+    .wfa-textarea { width:100%; min-height:220px; padding:1rem; border-radius:12px; border:1px solid var(--border-color); background:var(--bg-secondary); color:var(--text-primary); }
+    .wfa-results { margin-top:1rem; display:flex; gap:1rem; flex-wrap:wrap; }
+    .wfa-card { background:linear-gradient(145deg,var(--bg-secondary),var(--bg-tertiary)); border:1px solid var(--border-color); padding:1rem; border-radius:12px; flex:1 1 260px; }
+    .wfa-list { max-height:360px; overflow:auto; }
+    .wfa-row { display:flex; justify-content:space-between; padding:0.35rem 0.5rem; border-bottom:1px dashed rgba(255,255,255,0.03); }
+    .wfa-actions { display:flex; gap:0.5rem; }
+    .small-btn { padding:0.4rem 0.6rem; border-radius:8px; background:var(--gradient-primary); color:#fff; border:none; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <main class="wfa-container">
+    <h1 class="section-title">Word Frequency Analyzer</h1>
+    <p class="section-subtitle">Paste text below and see the most common words. Useful for content analysis, SEO, and spotting repetition.</p>
+
+    <div class="wfa-controls">
+      <input id="minLength" type="number" min="1" value="2" title="Minimum word length" />
+      <select id="stopwordMode">
+        <option value="none">No stopword filter</option>
+        <option value="basic" selected>Remove basic stopwords</option>
+      </select>
+      <input id="topN" type="number" min="1" value="20" style="width:90px;" />
+      <button id="analyzeBtn" class="small-btn">Analyze</button>
+      <div style="margin-left:auto;" class="wfa-actions">
+        <button id="copyBtn" class="small-btn">Copy CSV</button>
+        <button id="clearBtn" class="small-btn">Clear</button>
+      </div>
+    </div>
+
+    <textarea id="inputText" class="wfa-textarea" placeholder="Paste or type text here..."></textarea>
+
+    <div class="wfa-results">
+      <div class="wfa-card">
+        <h3>Top Words</h3>
+        <div id="results" class="wfa-list"></div>
+      </div>
+      <div class="wfa-card">
+        <h3>Summary</h3>
+        <div id="summary">
+          <p>Total words: <span id="totalWords">0</span></p>
+          <p>Unique words: <span id="uniqueWords">0</span></p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

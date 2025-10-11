@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Morse Translator - DevToolkit</title>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #081224;
+      --surface: #0f2431;
+      --muted: #9aa8b3;
+      --accent: #ff6b35;
+      --radius: 12px;
+      --glass: rgba(255,255,255,0.03);
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #06121b 0%, #07202b 100%);
+      color: #e6eef3;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .tool {
+      width: 100%;
+      max-width: 900px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+    }
+
+    .header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+    .title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--accent), #ff8b5d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .subtitle { color: var(--muted); font-size: 0.95rem; margin-top: 4px; }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin: 18px 0;
+      flex-wrap: wrap;
+    }
+
+    .seg {
+      display: inline-flex;
+      border-radius: 999px;
+      background: var(--glass);
+      padding: 6px;
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    .seg button {
+      background: transparent;
+      border: 0;
+      color: var(--muted);
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .seg button.active {
+      background: linear-gradient(90deg, var(--accent), #ff8b5d);
+      color: white;
+      box-shadow: 0 6px 18px rgba(255,107,53,0.12);
+    }
+
+    label.switch {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      padding: 14px;
+      border-radius: 12px;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.03);
+      color: inherit;
+      resize: vertical;
+      font-size: 0.98rem;
+    }
+
+    .panel-footer {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: white;
+      border: 0;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.06);
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .small { padding: 8px 12px; border-radius: 8px; font-weight: 600; }
+
+    .info {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tag {
+      background: rgba(255,255,255,0.03);
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width:820px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .morse-output {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Roboto Mono, monospace;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="tool" role="main" aria-labelledby="tool-title">
+    <div class="header">
+      <div>
+        <div id="tool-title" class="title">Morse Code Translator</div>
+        <div class="subtitle">Convert text ↔ Morse code. Supports letters, numbers and common punctuation.</div>
+      </div>
+    </div>
+
+    <div class="controls" aria-hidden="false">
+      <div class="seg" role="tablist" aria-label="Direction">
+        <button id="btnTextToMorse" class="active" aria-pressed="true">Text → Morse</button>
+        <button id="btnMorseToText" aria-pressed="false">Morse → Text</button>
+      </div>
+
+      <label class="switch" title="Enable live translation">
+        <input type="checkbox" id="liveToggle" />
+        <span style="color:var(--muted)">Live translate</span>
+      </label>
+
+      <div style="margin-left:auto" class="tags">
+        <span class="tag"><i class="fas fa-dice"></i> Utility</span>
+        <span class="tag"><i class="fas fa-paperclip"></i> Small</span>
+      </div>
+    </div>
+
+    <div class="grid" aria-live="polite">
+      <!-- Input -->
+      <div>
+        <label for="inputText" style="display:block;margin-bottom:8px;color:var(--muted);font-weight:600">
+          Input
+        </label>
+        <textarea id="inputText" placeholder="Type text or Morse code here..."></textarea>
+
+        <div class="panel-footer">
+          <div style="display:flex;gap:8px">
+            <button id="clearInput" class="btn secondary small"><i class="fas fa-eraser"></i> Clear</button>
+            <button id="pasteBtn" class="btn secondary small"><i class="fas fa-clipboard"></i> Paste</button>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button id="convertBtn" class="btn small"><i class="fas fa-arrow-right"></i> Convert</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Output -->
+      <div>
+        <label for="outputText" style="display:block;margin-bottom:8px;color:var(--muted);font-weight:600">
+          Output
+        </label>
+        <textarea id="outputText" readonly class="morse-output" placeholder="Result appears here..."></textarea>
+
+        <div class="panel-footer">
+          <div style="display:flex;gap:8px">
+            <button id="copyBtn" class="btn small"><i class="fas fa-copy"></i> Copy</button>
+            <button id="downloadBtn" class="btn secondary small"><i class="fas fa-download"></i> Download</button>
+          </div>
+          <div style="color:var(--muted);font-size:0.9rem">
+            Unknown characters are shown as <strong>?</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info">
+      Usage tips: Letters are separated by <code>space</code>, words by <code>/</code> for Morse input (e.g. <code>.... . .-.. .-.. --- / .-- --- .-. .-.. -..</code>). For text→morse, output uses a single space between letters and <code>/</code> between words.
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -197,29 +197,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Real-time processing
     textInput.addEventListener('input', debouncedTrim);
     
-    // Option changes trigger re-processing
-    trimLinesCheckbox.addEventListener('change', () => {
-        if (textInput.value.trim() !== '') {
-            trimText();
-        }
-    });
-    
-    normalizeSpacesCheckbox.addEventListener('change', () => {
-        if (textInput.value.trim() !== '') {
-            trimText();
-        }
-    });
-    
-    trimEachLineCheckbox.addEventListener('change', () => {
-        if (textInput.value.trim() !== '') {
-            trimText();
-        }
-    });
-    
-    removeEmptyLinesCheckbox.addEventListener('change', () => {
-        if (textInput.value.trim() !== '') {
-            trimText();
-        }
+    // Option changes trigger re-processing.
+    // Use a single listener for all checkboxes for cleaner code.
+    const optionCheckboxes = [
+        trimLinesCheckbox,
+        normalizeSpacesCheckbox,
+        trimEachLineCheckbox,
+        removeEmptyLinesCheckbox
+    ];
+    optionCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', trimText);
     });
 
     // Keyboard shortcuts
@@ -281,52 +268,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial stats update
     updateStats(0, 0, 0);
 });
-
-// Add CSS for enhanced interactions
-const enhancedStyle = document.createElement('style');
-enhancedStyle.textContent = `
-    .btn {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .btn::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        transition: all 0.5s ease;
-    }
-
-    .btn:active::before {
-        width: 300px;
-        height: 300px;
-    }
-
-    .success {
-        animation: successPulse 0.3s ease;
-    }
-
-    /* Tooltip styles */
-    .btn[title]:hover::after {
-        content: attr(title);
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        background: var(--bg-dark);
-        color: var(--text-primary);
-        padding: 0.5rem 0.75rem;
-        border-radius: var(--radius-sm);
-        font-size: 0.8rem;
-        white-space: nowrap;
-        z-index: 1000;
-        margin-bottom: 0.5rem;
-    }
-`;
-document.head.appendChild(enhancedStyle);

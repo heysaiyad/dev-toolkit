@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASCII ↔ Binary/Hex Converter - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .tool-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .tool-subtitle {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .converter-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 250px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            font-family: "Courier New", monospace;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(255, 107, 53, 0.2);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--gradient-primary);
+            color: #fff;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* New styles for separator options */
+        .options-section {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            display: none; /* Hidden by default */
+        }
+        .options-section.visible {
+            display: block; /* Shown via JS */
+        }
+        #separator-input {
+            width: 100px;
+            padding: 0.5rem;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-sm);
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .converter-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <div class="tool-header">
+            <h1 class="tool-title">ASCII ↔ Binary/Hex Converter</h1>
+            <p class="tool-subtitle">
+                Convert ASCII text to Binary or Hexadecimal and back again in real-time.
+                Useful for debugging encoding, byte operations, or just learning data representation.
+            </p>
+        </div>
+
+        <div class="mode-toggle" style="text-align:center; margin-bottom:1.5rem;">
+            <button class="mode-btn active" id="ascii-to-mode">
+                <i class="fas fa-arrow-right"></i> ASCII → Binary/Hex
+            </button>
+            <button class="mode-btn" id="to-ascii-mode">
+                <i class="fas fa-arrow-left"></i> Binary/Hex → ASCII
+            </button>
+        </div>
+        
+        <div class="options-section" id="separator-options">
+            <label for="separator-input"><strong>Separator:</strong></label>
+            <input id="separator-input" type="text" value=" " placeholder="Space">
+            <small>(Character separating your values, e.g., a space or comma. Leave empty for contiguous strings like 48656C6C6F)</small>
+        </div>
+
+        <div class="converter-section">
+            <div>
+                <label for="input-text"><strong>Input</strong></label>
+                <textarea id="input-text" placeholder="Enter your ASCII text here..."></textarea>
+            </div>
+            <div>
+                <label for="output-text"><strong>Output</strong></label>
+                <textarea id="output-text" readonly placeholder="Your converted result will appear here..."></textarea>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn btn-secondary" id="swap-btn"><i class="fas fa-sync-alt"></i> Swap</button>
+            <button class="btn btn-secondary" id="clear-btn"><i class="fas fa-eraser"></i> Clear</button>
+            <button class="btn btn-secondary" id="copy-btn"><i class="fas fa-copy"></i> Copy Output</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Shady Lab — Elegant Color Shade Generator</title>
+  <meta name="description" content="Generate elegant lighter or darker shades from any HEX color. Modern, responsive UI with smooth animations, copy, and export features." />
+  <!-- Load Inter font for modern typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="panel left-panel">
+      <h1>
+        Shady ~ Lab</h1>
+      <p class="lead">A platform which craft elegant color palettes by generating lighter or darker shades from any HEX color. This baddie is expert in this with "PRO" JS code.</p>
+
+      <div class="form-group">
+        <div class="form-row">
+          <input id="colorPicker" class="input" type="color" value="#7c3aed" aria-label="Color picker">
+          <input id="hexInput" class="input" type="text" maxlength="7" value="#7c3aed" placeholder="#HEX" aria-label="HEX input">
+        </div>
+
+        <div class="form-row">
+          <input id="percentInput" class="input" type="number" min="1" max="100" value="20" placeholder="Percentage" aria-label="Percentage input">
+          <select id="modeSelect" class="select" aria-label="Shade mode">
+            <option value="lighten">Lighten</option>
+            <option value="darken">Darken</option>
+          </select>
+          <button id="generateBtn" class="btn">Generate Shades</button>
+        </div>
+
+        <div class="form-row">
+          <button id="copyCssBtn" class="btn secondary">Copy CSS</button>
+          <button id="resetBtn" class="btn secondary">Reset</button>
+        </div>
+      </div>
+
+      <div class="preview-card">
+        <div id="swatchLarge" class="swatch-large" style="background: #7c3aed;">
+          <div class="meta">
+            <div>
+              <div class="hex" id="bigHex">#7C3AED</div>
+              <div class="sub" id="bigRgb">rgb(124, 58, 237)</div>
+            </div>
+          </div>
+          <div class="label-group">
+            <div class="tiny">Base Color</div>
+            <div id="luminance" class="tiny">L: 42%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div id="shadesGrid" class="shades-grid">
+        <!-- Shades will be dynamically inserted here -->
+      </div>
+
+      <div class="export-section">
+        <div class="tiny">Export as CSS Variables</div>
+        <div id="exportBox" class="export-box">/* Generate shades to see CSS variables here */</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">Copied to clipboard!</div>
+
+  <script src="script.js"></script>
+</body>
+</html>

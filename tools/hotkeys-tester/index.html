@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Hotkeys Tester - DevToolkit</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    .tool-container{max-width:900px;margin:0 auto;padding:2rem}
+    .tester-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:2rem;border-radius:var(--radius-lg);box-shadow:var(--shadow-md);position:relative;z-index:2;backdrop-filter:blur(6px)}
+
+    /* card top-right back button */
+    .card-back {
+      /* Inline button in controls row */
+      position: static;
+      background: rgba(255,255,255,0.02);
+      color: var(--text-primary);
+      border-radius: 10px;
+      padding: 8px 12px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,0.03);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      text-decoration: none;
+      font-weight:600;
+      margin-left: auto; /* push to right of controls */
+    }
+
+    .card-back:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm) }
+    .shortcut-display{font-family:'Courier New',monospace;font-size:2rem;text-align:center;padding:1.25rem;border-radius:12px;background:var(--bg-secondary);color:var(--text-primary);}
+    .recent-list{margin-top:1rem;display:grid;gap:8px}
+    .recent-item{background:var(--bg-primary);border:1px solid rgba(255,255,255,0.03);padding:0.75rem;border-radius:8px;color:var(--text-primary);display:flex;justify-content:space-between;align-items:center}
+    .controls{display:flex;gap:0.75rem;margin-top:1rem}
+  </style>
+</head>
+<body>
+  <main class="tool-container">
+    <header class="tool-header">
+      <h1 class="tool-title">Hotkeys Tester</h1>
+      <p class="tool-subtitle">Press any keyboard shortcut and it will be displayed here (e.g., Ctrl+Shift+K). Works across modifiers and key combos.</p>
+    </header>
+
+    <!-- Animated background (copied from site root) -->
+    <div class="animated-bg">
+      <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+        <div class="shape shape-5"></div>
+      </div>
+    </div>
+
+    <section class="tester-card">
+  <div class="shortcut-display" id="shortcut">Press any keys...</div>
+
+      <div class="controls">
+        <button id="clear" class="btn btn-secondary">Clear</button>
+        <button id="copy" class="btn btn-primary">Copy Last</button>
+        <a class="card-back" href="../../index.html" aria-label="Back to tools"><i class="fa fa-arrow-left"></i><span>Back</span></a>
+      </div>
+
+      <div class="recent-list" id="recent"></div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

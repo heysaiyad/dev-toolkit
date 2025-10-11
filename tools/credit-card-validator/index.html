@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Validator - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Tool-specific styles */
+        .tool-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .tool-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .tool-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .input-section {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .input-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-primary);
+        }
+
+        .input-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .input-label i {
+            color: var(--primary-color);
+        }
+
+        .card-input-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        #card-number {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: var(--bg-primary);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            font-family: var(--font-primary);
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+        }
+
+        #card-number:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+        }
+
+        #card-number::placeholder {
+            color: var(--text-muted);
+            letter-spacing: normal;
+        }
+
+        .card-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .card-input-container.valid .card-icon {
+            color: var(--success-color);
+        }
+
+        .card-input-container.invalid .card-icon {
+            color: var(--error-color);
+        }
+
+        .validation-result {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .validation-result.valid {
+            border-color: var(--success-color);
+            background: linear-gradient(135deg, rgba(126, 211, 33, 0.1), rgba(126, 211, 33, 0.05));
+        }
+
+        .validation-result.invalid {
+            border-color: var(--error-color);
+            background: linear-gradient(135deg, rgba(208, 2, 27, 0.1), rgba(208, 2, 27, 0.05));
+        }
+
+        .result-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .result-icon.valid {
+            color: var(--success-color);
+            animation: pulse 2s infinite;
+        }
+
+        .result-icon.invalid {
+            color: var(--error-color);
+        }
+
+        .result-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .result-title.valid {
+            color: var(--success-color);
+        }
+
+        .result-title.invalid {
+            color: var(--error-color);
+        }
+
+        .result-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .card-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .info-item {
+            background: var(--bg-primary);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .info-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .algorithm-explanation {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .algorithm-explanation h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .algorithm-explanation h3 i {
+            color: var(--primary-color);
+        }
+
+        .algorithm-steps {
+            list-style: none;
+            padding: 0;
+        }
+
+        .algorithm-steps li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .algorithm-steps li:last-child {
+            border-bottom: none;
+        }
+
+        .algorithm-steps li::before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: 0;
+            top: 0.75rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .algorithm-steps {
+            counter-reset: step-counter;
+        }
+
+        .sample-cards {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .sample-cards h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sample-cards h3 i {
+            color: var(--primary-color);
+        }
+
+        .sample-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .sample-card {
+            background: var(--bg-primary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sample-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .sample-card-type {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .sample-card-number {
+            font-family: monospace;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        .back-button:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(0, 129, 180, 0.1));
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .feature-highlight h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-highlight p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tool-container {
+                padding: 1rem;
+            }
+
+            .back-button {
+                top: 1rem;
+                left: 1rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .card-info {
+                grid-template-columns: 1fr;
+            }
+
+            .sample-cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #card-number {
+                font-size: 1rem;
+                letter-spacing: 1px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1 class="tool-title">Credit Card Validator</h1>
+            <p class="tool-subtitle">
+                Validate credit card numbers using the Luhn algorithm. Enter a card number to check if it's a valid format without storing any data.
+            </p>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <div class="input-label">
+                <i class="fas fa-credit-card"></i>
+                Enter Credit Card Number
+            </div>
+            <div class="card-input-container" id="card-input-container">
+                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+                <div class="card-icon" id="card-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Validation Result -->
+        <div class="validation-result" id="validation-result" style="display: none;">
+            <div class="result-icon" id="result-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="result-title" id="result-title">Valid Card Number</div>
+            <div class="result-description" id="result-description">
+                This credit card number passes the Luhn algorithm validation.
+            </div>
+            <div class="card-info" id="card-info">
+                <!-- Dynamic card info will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Sample Cards -->
+        <div class="sample-cards">
+            <h3>
+                <i class="fas fa-clipboard-list"></i>
+                Try These Sample Numbers
+            </h3>
+            <div class="sample-cards-grid">
+                <div class="sample-card" data-card="4532015112830366">
+                    <div class="sample-card-type">Visa</div>
+                    <div class="sample-card-number">4532 0151 1283 0366</div>
+                </div>
+                <div class="sample-card" data-card="5555555555554444">
+                    <div class="sample-card-type">Mastercard</div>
+                    <div class="sample-card-number">5555 5555 5555 4444</div>
+                </div>
+                <div class="sample-card" data-card="378282246310005">
+                    <div class="sample-card-type">American Express</div>
+                    <div class="sample-card-number">3782 8224 6310 005</div>
+                </div>
+                <div class="sample-card" data-card="6011111111111117">
+                    <div class="sample-card-type">Discover</div>
+                    <div class="sample-card-number">6011 1111 1111 1117</div>
+                </div>
+                <div class="sample-card" data-card="1234567890123456">
+                    <div class="sample-card-type">Invalid Example</div>
+                    <div class="sample-card-number">1234 5678 9012 3456</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Algorithm Explanation -->
+        <div class="algorithm-explanation">
+            <h3>
+                <i class="fas fa-calculator"></i>
+                How the Luhn Algorithm Works
+            </h3>
+            <ol class="algorithm-steps">
+                <li>Starting from the rightmost digit, double every second digit</li>
+                <li>If doubling results in a two-digit number, add the digits together</li>
+                <li>Sum all the digits in the modified number</li>
+                <li>If the total sum is divisible by 10, the number is valid</li>
+            </ol>
+        </div>
+
+        <!-- Feature Highlight -->
+        <div class="feature-highlight">
+            <h4>🔒 Privacy First</h4>
+            <p>This tool validates card numbers locally in your browser. No data is stored or transmitted anywhere.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

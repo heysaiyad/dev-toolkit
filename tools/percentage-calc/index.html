@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Percentage Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📊 Percentage Calculator</h1>
+
+    <div class="calc-box">
+      <select id="calcType">
+        <option value="type1">What is X% of Y?</option>
+        <option value="type2">X is what percent of Y?</option>
+        <option value="type3">Percentage increase/decrease?</option>
+      </select>
+
+      <div class="input-fields" id="inputs">
+        <div id="type1-inputs">
+          <input type="number" id="percent1" placeholder="Enter X (percent)" />
+          <input type="number" id="number1" placeholder="Enter Y (number)" />
+        </div>
+
+        <div id="type2-inputs" style="display:none;">
+          <input type="number" id="part2" placeholder="Enter X (part)" />
+          <input type="number" id="whole2" placeholder="Enter Y (whole)" />
+        </div>
+
+        <div id="type3-inputs" style="display:none;">
+          <input type="number" id="old3" placeholder="Enter old value" />
+          <input type="number" id="new3" placeholder="Enter new value" />
+        </div>
+      </div>
+
+      <button id="calculate">Calculate</button>
+
+      <div class="result-box">
+        <p><strong>Result:</strong> <span id="result">—</span></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
