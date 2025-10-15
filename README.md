@@ -204,6 +204,8 @@ Thanks goes to these wonderful people:
     </a>
     <br />💻
   </td>
+</tr><tr>
+
   <td align="center">
     <a href="https://github.com/paresh0805">
       <img src="https://avatars.githubusercontent.com/u/192526004?v=4" width="100px;" alt="paresh0805"/>
