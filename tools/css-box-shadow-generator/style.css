@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+body {
+  margin: 0;
+  background-color: #0f0f0f;
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  width: 90%;
+  max-width: 700px;
+  background: #1a1a1a;
+  border: 2px solid #ff6600;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 0 30px #ff660044;
+}
+
+h1 {
+  text-align: center;
+  color: #ff6600;
+  text-shadow: 0 0 15px #ff660099;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+input[type="range"] {
+  flex-grow: 1;
+}
+
+.preview {
+  width: 200px;
+  height: 200px;
+  margin: 30px auto;
+  background: #222;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.code-box {
+  text-align: center;
+}
+
+textarea {
+  width: 100%;
+  height: 80px;
+  background: #111;
+  border: 2px solid #ff6600;
+  border-radius: 10px;
+  color: #fff;
+  padding: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  resize: none;
+  margin-top: 10px;
+}
+
+button {
+  background: #ff6600;
+  border: none;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #ff8533;
+  box-shadow: 0 0 20px #ff660099;
+}
+
+strong {
+  color: #ff6600;
+}
