@@ -1,5 +1,6 @@
 // Modern Dev Toolkit JavaScript
 // Interactive elements and animations
+// Updated: Image Performance Audit tool integration - v1.1
 // Updated: 2024-12-19 - Added Credit Card Validator tool
 
 // Global error handling
@@ -798,6 +799,12 @@ function initAdvancedSearch() {
       url: "tools/text-extractor/index.html",
     },
     {
+      name: "Image Performance Audit",
+      description: "Analyze any webpage's images for performance issues, missing alt tags, and optimization opportunities. Get detailed insights and recommendations.",
+      category: "utility",
+      keywords: ["image", "performance", "audit", "seo", "optimization", "alt", "webp", "avif", "analysis", "webpage", "performace", "images", "speed", "lighthouse", "web", "site", "check", "analyze"],
+      icon: "fas fa-chart-line",
+      url: "tools/image-performance-audit/index.html",
       name: "Web Scraper",
       description: "Extract links and images from any website using our powerful web scraper. Input a URL and get organized results with detailed statistics and export options.",
       category: "utility",
@@ -812,6 +819,11 @@ function initAdvancedSearch() {
       url: "tools/credit-card-validator/index.html",
     }
   ];
+
+  // Debug: Log the total number of tools and check for Image Performance Audit
+  console.log(`Total tools in database: ${toolsDatabase.length}`);
+  const imageAuditTool = toolsDatabase.find(tool => tool.name === "Image Performance Audit");
+  console.log("Image Performance Audit tool found:", imageAuditTool);
 
   let searchTimeout;
 
@@ -836,6 +848,15 @@ function initAdvancedSearch() {
 
   function handleSearch(query) {
     const results = fuzzySearch(query, toolsDatabase);
+    console.log(`Search query: "${query}", Results: ${results.length}`, results.map(r => r.name));
+    
+    // Debug: Check if Image Performance Audit is in the database
+    const imageAuditTool = toolsDatabase.find(tool => tool.name === "Image Performance Audit");
+    console.log("Image Performance Audit tool in database:", imageAuditTool);
+    
+    // Debug: Check if it's in the results
+    const imageAuditInResults = results.find(tool => tool.name === "Image Performance Audit");
+    console.log("Image Performance Audit in results:", imageAuditInResults);
     
     // Debug logging
     if (query.toLowerCase().includes('credit')) {
@@ -860,42 +881,66 @@ function initAdvancedSearch() {
     query = query.toLowerCase().trim();
     const queryWords = query.split(/\s+/);
 
-    return tools.filter((tool) => {
+    // Score and sort tools for better relevance
+    const scoredTools = tools.map(tool => {
       const searchText = `${tool.name} ${tool.description} ${tool.keywords.join(" ")}`.toLowerCase();
+      let score = 0;
 
       // Exact match gets highest priority
-      if (searchText.includes(query)) return true;
+      if (searchText.includes(query)) score += 100;
 
       // Check if tool name starts with query
-      if (tool.name.toLowerCase().startsWith(query)) return true;
+      if (tool.name.toLowerCase().startsWith(query)) score += 80;
 
-      // Check individual words
+      // Check individual words with better typo tolerance
       const nameWords = tool.name.toLowerCase().split(/\s+/);
-      const hasWordMatch = queryWords.some(queryWord => {
-        if (queryWord.length < 2) return false;
+      queryWords.forEach(queryWord => {
+        if (queryWord.length < 2) return;
 
-        // Check exact word matches
-        if (nameWords.some(nameWord => nameWord.includes(queryWord))) return true;
+        // Check exact word matches in name
+        if (nameWords.some(nameWord => nameWord.includes(queryWord))) {
+          score += 60;
+        }
 
-        // Check keywords
-        return tool.keywords.some(keyword => {
+        // Check keywords with typo tolerance
+        tool.keywords.forEach(keyword => {
           const keywordLower = keyword.toLowerCase();
-          return keywordLower.includes(queryWord) ||
-            keywordLower.startsWith(queryWord) ||
-            levenshteinDistance(queryWord, keywordLower) <= 1;
+          if (keywordLower.includes(queryWord) || keywordLower.startsWith(queryWord)) {
+            score += 40;
+          } else if (levenshteinDistance(queryWord, keywordLower) <= 2) {
+            score += 20; // More lenient typo matching
+          }
         });
+
+        // Check description
+        if (tool.description.toLowerCase().includes(queryWord)) {
+          score += 10;
+        }
       });
 
-      if (hasWordMatch) return true;
+      // Special handling for common typos
+      if (query.includes('performace') && tool.name.toLowerCase().includes('performance')) {
+        score += 50; // Boost for "performace" typo
+      }
 
-      // Fuzzy matching for typos (more lenient)
-      return queryWords.some(word => {
-        if (word.length < 3) return false;
-        return tool.keywords.some(keyword => {
-          return levenshteinDistance(word, keyword.toLowerCase()) <= Math.floor(word.length / 3);
-        });
-      });
-    });
+      // Special boost for Image Performance Audit tool
+      if (tool.name === "Image Performance Audit" && query.includes('image')) {
+        score += 100; // High boost for image searches
+        console.log(`Image Performance Audit tool scored: ${score} for query: "${query}"`);
+      }
+
+      // Debug logging for Image Performance Audit tool
+      if (tool.name === "Image Performance Audit") {
+        console.log(`Image Performance Audit - Query: "${query}", Score: ${score}, SearchText: "${searchText}"`);
+      }
+
+      return { tool, score };
+    }).filter(item => item.score > 0);
+
+    // Sort by score (highest first) and return tools
+    return scoredTools
+      .sort((a, b) => b.score - a.score)
+      .map(item => item.tool);
   }
 
   function levenshteinDistance(str1, str2) {
@@ -931,7 +976,7 @@ function initAdvancedSearch() {
     }
 
     const suggestionsHTML = results
-      .slice(0, 5)
+      .slice(0, 10)
       .map(
         (tool) => `
             <div class="suggestion-item" data-url="${tool.url}" ${tool.url === '#' ? 'data-disabled="true"' : ''}>
@@ -999,6 +1044,9 @@ function initAdvancedSearch() {
         (result) => result.name.toLowerCase() === toolName.toLowerCase()
       );
 
+      // Debug: Check if this is the Image Performance Audit tool card
+      if (toolName === "Image Performance Audit") {
+        console.log(`Image Performance Audit card - Query: "${query}", IsMatch: ${isMatch}, Results:`, results.map(r => r.name));
       // Debug logging for Credit Card Validator
       if (toolName === 'Credit Card Validator') {
         console.log('Credit Card Validator card found:', card);

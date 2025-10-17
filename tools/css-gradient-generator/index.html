@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gradient Generator</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: radial-gradient(circle at center, #1b1b1b, #0e0e0e);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #ff8c1a;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: #b0b0b0;
+      margin-bottom: 2rem;
+    }
+
+    .container {
+      background: #121212;
+      border-radius: 20px;
+      padding: 2rem 3rem;
+      box-shadow: 0 0 15px rgba(255, 140, 26, 0.2);
+      border: 1px solid #ff8c1a33;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .input-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    input[type="color"], select {
+      border: none;
+      border-radius: 10px;
+      padding: 0.5rem;
+      outline: none;
+      background: #1e1e1e;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    #preview {
+      width: 300px;
+      height: 150px;
+      border-radius: 15px;
+      margin: 1rem auto;
+      border: 2px solid #ff8c1a55;
+      transition: 0.3s;
+    }
+
+    .btn {
+      background: linear-gradient(90deg, #ff8c1a, #ff6a00);
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 10px;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 140, 26, 0.5);
+    }
+
+    #cssCode {
+      background: #1b1b1b;
+      color: #ffb86b;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-top: 1rem;
+      font-family: monospace;
+      width: 90%;
+      text-align: center;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gradient Generator</h1>
+  <p>Create beautiful linear gradients and copy the CSS instantly!</p>
+
+  <div class="container">
+    <div class="input-group">
+      <label>Color 1:</label>
+      <input type="color" id="color1" value="#ff8c1a" />
+      <label>Color 2:</label>
+      <input type="color" id="color2" value="#ff6a00" />
+      <label>Direction:</label>
+      <select id="direction">
+        <option value="to right">→ To Right</option>
+        <option value="to left">← To Left</option>
+        <option value="to bottom">↓ To Bottom</option>
+        <option value="to top">↑ To Top</option>
+        <option value="45deg">45° Angle</option>
+        <option value="135deg">135° Angle</option>
+      </select>
+    </div>
+
+    <div id="preview"></div>
+    <button class="btn" id="copyBtn">Copy CSS</button>
+
+    <div id="cssCode"></div>
+  </div>
+
+  <script>
+    const color1 = document.getElementById("color1");
+    const color2 = document.getElementById("color2");
+    const direction = document.getElementById("direction");
+    const preview = document.getElementById("preview");
+    const cssCode = document.getElementById("cssCode");
+    const copyBtn = document.getElementById("copyBtn");
+
+    function updateGradient() {
+      const gradient = `linear-gradient(${direction.value}, ${color1.value}, ${color2.value})`;
+      preview.style.background = gradient;
+      cssCode.textContent = `background: ${gradient};`;
+    }
+
+    [color1, color2, direction].forEach(el => el.addEventListener("input", updateGradient));
+
+    copyBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(cssCode.textContent);
+      copyBtn.textContent = "Copied!";
+      setTimeout(() => copyBtn.textContent = "Copy CSS", 1500);
+    });
+
+    updateGradient();
+  </script>
+
+</body>
+</html>
