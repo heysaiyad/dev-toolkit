@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Waveform Visualizer - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .root{
+            --primary-color: #ff6b35;        /* Hacktoberfest Orange */
+            --secondary-color: #0081b4;      /* Blue */
+            --accent-color: #ff8c42;         /* Light Orange */
+            --success-color: #7ed321;        /* Green */
+            --warning-color: #f5a623;        /* Yellow */
+            --error-color: #d0021b;          /* Red */
+
+            --bg-primary: #0f0f23;          /* Dark Background */
+            --bg-secondary: #1a1a2e;         /* Card Background */
+            --text-primary: #ffffff;         /* White Text */
+            --text-secondary: #b8b8d1;       /* Light Gray Text */
+            --text-muted: #8b8ba7;           /* Muted Text */
+        }
+        
+        /* Tool-specific styles go here */
+        .tool-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .tool-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .tool-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        .back-button:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Add your custom styles here */
+
+        .input-section {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .input-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-primary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-primary);  /* Poppins font */
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .muteRed {
+            background: var(--primary-color);
+        }
+
+        .waveform-canvas {
+            width: 100%;
+            height: 200px;
+            background: var(--bg-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            margin-top: 1rem;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .tool-container {
+                padding: 1rem;
+            }
+
+            .back-button {
+                top: 1rem;
+                left: 1rem;
+                padding: 0.5rem 1rem;
+            }
+
+            button {
+                margin-top: 1rem;
+            }
+        }
+
+        /* Small mobile */
+        @media (max-width: 480px) {
+            /* Additional mobile optimizations */
+            
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1 class="tool-title">Audio Waveform Visualizer</h1>
+            <p class="tool-subtitle">
+                Upload an audio file and draw its waveform to an HTML Canvas using Web Audio API.
+            </p>
+        </div>
+
+        <!-- Your tool content goes here -->
+        <div class="input-section">
+            <button class="btn btn-secondary" id="uploadButton">Upload</button>
+            <input type="file" id="audioFileInput" accept="audio/*" style="display: none;">
+            <audio id="audio" controls style="margin-top: 1rem; width: 100%; display: none;"></audio>
+            <canvas id="waveformCanvas" class="waveform-canvas" width="800" height="200"></canvas>
+            <button id="playButton" class="btn btn-primary" disabled="true">Play</button>
+            <button id="muteButton" class="btn btn-secondary" disabled="true">Mute</button>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
