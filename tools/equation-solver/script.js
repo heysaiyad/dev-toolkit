@@ -164,9 +164,8 @@
     toggleInputs: toggleInputs
   };
 
-  // Initial setup: use a short timeout to ensure all elements are ready before reading values
   setTimeout(() => {
       toggleInputs();
-      solveEquation(); // Run an initial solve on the default values
+      solveEquation(); 
   }, 10);
 })();
