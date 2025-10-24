@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Sentiment Analyzer - DevToolkit</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    .tool-container {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 2rem 4rem;
+    }
+
+    .tool-header {
+      margin-bottom: 2.5rem;
+      text-align: center;
+      animation: fadeInDown 1s ease;
+    }
+
+    .tool-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+    }
+
+    .tool-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 2rem;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .sidebar {
+      background: rgba(26, 26, 46, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      backdrop-filter: blur(25px);
+    }
+
+    .sidebar h2 {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    label {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #ccc;
+      margin-bottom: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    label:first-of-type {
+      margin-top: 0;
+    }
+
+    textarea, select {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(10, 10, 25, 0.9);
+      color: #fff;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    textarea:focus, select:focus {
+      outline: none;
+      border: 1px solid #ff6b35;
+      box-shadow: 0 0 12px rgba(255, 107, 53, 0.6);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    button {
+      flex: 1;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-md);
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    #analyzeBtn {
+      background: var(--gradient-primary);
+      color: white;
+    }
+
+    #analyzeBtn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+    }
+
+    #clearBtn {
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    #clearBtn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .notes {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: rgba(15, 15, 35, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .notes strong {
+      color: var(--text-secondary);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .response-container {
+      background: rgba(26, 26, 46, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      min-height: 600px;
+      backdrop-filter: blur(25px);
+    }
+
+    .response-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .response-header h3 {
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+
+    .score-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .positive {
+      background: rgba(52, 211, 153, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .negative {
+      background: rgba(248, 113, 113, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(248, 113, 113, 0.3);
+    }
+
+    .neutral {
+      background: rgba(160, 174, 192, 0.15);
+      color: #a0aec0;
+      border: 1px solid rgba(160, 174, 192, 0.3);
+    }
+
+    pre#resultBox {
+      width: 100%;
+      min-height: 500px;
+      padding: 1.5rem;
+      background: rgba(15, 15, 35, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-family: 'Courier New', monospace;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow: auto;
+      line-height: 1.6;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(20px);
+    }
+
+    .back-button:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    @media (max-width: 1200px) {
+      .tool-container {
+        padding: 2rem;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .sidebar {
+        order: 1;
+      }
+      
+      .response-container {
+        order: 2;
+        min-height: 500px;
+      }
+      
+      pre#resultBox {
+        min-height: 400px;
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <a href="../../index.html" class="back-button">
+    <i class="fas fa-arrow-left"></i>
+    Back to Tools
+  </a>
+
+  <div class="tool-container">
+    <div class="tool-header">
+      <h1 class="tool-title">Text Sentiment Analyzer</h1>
+      <p class="tool-subtitle">
+        Type text and get a quick sentiment: Positive, Neutral, or Negative.
+      </p>
+    </div>
+
+    <div class="main-content">
+      <div class="sidebar">
+        <h2><i class="fas fa-sliders-h"></i> Settings</h2>
+        
+        <label for="textInput">Enter text to analyze</label>
+        <textarea id="textInput" placeholder="Type or paste a sentence or paragraph..."></textarea>
+
+        <label for="modeSelect">Analysis Mode</label>
+        <select id="modeSelect">
+          <option value="standard">Standard (fast)</option>
+          <option value="detailed">Detailed (word-level counts)</option>
+        </select>
+
+        <div class="button-group">
+          <button id="analyzeBtn">
+            <i class="fas fa-search"></i> Analyze
+          </button>
+          <button id="clearBtn">
+            <i class="fas fa-eraser"></i> Clear
+          </button>
+        </div>
+
+        <div class="notes">
+          <strong><i class="fas fa-info-circle"></i> Tips:</strong>
+          Use short sentences to see stronger scores. This analyzer uses a built-in wordlist and basic negation handling — no external libraries required.
+        </div>
+      </div>
+
+      <div class="response-container">
+        <div class="response-header">
+          <h3>Sentiment Result</h3>
+          <div id="scoreBadge" class="score-pill neutral">
+            <i class="fas fa-circle"></i> Not Analyzed
+          </div>
+        </div>
+
+        <pre id="resultBox">Results will appear here after you click "Analyze Sentiment".</pre>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
