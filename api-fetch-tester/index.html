@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Fetch Tester - DevToolkit</title>
+  <link rel="stylesheet" href="../../style.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Reuse your Form Builder aesthetic */
+    .tool-container { max-width: 1500px; margin: 0 auto; padding: 2rem 4rem; }
+    .tool-header { margin-bottom: 2.5rem; text-align: center; animation: fadeInDown 1s ease; }
+    .tool-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+    }
+    .tool-subtitle { font-size: 1.1rem; color: var(--text-secondary); }
+    .main-content { display: grid; grid-template-columns: 350px 1fr; gap: 2rem; animation: fadeInUp 0.8s ease; }
+
+    .sidebar {
+      background: rgba(26, 26, 46, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      backdrop-filter: blur(25px);
+    }
+    .sidebar h2 {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    label { display: block; margin: 0.5rem 0 0.25rem; color: var(--text-secondary); }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(10, 10, 25, 0.9);
+      color: #fff;
+      margin-bottom: 0.75rem;
+      transition: 0.3s ease;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 12px rgba(255, 107, 53, 0.5);
+    }
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.2rem;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      background: var(--gradient-primary);
+      color: white;
+      font-weight: 500;
+      transition: 0.3s ease;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+    }
+
+    .response-container {
+      background: rgba(26, 26, 46, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      min-height: 600px;
+      backdrop-filter: blur(25px);
+    }
+    #responseOutput {
+      white-space: pre-wrap;
+      background: rgba(15, 15, 35, 0.6);
+      border-radius: 8px;
+      padding: 1rem;
+      color: #fff;
+      font-family: monospace;
+      overflow-x: auto;
+      min-height: 400px;
+      margin-top: 1rem;
+    }
+    .status {
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-secondary);
+    }
+    .copy-btn {
+      float: right;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="animated-bg">
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+    </div>
+  </div>
+
+  <a href="../../index.html" class="back-button">
+    <i class="fas fa-arrow-left"></i> Back to Tools
+  </a>
+
+  <div class="tool-container">
+    <div class="tool-header">
+      <h1 class="tool-title">API Fetch Tester</h1>
+      <p class="tool-subtitle">Test REST APIs quickly with different methods, headers, and bodies.</p>
+    </div>
+
+    <div class="main-content">
+      <div class="sidebar">
+        <h2>Request Configuration</h2>
+        <label for="method">HTTP Method</label>
+        <select id="method">
+          <option>GET</option>
+          <option>POST</option>
+          <option>PUT</option>
+          <option>DELETE</option>
+          <option>PATCH</option>
+        </select>
+
+        <label for="url">Request URL</label>
+        <input type="text" id="url" placeholder="https://api.example.com/data" />
+
+        <label for="headers">Headers (JSON)</label>
+        <textarea id="headers" rows="4" placeholder='{"Content-Type": "application/json"}'></textarea>
+
+        <label for="body">Request Body (JSON)</label>
+        <textarea id="body" rows="6" placeholder='{"key": "value"}'></textarea>
+
+        <button id="sendBtn"><i class="fas fa-paper-plane"></i> Send Request</button>
+      </div>
+
+      <div class="response-container">
+        <div class="code-header">
+          <h3>Response</h3>
+          <button class="copy-btn" id="copyBtn"><i class="fas fa-copy"></i> Copy Response</button>
+        </div>
+        <div id="status" class="status"></div>
+        <pre id="responseOutput">Response will appear here...</pre>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
