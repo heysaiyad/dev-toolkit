@@ -85,7 +85,7 @@
     }
 
     textarea {
-      min-height: 120px;
+      min-height: 180px;
       resize: vertical;
     }
 
@@ -184,10 +184,22 @@
       font-size: 0.9rem;
     }
 
+    .highly-positive {
+      background: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
     .positive {
       background: rgba(52, 211, 153, 0.15);
       color: #34d399;
       border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .neutral {
+      background: rgba(160, 174, 192, 0.15);
+      color: #a0aec0;
+      border: 1px solid rgba(160, 174, 192, 0.3);
     }
 
     .negative {
@@ -196,10 +208,10 @@
       border: 1px solid rgba(248, 113, 113, 0.3);
     }
 
-    .neutral {
-      background: rgba(160, 174, 192, 0.15);
-      color: #a0aec0;
-      border: 1px solid rgba(160, 174, 192, 0.3);
+    .highly-negative {
+      background: rgba(220, 38, 38, 0.2);
+      color: #dc2626;
+      border: 1px solid rgba(220, 38, 38, 0.4);
     }
 
     pre#resultBox {
@@ -215,6 +227,32 @@
       word-wrap: break-word;
       overflow: auto;
       line-height: 1.6;
+    }
+
+    .sentiment-scale {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(15, 15, 35, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+    }
+
+    .scale-item {
+      flex: 1;
+      text-align: center;
+      padding: 0.5rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      opacity: 0.4;
+      transition: all 0.3s ease;
+    }
+
+    .scale-item.active {
+      opacity: 1;
+      transform: scale(1.1);
     }
 
     .back-button {
@@ -313,7 +351,7 @@
     <div class="tool-header">
       <h1 class="tool-title">Text Sentiment Analyzer</h1>
       <p class="tool-subtitle">
-        Type text and get a quick sentiment: Positive, Neutral, or Negative.
+        Type or paste text to analyze sentiment with 5 levels: Highly Negative, Negative, Neutral, Positive, Highly Positive
       </p>
     </div>
 
@@ -322,11 +360,11 @@
         <h2><i class="fas fa-sliders-h"></i> Settings</h2>
         
         <label for="textInput">Enter text to analyze</label>
-        <textarea id="textInput" placeholder="Type or paste a sentence or paragraph..."></textarea>
+        <textarea id="textInput" placeholder="Type or paste sentences, paragraphs, or even longer text..."></textarea>
 
         <label for="modeSelect">Analysis Mode</label>
         <select id="modeSelect">
-          <option value="standard">Standard (fast)</option>
+          <option value="standard">Standard</option>
           <option value="detailed">Detailed (word-level counts)</option>
         </select>
 
@@ -339,9 +377,17 @@
           </button>
         </div>
 
+        <div class="sentiment-scale">
+          <div class="scale-item highly-negative">😡<br>Highly<br>Negative</div>
+          <div class="scale-item negative">😠<br>Negative</div>
+          <div class="scale-item neutral">😐<br>Neutral</div>
+          <div class="scale-item positive">😊<br>Positive</div>
+          <div class="scale-item highly-positive">🤩<br>Highly<br>Positive</div>
+        </div>
+
         <div class="notes">
           <strong><i class="fas fa-info-circle"></i> Tips:</strong>
-          Use short sentences to see stronger scores. This analyzer uses a built-in wordlist and basic negation handling — no external libraries required.
+          The analyzer now processes entire paragraphs and updates automatically as you type! It uses an enhanced wordlist with intensity modifiers and context-aware analysis.
         </div>
       </div>
 
@@ -353,7 +399,7 @@
           </div>
         </div>
 
-        <pre id="resultBox">Results will appear here after you click "Analyze Sentiment".</pre>
+        <pre id="resultBox">Results will appear here after you enter text. Analysis happens automatically as you type!</pre>
       </div>
     </div>
   </div>
