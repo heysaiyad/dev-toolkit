@@ -751,6 +751,7 @@
     const scrollTopBtn = document.getElementById('scrollTopBtn');
 
     let currentResponseData = null;
+    let requestLogs = [];
 
     closeBtn.onclick = () => {
       modal.style.display = 'none';
@@ -792,6 +793,17 @@
       });
     });
 
+    function logRequest(method, url) {
+      const entry = {
+        method,
+        url,
+        time: new Date().toLocaleString()
+      };
+      requestLogs.unshift(entry); // Add newest at the top
+      if (requestLogs.length > 5) requestLogs.pop(); // Keep only 5 entries
+      console.log(`Request: ${method} ${url} @ ${entry.time}`);
+    }
+
     async function sendRequest() {
       const method = document.getElementById('method').value;
       const url = document.getElementById('url').value.trim();
@@ -803,7 +815,8 @@
         return;
       }
 
-      // Show loading state
+      logRequest(method, url); // <-- log each request here
+
       sendBtn.classList.add('loading');
       sendBtn.innerHTML = '<div class="spinner"></div> Sending...';
 
@@ -846,7 +859,7 @@
         displayResponse(response, responseData, duration);
         modal.style.display = 'block';
         fabContainer.classList.add('show');
-        scrollTopBtn.classList.remove('show'); // Reset scroll button
+        scrollTopBtn.classList.remove('show');
 
       } catch (error) {
         currentResponseData = {
@@ -887,6 +900,16 @@
           <div class="info-label">Content Type</div>
           <div class="info-value">${response.headers.get('content-type') || 'N/A'}</div>
         </div>
+        ${requestLogs.length > 0 ? `
+          <div class="info-card">
+            <div class="info-label">Request Log</div>
+            <div class="info-value" style="font-size:0.93rem;text-align:left;">
+              ${requestLogs.map(log =>
+                `${log.time} → ${log.method} (${log.url})`
+              ).join('<br>')}
+            </div>
+          </div>
+        ` : ''}
       `;
 
       const headersObj = {};
@@ -976,7 +999,6 @@
 
       showNotification('Response downloaded!');
     }
-
 
     function copyToClipboardSimple(text) {
       navigator.clipboard.writeText(text).then(() => {
