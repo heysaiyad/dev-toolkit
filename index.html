@@ -55,8 +55,8 @@
     </div>
 
     <script>
-            
-        window.addEventListener('scroll', function() {
+
+        window.addEventListener('scroll', function () {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height) * 100;
@@ -445,12 +445,9 @@
                     <div class="search-suggestions" id="searchSuggestions"></div>
                 </div>
                 <div class="search-stats" id="searchStats">
-<<<<<<< webp-converter
                     <span id="resultCount">15</span> tools found
-=======
                     <span id="resultCount">68</span> tools found
                     <span id="resultCount">17</span> tools found
->>>>>>> master
                 </div>
             </div>
 
@@ -500,30 +497,45 @@
                     <div class="tool-arrow">
                         <i class="fas fa-arrow-right"></i>
                     </div>
-                </a>   
+                </a>
+                <!-- Simple API Fetch Tester -->
+                <a href="tools/api-fetch-tester/index.html" class="tool-card" data-category="your-category">
+                    <div class="tool-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Simple API Fetch Tester</h3>
+                        <p class="tool-description">Send API requests and view responses directly from your browser.</p>
+                        <div class="tool-tags">
+                            <span class="tag">Category</span>
+                            <span class="tag">Feature</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
 
-                <a
-  href="tools/SVGPathVisualizerEditor/index.html"
-  class="tool-card"
-  data-category="your-category"
->
-  <div class="tool-icon">
-    <i class="fas fa-your-icon"></i>
-  </div>
-  <div class="tool-content">
-    <h2 class="tool-title">SVG_Visualizer         Editor</h2>
-    <!-- <h2 class="tool-title">Editor</h2> -->
+                </a>
 
-    <p class="tool-description">Brief description of functionality.</p>
-    <div class="tool-tags">
-      <span class="tag">Category</span>
-      <span class="tag">Feature</span>
-    </div>
-  </div>
-  <div class="tool-arrow">
-    <i class="fas fa-arrow-right"></i>
-  </div>
-</a>
+                <a href="tools/SVGPathVisualizerEditor/index.html" class="tool-card" data-category="your-category">
+                    <div class="tool-icon">
+                        <i class="fas fa-your-icon"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h2 class="tool-title">SVG_Visualizer Editor</h2>
+                        <!-- <h2 class="tool-title">Editor</h2> -->
+
+                        <p class="tool-description">Brief description of functionality.</p>
+                        <div class="tool-tags">
+                            <span class="tag">Category</span>
+                            <span class="tag">Feature</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
 
                 <!-- Form-builder -->
                 <a href="tools/form-builder/index.html" class="tool-card" data-category="utility">
@@ -595,7 +607,8 @@
                     </div>
                     <div class="tool-content">
                         <h3 class="tool-title">SVG Shape Generator</h3>
-                        <p class="tool-description">Generate SVG code for basic shapes like circles, rectangles, and ellipses. Customize attributes like color, size, and position.</p>
+                        <p class="tool-description">Generate SVG code for basic shapes like circles, rectangles, and
+                            ellipses. Customize attributes like color, size, and position.</p>
                         <div class="tool-tags">
                             <span class="tag">SVG</span>
                             <span class="tag">Shape</span>
@@ -647,6 +660,44 @@
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
+
+                <!-- Word Frequency Analyzer -->
+                <a href="tools/word-frequency-analyzer/index.html" class="tool-card" data-category="text">
+                    <div class="tool-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Word Frequency Analyzer</h3>
+                        <p class="tool-description">Analyze pasted text to find the most frequent words. Includes
+                            stopword filtering and CSV export.</p>
+                        <div class="tool-tags">
+                            <span class="tag">Text</span>
+                            <span class="tag">Analysis</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Text to ASCII Value Converter -->
+                <a href="tools/text-to-ascii-converter/index.html" class="tool-card" data-category="text">
+                    <div class="tool-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Text to ASCII Converter</h3>
+                        <p class="tool-description">Displays ASCII decimal values for each character.</p>
+                        <div class="tool-tags">
+                            <span class="tag">Text</span>
+                            <span class="tag">Converter</span>
+                            <span class="tag">ASCII</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
                 <!-- Line Sorter & Unique Extractor -->
                 <a href="tools/line-sorter-unique/index.html" class="tool-card" data-category="text">
                     <div class="tool-icon">
@@ -666,1431 +717,1623 @@
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
-                <!-- Lorem Ipsum Generator -->
-                <a href="tools/lorem-ipsum-generator/index.html" class="tool-card" data-category="text">
-                    <div class="tool-icon">
-                        <i class="fas fa-align-justify"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Lorem Ipsum Generator</h3>
-                        <p class="tool-description">Generate customizable placeholder text by words or paragraphs for
+                <<<<<<< feat/API_Fetch_Tester <!-- Advanced Text Analyzer -->
+                    <a href="tools/text-analyzer/index.html" class="tool-card" data-category="text">
+                        <div class="tool-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Advanced Text Analyzer</h3>
+                            <p class="tool-description">Comprehensive text analysis with detailed statistics including
+                                word
+                                count, sentence count, paragraph count, reading time, and average metrics for in-depth
+                                content evaluation.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Text</span>
+                                <span class="tag">Analytics</span>
+                                <span class="tag">Statistics</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                    =======
+                    >>>>>>> master
+                    <!-- Lorem Ipsum Generator -->
+                    <a href="tools/lorem-ipsum-generator/index.html" class="tool-card" data-category="text">
+                        <div class="tool-icon">
+                            <i class="fas fa-align-justify"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Lorem Ipsum Generator</h3>
+                            <p class="tool-description">Generate customizable placeholder text by words or paragraphs
+                                for
 
-                            your design and development projects. Perfect for mockups and prototyping.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Text</span>
-                            <span class="tag">Generator</span>
+                                your design and development projects. Perfect for mockups and prototyping.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Text</span>
+                                <span class="tag">Generator</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <!-- Markdown Previewer -->
+                    <a href="tools/markdown-previewer/index.html" class="tool-card" data-category="code">
+                        <div class="tool-icon">
+                            <i class="fas fa-markdown"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Markdown Previewer</h3>
+                            <p class="tool-description">Write and preview Markdown in real-time with split-view editor.
+                                Export to HTML, MD, or plain text.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Markdown</span>
+                                <span class="tag">Preview</span>
+                                <span class="tag">Editor</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <!-- Commit Message Formatter -->
+                    <a href="tools/commit-formatter/index.html" class="tool-card" data-category="code">
+                        <div class="tool-icon">
+                            <i class="fas fa-message"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Commit Message Formatter</h3>
+                            <p class="tool-description">Create well-structured commit messages following the
+                                Conventional Commits specification.
+                                Includes type selection, scope, and emoji support.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Git</span>
+                                <span class="tag">Commits</span>
+                                <span class="tag">Developer</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <!-- Git Branch Visualizer -->
+                    <a href="tools/git-branch-visualizer/index.html" class="tool-card" data-category="code">
+                        <div class="tool-icon">
+                            <i class="fas fa-code-branch"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Git Branch Visualizer</h3>
+                            <p class="tool-description">Interactive visualization of Git branch history with support for
+                                merges and complex flows.
+                                Perfect for understanding repository structure.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Git</span>
+                                <span class="tag">Visualization</span>
+                                <span class="tag">Developer</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a> <!-- JSON Formatter -->
+                    <a href="tools/json-formatter/index.html" class="tool-card" data-category="code">
+                        <div class="tool-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">JSON Formatter</h3>
+                            <p class="tool-description">Format, validate, and beautify JSON data with an interactive
+                                tree
+                                view and error detection.</p>
+                            <div class="tool-tags">
+                                <span class="tag">JSON</span>
+                                <span class="tag">Format</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <a href="tools/unit-converters/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Unit Converter</h3>
+                            <p class="tool-description">
+                                Extract links and images from any website using our powerful web scraper. Input a URL
+                                and
+                                get organized results with detailed statistics and export options.
+                            </p>
+                            <div class="tool-tags">
+                                <span class="tag">Units</span>
+                                <span class="tag">Conversion</span>
+                                <span class="tag">Utility</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <!-- Aspect Ratio Calculator -->
+                    <a href="tools/aspect-ratio-calculator/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Aspect Ratio Calculator</h3>
+                            <p class="tool-description">
+                                Calculate dimensions based on aspect ratios. Perfect for responsive design, video
+                                dimensions, and screen specifications.
+                            </p>
+                            <div class="tool-tags">
+                                <span class="tag">Calculator</span>
+                                <span class="tag">Design</span>
+                                <span class="tag">Utility</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <!-- Timer & Stopwatch -->
+                    <a href="tools/timer-stopwatch/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Timer & Stopwatch</h3>
+                            <p class="tool-description">Countdown timer and stopwatch with lap tracking, audio alerts,
+                                and
+                                keyboard shortcuts.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Timer</span>
+                                <span class="tag">Stopwatch</span>
+                                <span class="tag">Productivity</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <!-- Pomodoro Timer -->
+                    <a href="tools/pomodoro-timer/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-hourglass-half"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Pomodoro Timer</h3>
+                            <p class="tool-description">25-minute work sessions and 5-minute breaks with Start, Pause,
+                                Reset
+                                controls and an audible alert to boost your focus.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Productivity</span>
+                                <span class="tag">Timer</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <!-- Hotkeys Tester -->
+                    <a href="tools/hotkeys-tester/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-keyboard"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Hotkeys Tester</h3>
+                            <p class="tool-description">Detect and display complex keyboard shortcuts (e.g.,
+                                Ctrl+Shift+K).
+                                Useful for testing which shortcuts are available in the browser or OS.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Keyboard</span>
+                                <span class="tag">Hotkeys</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <a href="tools/timezone-converters/index.html" class="tool-card"
+                        data-category="timezone-convertors">
+                        <div class="tool-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Timezone Converter</h3>
+                            <p class="tool-description">
+                                Convert dates and times between different timezones with ease.
+                                See UTC offsets, daylight savings adjustments, and compare times instantly.
+                            </p>
+                            <div class="tool-tags">
+                                <span class="tag">Timezone</span>
+                                <span class="tag">Date</span>
+                                <span class="tag">Converter</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+
+                    <a href="tools/date-difference/index.html" class="tool-card" data-category="date">
+                        <div class="tool-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Date Difference Calculator</h3>
+                            <p class="tool-description">
+                                Quickly calculate the number of days, weeks, or months between two dates.
+                                Perfect for project planning, deadlines, and scheduling.
+                            </p>
+                            <div class="tool-tags">
+                                <span class="tag">Date</span>
+                                <span class="tag">Time</span>
+                                <span class="tag">Calculator</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <!-- Color Picker -->
+                    <div class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Color Picker</h3>
+                            <p class="tool-description">Generate color palettes, convert between formats, and find
+                                perfect
+
+                                color combinations.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Color</span>
+                                <span class="tag">Design</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
 
-                <!-- Markdown Previewer -->
-                <a href="tools/markdown-previewer/index.html" class="tool-card" data-category="code">
-                    <div class="tool-icon">
-                        <i class="fas fa-markdown"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Markdown Previewer</h3>
-                        <p class="tool-description">Write and preview Markdown in real-time with split-view editor.
-                            Export to HTML, MD, or plain text.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Markdown</span>
-                            <span class="tag">Preview</span>
-                            <span class="tag">Editor</span>
+                    <!-- Random Color Generator -->
+                    <a href="tools/random-color-generator/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-paint-brush"></i>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
-                                <!-- Commit Message Formatter -->
-                <a href="tools/commit-formatter/index.html" class="tool-card" data-category="code">
-                    <div class="tool-icon">
-                        <i class="fas fa-message"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Commit Message Formatter</h3>
-                        <p class="tool-description">Create well-structured commit messages following the Conventional Commits specification. 
-                            Includes type selection, scope, and emoji support.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Git</span>
-                            <span class="tag">Commits</span>
-                            <span class="tag">Developer</span>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Random Color Generator</h3>
+                            <p class="tool-description">
+                                Generates a random HEX or RGB color on button click. Shows the color code and a preview
+                                box.
+                            </p>
+                            <div class="tool-tags">
+                                <span class="tag">Utility</span>
+                                <span class="tag">Color</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
-                                <!-- Git Branch Visualizer -->
-                <a href="tools/git-branch-visualizer/index.html" class="tool-card" data-category="code">
-                    <div class="tool-icon">
-                        <i class="fas fa-code-branch"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Git Branch Visualizer</h3>
-                        <p class="tool-description">Interactive visualization of Git branch history with support for merges and complex flows.
-                            Perfect for understanding repository structure.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Git</span>
-                            <span class="tag">Visualization</span>
-                            <span class="tag">Developer</span>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>                <!-- JSON Formatter -->
-                <a href="tools/json-formatter/index.html" class="tool-card" data-category="code">
-                    <div class="tool-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">JSON Formatter</h3>
-                        <p class="tool-description">Format, validate, and beautify JSON data with an interactive tree
-                            view and error detection.</p>
-                        <div class="tool-tags">
-                            <span class="tag">JSON</span>
-                            <span class="tag">Format</span>
+                    </a>
+                    <!-- Random Number Generator -->
+                    <a href="tools/random-number-generator/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-magic"></i>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
-                <a href="tools/unit-converters/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-exchange-alt"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Unit Converter</h3>
-                        <p class="tool-description">
-                            Convert between different units of length, weight, temperature, time, and storage — quick,
-                            accurate, and easy to use.
-                        </p>
-                        <div class="tool-tags">
-                            <span class="tag">Units</span>
-                            <span class="tag">Conversion</span>
-                            <span class="tag">Utility</span>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Random Number generator</h3>
+                            <p class="tool-description">
+                                Generates a random number within a user-defined min/max range
+                            </p>
+                            <div class="tool-tags">
+                                <span class="tag">Utility</span>
+                                <span class="tag">Awesome</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
-                <!-- Aspect Ratio Calculator -->
-                <a href="tools/aspect-ratio-calculator/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-expand"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Aspect Ratio Calculator</h3>
-                        <p class="tool-description">
-                            Calculate dimensions based on aspect ratios. Perfect for responsive design, video
-                            dimensions, and screen specifications.
-                        </p>
-                        <div class="tool-tags">
-                            <span class="tag">Calculator</span>
-                            <span class="tag">Design</span>
-                            <span class="tag">Utility</span>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
+                    </a>
 
-                <!-- Timer & Stopwatch -->
-                <a href="tools/timer-stopwatch/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Timer & Stopwatch</h3>
-                        <p class="tool-description">Countdown timer and stopwatch with lap tracking, audio alerts, and
-                            keyboard shortcuts.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Timer</span>
-                            <span class="tag">Stopwatch</span>
-                            <span class="tag">Productivity</span>
+
+                    <!-- Base64 Encoder/Decoder -->
+                    <a href="tools/base64-encoder/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-lock"></i>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
-                <a href="tools/timezone-converters/index.html" class="tool-card" data-category="timezone-convertors">
-                    <div class="tool-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Timezone Converter</h3>
-                        <p class="tool-description">
-                            Convert dates and times between different timezones with ease.
-                            See UTC offsets, daylight savings adjustments, and compare times instantly.
-                        </p>
-                        <div class="tool-tags">
-                            <span class="tag">Timezone</span>
-                            <span class="tag">Date</span>
-                            <span class="tag">Converter</span>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Base64 Encoder/Decoder</h3>
+                            <p class="tool-description">Encode text to Base64 or decode Base64 strings. Support for text
+                                and
+                                file conversion.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Base64</span>
+                                <span class="tag">Encode</span>
+                                <span class="tag">Decode</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
-
-                <a href="tools/date-difference/index.html" class="tool-card" data-category="date">
-                    <div class="tool-icon">
-                        <i class="fas fa-calendar-alt"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Date Difference Calculator</h3>
-                        <p class="tool-description">
-                            Quickly calculate the number of days, weeks, or months between two dates.
-                            Perfect for project planning, deadlines, and scheduling.
-                        </p>
-                        <div class="tool-tags">
-                            <span class="tag">Date</span>
-                            <span class="tag">Time</span>
-                            <span class="tag">Calculator</span>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
+                    </a>
 
-                <!-- Color Picker -->
-                <div class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-layer-group"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Color Picker</h3>
-                        <p class="tool-description">Generate color palettes, convert between formats, and find perfect
-
-                            color combinations.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Color</span>
-                            <span class="tag">Design</span>
+                    <!-- Image to Base64 Converter -->
+                    <a href="tools/image-base64-converter/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-image"></i>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </div>
-
-                <!-- Random Color Generator -->
-                <a href="tools/random-color-generator/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-paint-brush"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Random Color Generator</h3>
-                        <p class="tool-description">
-                            Generates a random HEX or RGB color on button click. Shows the color code and a preview box.
-                        </p>
-                        <div class="tool-tags">
-                            <span class="tag">Utility</span>
-                            <span class="tag">Color</span>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Image to Base64 Converter</h3>
+                            <p class="tool-description">Convert images to Base64 encoded strings. Perfect for embedding
+                                images directly in HTML, CSS, or JSON files.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Image</span>
+                                <span class="tag">Base64</span>
+                                <span class="tag">Converter</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-                <!-- Random Number Generator -->
-                <a href="tools/random-number-generator/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-magic"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Random Number generator</h3>
-                        <p class="tool-description">
-                            Generates a random number within a user-defined min/max range
-                        </p>
-                        <div class="tool-tags">
-                            <span class="tag">Utility</span>
-                            <span class="tag">Awesome</span>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
+                    </a>
 
-
-                <!-- Base64 Encoder/Decoder -->
-                <a href="tools/base64-encoder/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Base64 Encoder/Decoder</h3>
-                        <p class="tool-description">Encode text to Base64 or decode Base64 strings. Support for text and
-                            file conversion.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Base64</span>
-                            <span class="tag">Encode</span>
-                            <span class="tag">Decode</span>
+                    <!-- Image Compressor -->
+                    <a href="tools/image-compressor/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-compress"></i>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
-                <!-- Image to Base64 Converter -->
-                <a href="tools/image-base64-converter/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-image"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Image to Base64 Converter</h3>
-                        <p class="tool-description">Convert images to Base64 encoded strings. Perfect for embedding
-                            images directly in HTML, CSS, or JSON files.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Image</span>
-                            <span class="tag">Base64</span>
-                            <span class="tag">Converter</span>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Image Compressor</h3>
+                            <p class="tool-description">Upload a JPG/PNG, adjust quality and optionally resize, then
+                                compress in-browser and download.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Image</span>
+                                <span class="tag">Compression</span>
+                                <span class="tag">Utility</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
-                <!-- Image Compressor -->
-                <a href="tools/image-compressor/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-compress"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Image Compressor</h3>
-                        <p class="tool-description">Upload a JPG/PNG, adjust quality and optionally resize, then
-                            compress in-browser and download.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Image</span>
-                            <span class="tag">Compression</span>
-                            <span class="tag">Utility</span>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
+                    </a>
 
-                <!-- WebP Image Converter -->
-                <a href="tools/webp-converter/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-file-image"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">WebP Image Converter</h3>
-                        <p class="tool-description">
-                            Convert images to WebP format for better web performance. Upload JPG, PNG, GIF, and other formats to get optimized WebP files.
-                        </p>
-                        <div class="tool-tags">
-                            <span class="tag">WebP</span>
-                            <span class="tag">Image</span>
-                            <span class="tag">Converter</span>
+                    <!-- WebP Image Converter -->
+                    <a href="tools/webp-converter/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-file-image"></i>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
-                <!-- Image Metadata (EXIF) Remover -->
-                <a href="tools/exif-remover/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Image Metadata (EXIF) Remover</h3>
-                        <p class="tool-description">Strip all EXIF metadata from your images to protect privacy. Upload
-                            an image and download a clean version without any embedded metadata.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Image</span>
-                            <span class="tag">Privacy</span>
-                            <span class="tag">EXIF</span>
+                        <div class="tool-content">
+                            <h3 class="tool-title">WebP Image Converter</h3>
+                            <p class="tool-description">
+                                Convert images to WebP format for better web performance. Upload JPG, PNG, GIF, and
+                                other formats to get optimized WebP files.
+                            </p>
+                            <div class="tool-tags">
+                                <span class="tag">WebP</span>
+                                <span class="tag">Image</span>
+                                <span class="tag">Converter</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
-                <!-- URL Encoder/Decoder -->
-                <a href="tools/url-encoder-decoder/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-link"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">URL Encoder/Decoder</h3>
-                        <p class="tool-description">Encode or decode URLs to ensure proper formatting. Convert special
-                            characters and spaces for safe URL transmission.</p>
-                        <div class="tool-tags">
-                            <span class="tag">URL</span>
-                            <span class="tag">Encode</span>
-                            <span class="tag">Decode</span>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
+                    </a>
 
-                <!-- URL Query Parameter Editor -->
-                <a href="tools/url-query-editor/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-edit"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">URL Query Parameter Editor</h3>
-                        <p class="tool-description">Parse, modify, and rebuild URLs with their query parameters. Add,
-                            edit, or remove parameters and generate new URLs with ease.</p>
-                        <div class="tool-tags">
-                            <span class="tag">URL</span>
-                            <span class="tag">Parameters</span>
-                            <span class="tag">Query</span>
-                            <span class="tag">Edit</span>
+                    <!-- Image Metadata (EXIF) Remover -->
+                    <a href="tools/exif-remover/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-shield-alt"></i>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
-                <!-- Password Generator -->
-                <a href="tools/password-generator/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-key"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Password Generator</h3>
-                        <p class="tool-description">Generate secure passwords with customizable length and character
-
-                            sets.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Security</span>
-                            <span class="tag">Password</span>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Image Metadata (EXIF) Remover</h3>
+                            <p class="tool-description">Strip all EXIF metadata from your images to protect privacy.
+                                Upload
+                                an image and download a clean version without any embedded metadata.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Image</span>
+                                <span class="tag">Privacy</span>
+                                <span class="tag">EXIF</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
-                <!-- Unix Timestamp Converter -->
-                <a href="tools/unix-timestamp-converter/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Unix Timestamp Converter</h3>
-                        <p class="tool-description">A simple tool to convert human-readable dates into Unix timestamps
-                            and convert Unix timestamps back into readable date/time.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Time</span>
-                            <span class="tag">Date</span>
-                            <span class="tag">Unix</span>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
+                    </a>
 
-
-
-                <!-- QR Code Generator -->
-                <a href="tools/qr-code-generator/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-qrcode"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">QR Code Generator</h3>
-                        <p class="tool-description">Create QR codes for URLs, text, WiFi, and more with customizable
-
-                            styling.</p>
-                        <div class="tool-tags">
-                            <span class="tag">QR Code</span>
-                            <span class="tag">Generator</span>
+                    <!-- URL Encoder/Decoder -->
+                    <a href="tools/url-encoder-decoder/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-link"></i>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
+                        <div class="tool-content">
+                            <h3 class="tool-title">URL Encoder/Decoder</h3>
+                            <p class="tool-description">Encode or decode URLs to ensure proper formatting. Convert
+                                special
+                                characters and spaces for safe URL transmission.</p>
+                            <div class="tool-tags">
+                                <span class="tag">URL</span>
+                                <span class="tag">Encode</span>
+                                <span class="tag">Decode</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <!-- URL Query Parameter Editor -->
+                    <a href="tools/url-query-editor/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">URL Query Parameter Editor</h3>
+                            <p class="tool-description">Parse, modify, and rebuild URLs with their query parameters.
+                                Add,
+                                edit, or remove parameters and generate new URLs with ease.</p>
+                            <div class="tool-tags">
+                                <span class="tag">URL</span>
+                                <span class="tag">Parameters</span>
+                                <span class="tag">Query</span>
+                                <span class="tag">Edit</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <!-- Password Generator -->
+                    <a href="tools/password-generator/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Password Generator</h3>
+                            <p class="tool-description">Generate secure passwords with customizable length and character
+
+                                sets.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Security</span>
+                                <span class="tag">Password</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <!-- Unix Timestamp Converter -->
+                    <a href="tools/unix-timestamp-converter/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Unix Timestamp Converter</h3>
+                            <p class="tool-description">A simple tool to convert human-readable dates into Unix
+                                timestamps
+                                and convert Unix timestamps back into readable date/time.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Time</span>
+                                <span class="tag">Date</span>
+                                <span class="tag">Unix</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
 
 
-                <!-- Geolocation & Maps -->
-                <a href="tools/geolocation/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-location-dot"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Geolocation & Maps</h3>
-                        <p class="tool-description">Find your current location using the browser's Geolocation API and
-                            display it on an interactive map with CartoDB tiles.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Location</span>
-                            <span class="tag">Maps</span>
-                            <span class="tag">Leaflet</span>
-                        </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
 
-                <!-- Hexadecimal to RGB Converter -->
-                <a href="tools/hex-to-rgb-converter/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-solid fa-backward"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Hex to RGB Converter</h3>
-                        <p class="tool-description">Convert the hexadecimal to RGB color code in a single click.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Hex to RGB</span>
-                            <span class="tag">Converter</span>
+                    <!-- QR Code Generator -->
+                    <a href="tools/qr-code-generator/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-qrcode"></i>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-                <!-- UUID Generator -->
-                <a href="tools/uuid-generator/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-fingerprint"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">UUID Generator</h3>
-                        <p class="tool-description">Generate Universally Unique Identifiers (UUIDs) instantly for
-                            database keys, session IDs, and unique identifiers.</p>
-                        <div class="tool-tags">
-                            <span class="tag">UUID</span>
-                            <span class="tag">Generator</span>
-                            <span class="tag">Security</span>
-                        </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-                <!-- Percentage Calculator -->
-                <a href="tools/percentage-calculator/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-calculator"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Percentage Calculator</h3>
-                        <p class="tool-description">Easily calculate percentages with this intuitive calculator. Find
-                            out what is X% of Y in seconds.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Calculator</span>
-                            <span class="tag">Math</span>
-                            <span class="tag">Utility</span>
-                        </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
+                        <div class="tool-content">
+                            <h3 class="tool-title">QR Code Generator</h3>
+                            <p class="tool-description">Create QR codes for URLs, text, WiFi, and more with customizable
 
-                <!-- Color Palette Generator -->
-                <a href="tools/color-palette-generator/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-palette"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Color Palette Generator</h3>
-                        <p class="tool-description">
-                            Generate harmonious color palettes based on a base color and a chosen harmony rule
-                            (monochromatic, analogous, complementary, etc.).
-                        </p>
-                        <div class="tool-tags flex">
-                            <span class="tag">Color</span>
-                            <span class="tag">Palette</span>
-                            <span class="tag">Utility</span>
+                                styling.</p>
+                            <div class="tool-tags">
+                                <span class="tag">QR Code</span>
+                                <span class="tag">Generator</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
-                <!-- Number Squarer/Cuber -->
-                <a href="tools/number-squarer-cuber/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-square-root-alt"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Number Squarer/Cuber</h3>
-                        <p class="tool-description">Calculate the square and cube of any number instantly. Perfect for
-                            mathematical calculations and learning.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Calculator</span>
-                            <span class="tag">Math</span>
-                            <span class="tag">Utility</span>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
                         </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
+                    </a>
 
-                <!-- CSS Clamp() Generator -->
-                <a href="tools/clamp-generator/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-text-height"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">CSS Clamp() Generator</h3>
-                        <p class="tool-description">
-                            Generate responsive font sizes using the CSS clamp() function with min, max, and fluid
-                            values.
-                        </p>
-                        <div class="tool-tags">
-                            <span class="tag">CSS</span>
-                            <span class="tag">Typography</span>
-                            <!-- Relative Date Formatter -->
-                            <a href="tools/relative-date/index.html" class="tool-card" data-category="utility">
-                                <div class="tool-icon">
-                                    <i class="fas fa-clock"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Relative Date Formatter</h3>
-                                    <p class="tool-description">
-                                        Input a past or future date/time to see it in a human-readable relative format,
-                                        like '5
-                                        minutes ago' or 'in 3 months'.
-                                    </p>
-                                    <div class="tool-tags flex">
-                                        <span class="tag">Date</span>
-                                        <span class="tag">Time</span>
-                                        <span class="tag">Utility</span>
+                    <!-- Cron Expression Translator -->
+                    <a href="tools/cron-translator/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Cron Expression Translator</h3>
+                            <p class="tool-description">Translate a 5-field cron expression into a human-readable
+                                description (e.g., <code>*/5 * * * *</code> → "Every 5 minutes").</p>
+                            <div class="tool-tags">
+                                <span class="tag">Cron</span>
+                                <span class="tag">Scheduler</span>
+                                <span class="tag">Utility</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <!-- Geolocation & Maps -->
+                    <a href="tools/geolocation/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-location-dot"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Geolocation & Maps</h3>
+                            <p class="tool-description">Find your current location using the browser's Geolocation API
+                                and
+                                display it on an interactive map with CartoDB tiles.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Location</span>
+                                <span class="tag">Maps</span>
+                                <span class="tag">Leaflet</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <!-- Hexadecimal to RGB Converter -->
+                    <a href="tools/hex-to-rgb-converter/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-solid fa-backward"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Hex to RGB Converter</h3>
+                            <p class="tool-description">Convert the hexadecimal to RGB color code in a single click.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Hex to RGB</span>
+                                <span class="tag">Converter</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                    <!-- UUID Generator -->
+                    <a href="tools/uuid-generator/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-fingerprint"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">UUID Generator</h3>
+                            <p class="tool-description">Generate Universally Unique Identifiers (UUIDs) instantly for
+                                database keys, session IDs, and unique identifiers.</p>
+                            <div class="tool-tags">
+                                <span class="tag">UUID</span>
+                                <span class="tag">Generator</span>
+                                <span class="tag">Security</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                    <!-- Percentage Calculator -->
+                    <a href="tools/percentage-calculator/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Percentage Calculator</h3>
+                            <p class="tool-description">Easily calculate percentages with this intuitive calculator.
+                                Find
+                                out what is X% of Y in seconds.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Calculator</span>
+                                <span class="tag">Math</span>
+                                <span class="tag">Utility</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <!-- Color Palette Generator -->
+                    <a href="tools/color-palette-generator/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Color Palette Generator</h3>
+                            <p class="tool-description">
+                                Generate harmonious color palettes based on a base color and a chosen harmony rule
+                                (monochromatic, analogous, complementary, etc.).
+                            </p>
+                            <div class="tool-tags flex">
+                                <span class="tag">Color</span>
+                                <span class="tag">Palette</span>
+                                <span class="tag">Utility</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <!-- Number Squarer/Cuber -->
+                    <a href="tools/number-squarer-cuber/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-square-root-alt"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">Number Squarer/Cuber</h3>
+                            <p class="tool-description">Calculate the square and cube of any number instantly. Perfect
+                                for
+                                mathematical calculations and learning.</p>
+                            <div class="tool-tags">
+                                <span class="tag">Calculator</span>
+                                <span class="tag">Math</span>
+                                <span class="tag">Utility</span>
+                            </div>
+                        </div>
+                        <div class="tool-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <!-- CSS Clamp() Generator -->
+                    <a href="tools/clamp-generator/index.html" class="tool-card" data-category="utility">
+                        <div class="tool-icon">
+                            <i class="fas fa-text-height"></i>
+                        </div>
+                        <div class="tool-content">
+                            <h3 class="tool-title">CSS Clamp() Generator</h3>
+                            <p class="tool-description">
+                                Generate responsive font sizes using the CSS clamp() function with min, max, and fluid
+                                values.
+                            </p>
+                            <div class="tool-tags">
+                                <span class="tag">CSS</span>
+                                <span class="tag">Typography</span>
+                                <!-- Relative Date Formatter -->
+                                <a href="tools/relative-date/index.html" class="tool-card" data-category="utility">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-clock"></i>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-
-                            <!-- Kanban Board -->
-                            <a href="tools/kanban-board/index.html" class="tool-card" data-category="utility"
-                                data-featured="true">
-                                <div class="tool-icon">
-                                    <i class="fas fa-columns"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Kanban Board</h3>
-                                    <p class="tool-description">Organize your tasks with a simple drag-and-drop Kanban
-                                        board.
-                                        Create, edit, and move tasks between columns with data persistence.</p>
-                                    <div class="tool-tags">
-                                        <span class="tag">Productivity</span>
-                                        <span class="tag">Task Management</span>
-                                        <span class="tag">Utility</span>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">Relative Date Formatter</h3>
+                                        <p class="tool-description">
+                                            Input a past or future date/time to see it in a human-readable relative
+                                            format,
+                                            like '5
+                                            minutes ago' or 'in 3 months'.
+                                        </p>
+                                        <div class="tool-tags flex">
+                                            <span class="tag">Date</span>
+                                            <span class="tag">Time</span>
+                                            <span class="tag">Utility</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-
-                            <!-- Censor / Word Masker -->
-                            <a href="tools/censor-tool/index.html" class="tool-card" data-category="text">
-                                <div class="tool-icon">
-                                    <i class="fas fa-ban"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Censor / Word Masker</h3>
-                                    <p class="tool-description">
-                                        Replace listed words in text with asterisks, custom characters, or fixed labels.
-                                    </p>
-                                    <div class="tool-tags flex">
-                                        <span class="tag">Text</span>
-                                        <span class="tag">Utility</span>
-                                        <span class="tag">Filter</span>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
+                                </a>
 
-                            <!-- Web Speech API -->
-                            <a href="tools/web-speech-api/index.html" class="tool-card" data-category="utility"
-                                data-featured="true">
-                                <div class="tool-icon">
-                                    <i class="fas fa-microphone"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Web Speech API</h3>
-                                    <p class="tool-description">Experience speech recognition and synthesis. Convert
-                                        speech to text
-                                        and text to speech using your browser's built-in capabilities.</p>
-                                    <div class="tool-tags">
-                                        <span class="tag">Speech</span>
-                                        <span class="tag">AI</span>
-                                        <span class="tag">Utility</span>
+                                <!-- Kanban Board -->
+                                <a href="tools/kanban-board/index.html" class="tool-card" data-category="utility"
+                                    data-featured="true">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-columns"></i>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-
-                            <!-- Code Diff Viewer -->
-                            <a href="tools/code-diff-viewer/index.html" class="tool-card" data-category="code"
-                                data-featured="true">
-                                <div class="tool-icon">
-                                    <i class="fas fa-code-branch"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Code Diff Viewer</h3>
-                                    <p class="tool-description">Compare code snippets side-by-side with GitHub-style
-                                        diff
-                                        highlighting. Upload files or paste code to see detailed differences.</p>
-                                    <div class="tool-tags">
-                                        <span class="tag">Code</span>
-                                        <span class="tag">Diff</span>
-                                        <span class="tag">Comparison</span>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">Kanban Board</h3>
+                                        <p class="tool-description">Organize your tasks with a simple drag-and-drop
+                                            Kanban
+                                            board.
+                                            Create, edit, and move tasks between columns with data persistence.</p>
+                                        <div class="tool-tags">
+                                            <span class="tag">Productivity</span>
+                                            <span class="tag">Task Management</span>
+                                            <span class="tag">Utility</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-
-                            <!-- String Reverser -->
-                            <a href="tools/string-reverser/index.html" class="tool-card" data-category="text">
-                                <div class="tool-icon">
-                                    <i class="fas fa-sync-alt"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">String Reverser</h3>
-                                    <p class="tool-description">Reverse any text instantly for coding exercises, data
-                                        transformation, input testing, obfuscation, and playful text effects.</p>
-                                    <div class="tool-tags">
-                                        <span class="tag">String</span>
-                                        <span class="tag">Reverse</span>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-                            <!-- Text Trimmer -->
-                            <a href="tools/text-trimmer/index.html" class="tool-card" data-category="text">
-                                <div class="tool-icon">
-                                    <i class="fas fa-scissors"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Text Trimmer</h3>
-                                    <p class="tool-description">Remove leading/trailing whitespace and normalize spaces
-                                        in your
-                                        text. Perfect for data cleaning and text preprocessing.</p>
-                                    <div class="tool-tags">
-                                        <span class="tag">Text</span>
-                                        <span class="tag">Trim</span>
-                                        <span class="tag">Clean</span>
+                                </a>
+
+                                <!-- Censor / Word Masker -->
+                                <a href="tools/censor-tool/index.html" class="tool-card" data-category="text">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-ban"></i>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-                            <a href="tools/code-beautifier/index.html" class="tool-card" data-category="code">
-                                <div class="tool-icon">
-                                    <i class="fas fa-code tool-icon"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Code Beautifier</h3>
-                                    <p class="tool-description">Paste messy HTML code and instantly get beautifully
-                                        formatted code.
-                                    </p>
-                                    <div class="tool-tags">
-                                        <span class="tag">Code</span>
-                                        <span class="tag">Beautify</span>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">Censor / Word Masker</h3>
+                                        <p class="tool-description">
+                                            Replace listed words in text with asterisks, custom characters, or fixed
+                                            labels.
+                                        </p>
+                                        <div class="tool-tags flex">
+                                            <span class="tag">Text</span>
+                                            <span class="tag">Utility</span>
+                                            <span class="tag">Filter</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-
-
-                            <!-- Text Reapeater  -->
-                            <a href="tools/text-repeater/index.html" class="tool-card" data-category="text">
-                                <div class="tool-icon">
-                                    <i class="fas fa-sync"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Text Repeater</h3>
-                                    <p class="tool-description">Repeat any text a specified number of times.</p>
-                                    <div class="tool-tags">
-                                        <span class="tag">Text</span>
-                                        <span class="tag">Utility</span>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
+                                </a>
 
-                            <!-- Even Odd Checker -->
-                            <a href="tools/even-odd-checker/index.html" class="tool-card" data-category="utility">
-                                <div class="tool-icon">
-                                    <i class="fas fa-calculator"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Even Odd Checker</h3>
-                                    <p class="tool-description">
-                                        A simple tool to check whether a number is even or odd. Perfect for quick
-                                        mathematical
-                                        verifications.
-                                    </p>
-                                    <div class="tool-tags">
-                                        <span class="tag">Math</span>
-                                        <span class="tag">Utility</span>
+                                <!-- Web Speech API -->
+                                <a href="tools/web-speech-api/index.html" class="tool-card" data-category="utility"
+                                    data-featured="true">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-microphone"></i>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-
-                            <!-- Palindrome Checker -->
-                            <a href="tools/palindrome-checker/index.html" class="tool-card" data-category="text">
-                                <div class="tool-icon">
-                                    <i class="fas fa-spell-check"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Palindrome Checker</h3>
-                                    <p class="tool-description">
-                                        Check if a word or phrase reads the same forwards and backwards.
-                                    </p>
-                                    <div class="tool-tags">
-                                        <span class="tag">Text</span>
-                                        <span class="tag">Utility</span>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">Web Speech API</h3>
+                                        <p class="tool-description">Experience speech recognition and synthesis. Convert
+                                            speech to text
+                                            and text to speech using your browser's built-in capabilities.</p>
+                                        <div class="tool-tags">
+                                            <span class="tag">Speech</span>
+                                            <span class="tag">AI</span>
+                                            <span class="tag">Utility</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-
-                            <!-- Character Counter -->
-                            <a href="tools/character-count/index.html" class="tool-card" data-category="utility">
-                                <div class="tool-icon">
-                                    <i class="fas fa-text-width"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Character Counter</h3>
-                                    <p class="tool-description">
-                                        Instantly count the number of characters in any text input.
-                                    </p>
-                                    <div class="tool-tags">
-                                        <span class="tag">Text</span>
-                                        <span class="tag">Utility</span>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
+                                </a>
 
-                            <!-- Number Base Converter -->
-                            <a href="tools/number-base-converter/index.html" class="tool-card" data-category="utility">
-                                <div class="tool-icon">
-                                    <i class="fas fa-exchange-alt"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Number Base Converter</h3>
-                                    <p class="tool-description">
-                                        A simple tool to convert numbers between Decimal, Binary, Octal, and
-                                        Hexadecimal.
-                                    </p>
-                                    <div class="tool-tags">
-                                        <span class="tag">Binary</span>
-                                        <span class="tag">Decimal</span>
-                                        <span class="tag">Octal</span>
-                                        <span class="tag">Hexadecimal</span>
+                                <!-- Code Diff Viewer -->
+                                <a href="tools/code-diff-viewer/index.html" class="tool-card" data-category="code"
+                                    data-featured="true">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-code-branch"></i>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-
-                            <!-- EMI Calculator -->
-                            <a href="tools/emi-calculator/index.html" class="tool-card" data-category="utility">
-                                <div class="tool-icon">
-                                    <i class="fas fa-money-bill-wave"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">EMI Calculator</h3>
-                                    <p class="tool-description">
-                                        Calculate monthly EMI, total payment and total interest by entering principal,
-                                        annual rate
-                                        and tenure.
-                                    </p>
-                                    <div class="tool-tags">
-                                        <span class="tag">Finance</span>
-                                        <span class="tag">EMI</span>
-                                        <span class="tag">Calculator</span>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">Code Diff Viewer</h3>
+                                        <p class="tool-description">Compare code snippets side-by-side with GitHub-style
+                                            diff
+                                            highlighting. Upload files or paste code to see detailed differences.</p>
+                                        <div class="tool-tags">
+                                            <span class="tag">Code</span>
+                                            <span class="tag">Diff</span>
+                                            <span class="tag">Comparison</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-
-                            <!-- JSON-YAML-converter -->
-                            <a href="tools/json-yaml-converter/index.html" class="tool-card" data-category="utility">
-                                <div class="tool-icon">
-                                    <i class="fas fa-file-code"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">YAML ↔ JSON Converter</h3>
-                                    <p class="tool-description">
-                                        Easily convert YAML to JSON and JSON to YAML. Perfect for developers working
-                                        with APIs or
-                                        config files.
-                                    </p>
-                                    <div class="tool-tags">
-                                        <span class="tag">JSON</span>
-                                        <span class="tag">YAML</span>
-                                        <span class="tag">Utility</span>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
+                                </a>
 
-                            <!-- XML to JSON -->
-                            <a href="tools/xml-to-json-converter/index.html" class="tool-card" data-category="utility">
-                                <div class="tool-icon">
-                                    <i class="fas fa-exchange"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">XML to JSON</h3>
-                                    <p class="tool-description">
-                                        A tool to convert your XML data into JSON into format. With feature to copy and
-                                        download the
-                                        JSON file.
-                                    </p>
-                                    <div class="tool-tags">
-                                        <span class="tag">Converter</span>
-                                        <span class="tag">Utility</span>
+                                <!-- String Reverser -->
+                                <a href="tools/string-reverser/index.html" class="tool-card" data-category="text">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-sync-alt"></i>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-
-                            <!-- JSON → CSV Converter -->
-                            <a href="tools/json-csv-converter/index.html" class="tool-card" data-category="utility">
-                                <div class="tool-icon">
-                                    <i class="fas fa-file-csv"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">JSON → CSV Converter</h3>
-                                    <p class="tool-description">
-                                        Convert an array of JSON objects into CSV format automatically using the keys
-                                        from the first
-                                        object.
-                                    </p>
-                                    <div class="tool-tags">
-                                        <span class="tag">JSON</span>
-                                        <span class="tag">CSV</span>
-                                        <span class="tag">Utility</span>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">String Reverser</h3>
+                                        <p class="tool-description">Reverse any text instantly for coding exercises,
+                                            data
+                                            transformation, input testing, obfuscation, and playful text effects.</p>
+                                        <div class="tool-tags">
+                                            <span class="tag">String</span>
+                                            <span class="tag">Reverse</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-
-                            <!-- Video to GIF Converter -->
-                            <a href="tools/Video-to-Gif converter/index.html" class="tool-card" data-category="utility">
-                                <div class="tool-icon">
-                                    <i class="fas fa-film"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Video to GIF Converter</h3>
-                                    <p class="tool-description">
-                                        Convert video clips to high-quality GIFs. Upload a video, select the segment,
-                                        and
-                                        generate a GIF.
-                                    </p>
-                                    <div class="tool-tags">
-                                        <span class="tag">Video</span>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-
-
-                            <!-- File Zipper -->
-                            <a href="tools/file-zipper/index.html" class="tool-card" data-category="utility">
-                                <div class="tool-icon">
-                                    <i class="fas fas fa-file-zipper"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">File Zipper</h3>
-                                    <p class="tool-description">
-                                        Convert your files into a zip and download it.
-                                    </p>
-                                    <div class="tool-tags">
-                                        <span class="tag">Pdf</span>
-                                        <span class="tag">Zip</span>
-                                        <span class="tag">Utility</span>
+                                </a>
+                                <!-- Text Trimmer -->
+                                <a href="tools/text-trimmer/index.html" class="tool-card" data-category="text">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-scissors"></i>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-
-                            <!-- File Encryptor (AES-GCM) -->
-                            <a href="tools/file-encryptor/index.html" class="tool-card" data-category="utility">
-                                <div class="tool-icon">
-                                    <i class="fas fa-lock"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">File Encryptor</h3>
-                                    <p class="tool-description">
-                                        Encrypt and decrypt files locally using AES-GCM with a password. Nothing is
-                                        uploaded.
-                                    </p>
-                                    <div class="tool-tags">
-                                        <span class="tag">Security</span>
-                                        <span class="tag">AES-GCM</span>
-                                        <span class="tag">PBKDF2</span>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">Text Trimmer</h3>
+                                        <p class="tool-description">Remove leading/trailing whitespace and normalize
+                                            spaces
+                                            in your
+                                            text. Perfect for data cleaning and text preprocessing.</p>
+                                        <div class="tool-tags">
+                                            <span class="tag">Text</span>
+                                            <span class="tag">Trim</span>
+                                            <span class="tag">Clean</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-
-                            <!-- Color Contrast Checker -->
-                            <a href="tools/color-contrast-checker/index.html" class="tool-card" data-category="utility">
-                                <div class="tool-icon">
-                                    <i class="fas fa-layer-group"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Color Contrast Checker</h3>
-                                    <p class="tool-description">
-                                        A tool to check contrast between two colors and certify if they meet the WCAG AA
-                                        and AAA
-                                        standards
-                                    </p>
-                                    <div class="tool-tags flex ">
-                                        <span class="tag">Converter</span>
-                                        <span class="tag">Utility</span>
-                                        <span class="tag">Checker</span>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-
-                            <!-- CSV Viewer & Editor -->
-                            <a href="tools/csv-viewer/index.html" class="tool-card" data-category="utility">
-                                <div class="tool-icon">
-                                    <i class="fas fa-file-csv"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">CSV Viewer & Editor</h3>
-                                    <p class="tool-description">
-                                        Paste CSV to view it as a formatted, editable table. Edit cells inline and
-                                        export the
-                                        updated CSV.
-                                    </p>
-                                    <div class="tool-tags">
-                                        <span class="tag">CSV</span>
-                                        <span class="tag">Table</span>
-                                        <span class="tag">Utility</span>
+                                </a>
+                                <a href="tools/code-beautifier/index.html" class="tool-card" data-category="code">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-code tool-icon"></i>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-
-                            <!-- CSS Specificity Calculator -->
-                            <a href="tools/css-specificity-calculator/index.html" class="tool-card"
-                                data-category="utility">
-                                <div class="tool-icon">
-                                    <i class="fas fa-calculator"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">CSS Specificity Calculator</h3>
-                                    <p class="tool-description">
-                                        Enter a CSS selector to calculate its specificity score in the format [IDs,
-                                        Classes/Attributes, Elements].
-                                    </p>
-                                    <div class="tool-tags">
-                                        <span class="tag">CSS</span>
-                                        <span class="tag">Specificity</span>
-                                        <span class="tag">Utility</span>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">Code Beautifier</h3>
+                                        <p class="tool-description">Paste messy HTML code and instantly get beautifully
+                                            formatted code.
+                                        </p>
+                                        <div class="tool-tags">
+                                            <span class="tag">Code</span>
+                                            <span class="tag">Beautify</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
 
-                            <!-- CSS Animation Showcase -->
-                            <a href="tools/css-animations/index.html" class="tool-card" data-category="utility">
-                                <div class="tool-icon">
-                                    <i class="fas fa-magic"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">CSS Animation Showcase</h3>
-                                    <p class="tool-description">
-                                        Preview pre-made CSS animations like bounce, fade, slide, and copy the code
-                                        instantly.
-                                    </p>
-                                    <div class="tool-tags flex">
-                                        <span class="tag">CSS</span>
-                                        <span class="tag">Animation</span>
 
-                                        <!-- Prime Finder -->
-                                        <a href="tools/prime-finder/index.html" class="tool-card"
-                                            data-category="utility">
-                                            <div class="tool-icon">
-                                                <i class="fas fa-hashtag"></i>
-                                            </div>
-                                            <div class="tool-content">
-                                                <h3 class="tool-title">Prime Finder</h3>
-                                                <p class="tool-description">
-                                                    Find all prime numbers up to a large number without freezing your
-                                                    browser using Web Workers.
-                                                    Shows progress and allows download.
-                                                </p>
-                                                <div class="tool-tags">
-                                                    <span class="tag">Prime</span>
-                                                    <span class="tag">Math</span>
-                                                    <span class="tag">Utility</span>
+                                <!-- Text Reapeater  -->
+                                <a href="tools/text-repeater/index.html" class="tool-card" data-category="text">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-sync"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">Text Repeater</h3>
+                                        <p class="tool-description">Repeat any text a specified number of times.</p>
+                                        <div class="tool-tags">
+                                            <span class="tag">Text</span>
+                                            <span class="tag">Utility</span>
+                                        </div>
+                                    </div>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
+
+                                <!-- Even Odd Checker -->
+                                <a href="tools/even-odd-checker/index.html" class="tool-card" data-category="utility">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-calculator"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">Even Odd Checker</h3>
+                                        <p class="tool-description">
+                                            A simple tool to check whether a number is even or odd. Perfect for quick
+                                            mathematical
+                                            verifications.
+                                        </p>
+                                        <div class="tool-tags">
+                                            <span class="tag">Math</span>
+                                            <span class="tag">Utility</span>
+                                        </div>
+                                    </div>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
+
+                                <!-- Palindrome Checker -->
+                                <a href="tools/palindrome-checker/index.html" class="tool-card" data-category="text">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-spell-check"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">Palindrome Checker</h3>
+                                        <p class="tool-description">
+                                            Check if a word or phrase reads the same forwards and backwards.
+                                        </p>
+                                        <div class="tool-tags">
+                                            <span class="tag">Text</span>
+                                            <span class="tag">Utility</span>
+                                        </div>
+                                    </div>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
+
+                                <!-- Character Counter -->
+                                <a href="tools/character-count/index.html" class="tool-card" data-category="utility">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-text-width"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">Character Counter</h3>
+                                        <p class="tool-description">
+                                            Instantly count the number of characters in any text input.
+                                        </p>
+                                        <div class="tool-tags">
+                                            <span class="tag">Text</span>
+                                            <span class="tag">Utility</span>
+                                        </div>
+                                    </div>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
+
+                                <!-- Number Base Converter -->
+                                <a href="tools/number-base-converter/index.html" class="tool-card"
+                                    data-category="utility">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-exchange-alt"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">Number Base Converter</h3>
+                                        <p class="tool-description">
+                                            A simple tool to convert numbers between Decimal, Binary, Octal, and
+                                            Hexadecimal.
+                                        </p>
+                                        <div class="tool-tags">
+                                            <span class="tag">Binary</span>
+                                            <span class="tag">Decimal</span>
+                                            <span class="tag">Octal</span>
+                                            <span class="tag">Hexadecimal</span>
+                                        </div>
+                                    </div>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
+
+                                <!-- Favicon Preview Tool -->
+                                <a href="tools/favicon-preview-tool/index.html" class="tool-card"
+                                    data-category="design">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">Favicon Preview Tool</h3>
+                                        <p class="tool-description">
+                                            Upload an image and preview how it looks as a favicon in a mock browser tab.
+                                        </p>
+                                        <div class="tool-tags">
+                                            <span class="tag">Favicon</span>
+                                            <span class="tag">Preview</span>
+                                            <span class="tag">Design</span>
+                                        </div>
+                                    </div>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
+
+                                <!-- Number Base Converter -->
+                                <a href="tools/number-base-converter/index.html" class="tool-card"
+                                    data-category="utility">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-exchange-alt"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">Number Base Converter</h3>
+                                        <p class="tool-description">
+                                            A simple tool to convert numbers between Decimal, Binary, Octal, and
+                                            Hexadecimal.
+                                        </p>
+                                        <div class="tool-tags">
+                                            <span class="tag">Binary</span>
+                                            <span class="tag">Decimal</span>
+                                            <span class="tag">Octal</span>
+                                            <span class="tag">Hexadecimal</span>
+                                        </div>
+                                    </div>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
+
+                                <!-- EMI Calculator -->
+                                <a href="tools/emi-calculator/index.html" class="tool-card" data-category="utility">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">EMI Calculator</h3>
+                                        <p class="tool-description">
+                                            Calculate monthly EMI, total payment and total interest by entering
+                                            principal,
+                                            annual rate
+                                            and tenure.
+                                        </p>
+                                        <div class="tool-tags">
+                                            <span class="tag">Finance</span>
+                                            <span class="tag">EMI</span>
+                                            <span class="tag">Calculator</span>
+                                        </div>
+                                    </div>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
+
+                                <!-- JSON-YAML-converter -->
+                                <a href="tools/json-yaml-converter/index.html" class="tool-card"
+                                    data-category="utility">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-file-code"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">YAML ↔ JSON Converter</h3>
+                                        <p class="tool-description">
+                                            Easily convert YAML to JSON and JSON to YAML. Perfect for developers working
+                                            with APIs or
+                                            config files.
+                                        </p>
+                                        <div class="tool-tags">
+                                            <span class="tag">JSON</span>
+                                            <span class="tag">YAML</span>
+                                            <span class="tag">Utility</span>
+                                        </div>
+                                    </div>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
+
+                                <!-- XML to JSON -->
+                                <a href="tools/xml-to-json-converter/index.html" class="tool-card"
+                                    data-category="utility">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-exchange"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">XML to JSON</h3>
+                                        <p class="tool-description">
+                                            A tool to convert your XML data into JSON into format. With feature to copy
+                                            and
+                                            download the
+                                            JSON file.
+                                        </p>
+                                        <div class="tool-tags">
+                                            <span class="tag">Converter</span>
+                                            <span class="tag">Utility</span>
+                                        </div>
+                                    </div>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
+
+                                <!-- JSON → CSV Converter -->
+                                <a href="tools/json-csv-converter/index.html" class="tool-card" data-category="utility">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-file-csv"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">JSON → CSV Converter</h3>
+                                        <p class="tool-description">
+                                            Convert an array of JSON objects into CSV format automatically using the
+                                            keys
+                                            from the first
+                                            object.
+                                        </p>
+                                        <div class="tool-tags">
+                                            <span class="tag">JSON</span>
+                                            <span class="tag">CSV</span>
+                                            <span class="tag">Utility</span>
+                                        </div>
+                                    </div>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
+
+                                <!-- Video to GIF Converter -->
+                                <a href="tools/Video-to-Gif converter/index.html" class="tool-card"
+                                    data-category="utility">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-film"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">Video to GIF Converter</h3>
+                                        <p class="tool-description">
+                                            Convert video clips to high-quality GIFs. Upload a video, select the
+                                            segment,
+                                            and
+                                            generate a GIF.
+                                        </p>
+                                        <div class="tool-tags">
+                                            <span class="tag">Video</span>
+                                        </div>
+                                    </div>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
+
+
+                                <!-- File Zipper -->
+                                <a href="tools/file-zipper/index.html" class="tool-card" data-category="utility">
+                                    <div class="tool-icon">
+                                        <i class="fas fas fa-file-zipper"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">File Zipper</h3>
+                                        <p class="tool-description">
+                                            Convert your files into a zip and download it.
+                                        </p>
+                                        <div class="tool-tags">
+                                            <span class="tag">Pdf</span>
+                                            <span class="tag">Zip</span>
+                                            <span class="tag">Utility</span>
+                                        </div>
+                                    </div>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
+
+                                <!-- File Encryptor (AES-GCM) -->
+                                <a href="tools/file-encryptor/index.html" class="tool-card" data-category="utility">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-lock"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">File Encryptor</h3>
+                                        <p class="tool-description">
+                                            Encrypt and decrypt files locally using AES-GCM with a password. Nothing is
+                                            uploaded.
+                                        </p>
+                                        <div class="tool-tags">
+                                            <span class="tag">Security</span>
+                                            <span class="tag">AES-GCM</span>
+                                            <span class="tag">PBKDF2</span>
+                                        </div>
+                                    </div>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
+
+                                <!-- Color Contrast Checker -->
+                                <a href="tools/color-contrast-checker/index.html" class="tool-card"
+                                    data-category="utility">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-layer-group"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">Color Contrast Checker</h3>
+                                        <p class="tool-description">
+                                            A tool to check contrast between two colors and certify if they meet the
+                                            WCAG AA
+                                            and AAA
+                                            standards
+                                        </p>
+                                        <div class="tool-tags flex ">
+                                            <span class="tag">Converter</span>
+                                            <span class="tag">Utility</span>
+                                            <span class="tag">Checker</span>
+                                        </div>
+                                    </div>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
+
+                                <!-- CSV Viewer & Editor -->
+                                <a href="tools/csv-viewer/index.html" class="tool-card" data-category="utility">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-file-csv"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">CSV Viewer & Editor</h3>
+                                        <p class="tool-description">
+                                            Paste CSV to view it as a formatted, editable table. Edit cells inline and
+                                            export the
+                                            updated CSV.
+                                        </p>
+                                        <div class="tool-tags">
+                                            <span class="tag">CSV</span>
+                                            <span class="tag">Table</span>
+                                            <span class="tag">Utility</span>
+                                        </div>
+                                    </div>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
+
+                                <!-- CSS Specificity Calculator -->
+                                <a href="tools/css-specificity-calculator/index.html" class="tool-card"
+                                    data-category="utility">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-calculator"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">CSS Specificity Calculator</h3>
+                                        <p class="tool-description">
+                                            Enter a CSS selector to calculate its specificity score in the format [IDs,
+                                            Classes/Attributes, Elements].
+                                        </p>
+                                        <div class="tool-tags">
+                                            <span class="tag">CSS</span>
+                                            <span class="tag">Specificity</span>
+                                            <span class="tag">Utility</span>
+                                        </div>
+                                    </div>
+                                    <div class="tool-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </a>
+
+                                <!-- CSS Animation Showcase -->
+                                <a href="tools/css-animations/index.html" class="tool-card" data-category="utility">
+                                    <div class="tool-icon">
+                                        <i class="fas fa-magic"></i>
+                                    </div>
+                                    <div class="tool-content">
+                                        <h3 class="tool-title">CSS Animation Showcase</h3>
+                                        <p class="tool-description">
+                                            Preview pre-made CSS animations like bounce, fade, slide, and copy the code
+                                            instantly.
+                                        </p>
+                                        <div class="tool-tags flex">
+                                            <span class="tag">CSS</span>
+                                            <span class="tag">Animation</span>
+
+                                            <!-- Prime Finder -->
+                                            <a href="tools/prime-finder/index.html" class="tool-card"
+                                                data-category="utility">
+                                                <div class="tool-icon">
+                                                    <i class="fas fa-hashtag"></i>
                                                 </div>
-                                            </div>
-                                            <div class="tool-arrow">
-                                                <i class="fas fa-arrow-right"></i>
-                                            </div>
-                                        </a>
-
-                                        <!-- CSS Grid Generator -->
-                                        <a href="tools/css-grid-generator/index.html" class="tool-card"
-                                            data-category="utility">
-                                            <div class="tool-icon">
-                                                <i class="fas fa-th-large"></i>
-                                            </div>
-                                            <div class="tool-content">
-                                                <h3 class="tool-title">CSS Grid Generator</h3>
-                                                <p class="tool-description">
-                                                    Create interactive CSS Grid layouts by defining rows, columns, gaps,
-                                                    and item positions,
-                                                    with ready-to-use CSS output.
-                                                </p>
-                                                <div class="tool-tags">
-                                                    <span class="tag">CSS</span>
-                                                    <span class="tag">Grid</span>
-                                                    <span class="tag">Utility</span>
+                                                <div class="tool-content">
+                                                    <h3 class="tool-title">Prime Finder</h3>
+                                                    <p class="tool-description">
+                                                        Find all prime numbers up to a large number without freezing
+                                                        your
+                                                        browser using Web Workers.
+                                                        Shows progress and allows download.
+                                                    </p>
+                                                    <div class="tool-tags">
+                                                        <span class="tag">Prime</span>
+                                                        <span class="tag">Math</span>
+                                                        <span class="tag">Utility</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="tool-arrow">
-                                                <i class="fas fa-arrow-right"></i>
-                                            </div>
-                                        </a>
-
-                                        <!-- JSON Schema Validator -->
-                                        <a href="tools/json-schema-validator/index.html" class="tool-card"
-                                            data-category="utility">
-                                            <div class="tool-icon">
-                                                <i class="fas fa-shield-alt"></i>
-                                            </div>
-                                            <div class="tool-content">
-                                                <h3 class="tool-title">JSON Schema Validator</h3>
-                                                <p class="tool-description">
-                                                    Validate a JSON object against a JSON schema and get detailed error
-                                                    messages or confirm
-                                                    validity.
-                                                </p>
-                                                <div class="tool-tags">
-                                                    <span class="tag">JSON</span>
-                                                    <span class="tag">Schema</span>
-                                                    <span class="tag">Utility</span>
+                                                <div class="tool-arrow">
+                                                    <i class="fas fa-arrow-right"></i>
                                                 </div>
-                                            </div>
-                                            <div class="tool-arrow">
-                                                <i class="fas fa-arrow-right"></i>
-                                            </div>
-                                        </a>
+                                            </a>
 
-                                        <!-- Internet Speed Checker -->
-                                        <a href="tools/internet-speed/index.html" class="tool-card"
-                                            data-category="utility">
-                                            <div class="tool-icon">
-                                                <i class="fas fa-compress"></i>
-                                            </div>
-                                            <div class="tool-content">
-                                                <h3 class="tool-title">Internet Spped Check</h3>
-                                                <p class="tool-description">A simple and fast internet speed testing
-                                                    tool built with HTML, CSS,
-                                                    and JavaScript to measure your connection's download, upload, and
-                                                    ping."</p>
-                                                <div class="tool-tags">
-                                                    <span class="tag">Tool</span>
-                                                    <span class="tag">Internet Speed</span>
-                                                    <span class="tag">Web</span>
+                                            <!-- CSS Grid Generator -->
+                                            <a href="tools/css-grid-generator/index.html" class="tool-card"
+                                                data-category="utility">
+                                                <div class="tool-icon">
+                                                    <i class="fas fa-th-large"></i>
                                                 </div>
-                                            </div>
-                                            <div class="tool-arrow">
-                                                <i class="fas fa-arrow-right"></i>
-                                            </div>
-                                        </a>
-
-                                        <!-- Word Scrambler -->
-                                        <a href="tools/word-scrambler/index.html" class="tool-card"
-                                            data-category="text">
-                                            <div class="tool-icon">
-                                                <i class="fas fa-random"></i>
-                                            </div>
-                                            <div class="tool-content">
-                                                <h3 class="tool-title">Word Scrambler</h3>
-                                                <p class="tool-description">Scramble the letters of each word while
-                                                    keeping the first and last
-                                                    letters fixed.</p>
-                                                <div class="tool-tags">
-                                                    <span class="tag">Text</span>
-                                                    <span class="tag">Scramble</span>
+                                                <div class="tool-content">
+                                                    <h3 class="tool-title">CSS Grid Generator</h3>
+                                                    <p class="tool-description">
+                                                        Create interactive CSS Grid layouts by defining rows, columns,
+                                                        gaps,
+                                                        and item positions,
+                                                        with ready-to-use CSS output.
+                                                    </p>
+                                                    <div class="tool-tags">
+                                                        <span class="tag">CSS</span>
+                                                        <span class="tag">Grid</span>
+                                                        <span class="tag">Utility</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="tool-arrow">
-                                                <i class="fas fa-arrow-right"></i>
-                                            </div>
-                                        </a>
-
-                                        <!-- Text Extraction Tool -->
-                                        <a href="tools/text-extractor/index.html" class="tool-card"
-                                            data-category="utility">
-                                            <div class="tool-icon">
-                                                <i class="fas fa-file-alt"></i>
-                                            </div>
-                                            <div class="tool-content">
-                                                <h3 class="tool-title">Text Extractor</h3>
-                                                <p class="tool-description">
-                                                    Extract meaningful text from various document formats, including
-                                                    PDFs, Word files and images
-                                                    using OCR technology.
-                                                </p>
-                                                <div class="tool-tags">
-                                                    <span class="tag">Text</span>
-                                                    <span class="tag">Extraction</span>
-                                                    <span class="tag">Utility</span>
+                                                <div class="tool-arrow">
+                                                    <i class="fas fa-arrow-right"></i>
                                                 </div>
-                                            </div>
-                                            <div class="tool-arrow">
-                                                <i class="fas fa-arrow-right"></i>
-                                            </div>
-                                        </a>
-<<<<<<< webp-converter
-=======
-                                        <!-- Image Performance Audit Tool -->
-                                        <a href="tools/image-performance-audit/index.html" class="tool-card"
-                                            data-category="utility">
-                                            <div class="tool-icon">
-                                                <i class="fas fa-chart-line"></i>
-                                            </div>
-                                            <div class="tool-content">
-                                                <h3 class="tool-title">Image Performance Audit</h3>
-                                                <p class="tool-description">
-                                                    Analyze any webpage's images for performance issues, missing alt tags, 
-                                                    and optimization opportunities. Get detailed insights and recommendations.
-                                                </p>
-                                                <div class="tool-tags">
-                                                    <span class="tag">Performance</span>
-                                                    <span class="tag">SEO</span>
-                                                    <span class="tag">Images</span>
+                                            </a>
+
+                                            <!-- JSON Schema Validator -->
+                                            <a href="tools/json-schema-validator/index.html" class="tool-card"
+                                                data-category="utility">
+                                                <div class="tool-icon">
+                                                    <i class="fas fa-shield-alt"></i>
                                                 </div>
-                                            </div>
-                                            <div class="tool-arrow">
-                                                <i class="fas fa-arrow-right"></i>
-                                            </div>
-                                        </a>
-                                        <!-- String-Length_counter -->
-                                        <a href="tools/string-length-counter/index.html" class="tool-card"
-                                            data-category="utility">
-                                            <div class="tool-icon">
-                                                <i class="fas fa-text-width"></i>
-                                            </div>
-                                            <div class="tool-content">
-                                                <h3 class="tool-title">String Length Counter</h3>
-                                                <p class="tool-description">
-                                                    A simple tool to count the number of characters in any text input.
-                                                </p>
-                                                <div class="tool-tags">
-                                                    <span class="tag">Text</span>
-                                                    <span class="tag">Utility</span>
-
+                                                <div class="tool-content">
+                                                    <h3 class="tool-title">JSON Schema Validator</h3>
+                                                    <p class="tool-description">
+                                                        Validate a JSON object against a JSON schema and get detailed
+                                                        error
+                                                        messages or confirm
+                                                        validity.
+                                                    </p>
+                                                    <div class="tool-tags">
+                                                        <span class="tag">JSON</span>
+                                                        <span class="tag">Schema</span>
+                                                        <span class="tag">Utility</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="tool-arrow">
-                                                <i class="fas fa-arrow-right"></i>
-                                            </div>
-                                        </a>
-                                        <!-- percentage-calculator -->
-                                        <a href="tools/percentage-calculator/index.html" class="tool-card"
-                                            data-category="utility">
-                                            <div class="tool-icon">
-                                                <i class="fas fa-percentage"></i>
-                                            </div>
-                                            <div class="tool-content">
-                                                <h3 class="tool-title">Percentage Calculator</h3>
-                                                <p class="tool-description">
-                                                    A simple percentage calculator to find percentage of a number.
-                                                </p>
-                                                <div class="tool-tags">
-                                                    <span class="tag">Math</span>
-                                                    <span class="tag">Utility</span>
+                                                <div class="tool-arrow">
+                                                    <i class="fas fa-arrow-right"></i>
                                                 </div>
-                                            </div>
-                                            <div class="tool-arrow">
-                                                <i class="fas fa-arrow-right"></i>
-                                            </div>
-                                        </a>
-                                        <!-- meme generator -->
-                                        <a
-                                          href="tools/meme-generator/index.html"
-                                          class="tool-card"
-                                          data-category="your-category"
-                                        >
-                                          <div class="tool-icon">
-                                            <i class="fas fa-image"></i>
-                                          </div>
-                                          <div class="tool-content">
-                                            <h3 class="tool-title">Meme Generator</h3>
-                                            <p class="tool-description">
-                                              Generate memes with customizable text and images.
-                                            </p>
-                                            <div class="tool-tags">
-                                              <span class="tag">Image</span>
-                                              <span class="tag">Utility</span>
-                                            </div>
-                                          </div>
-                                          <div class="tool-arrow">
-                                            <i class="fas fa-arrow-right"></i>
-                                          </div>
-                                        </a>
+                                            </a>
 
-                                        <!-- diff checker -->
-                                        <a
-                                          href="tools/text-diff-checker/index.html"
-                                          class="tool-card"
-                                          data-category="your-category"
-                                        >
-                                          <div class="tool-icon">
-                                            <i class="fas fa-quote-left"></i>
-                                          </div>
-                                          <div class="tool-content">
-                                            <h3 class="tool-title">Text Diff Checker</h3>
-                                            <p class="tool-description">
-                                              Compare snippets side-by-side with diff highlighting.
-                                            </p>
-                                            <div class="tool-tags">
-                                              <span class="tag">Math</span>
-                                              <span class="tag">Utility</span>
-                                            </div>
-                                          </div>
-                                          <div class="tool-arrow">
-                                            <i class="fas fa-arrow-right"></i>
-                                          </div>
-                                        </a>
-
-
-
-                                        <!-- Gantt Chart Generator -->
-                                        <a href="tools/gantt-chart-generator/index.html" class="tool-card" data-category="utility">
-                                            <div class="tool-icon">
-                                                <i class="fas fa-tasks"></i>
-                                            </div>
-                                            <div class="tool-content">
-                                                <h3 class="tool-title">Gantt Chart Generator</h3>
-                                                <p class="tool-description">Create professional Gantt charts for project planning and scheduling. Add tasks, set durations, dependencies and export as image.</p>
-                                                <div class="tool-tags">
-                                                    <span class="tag">Project</span>
-                                                    <span class="tag">Planning</span>
-                                                    <span class="tag">Charts</span>
+                                            <!-- Credit Card Validator -->
+                                            <a href="tools/credit-card-validator/index.html" class="tool-card"
+                                                data-category="utility">
+                                                <div class="tool-icon">
+                                                    <i class="fas fa-credit-card"></i>
                                                 </div>
-                                            </div>
-                                            <div class="tool-arrow">
-                                                <i class="fas fa-arrow-right"></i>
-                                            </div>
-                                        </a>
-                                        <!--CSS Gradient Generator-->
-                                        <a href="tools/css-gradient-generator/index.html" class="tool-card" data-category="utility">
-                                            <div class="tool-icon">
-                                                <i class="fas fa-fill-drip"></i>
-                                            </div>
-                                            <div class="tool-content">
-                                                <h3 class="tool-title">CSS Gradient Generator</h3>
-                                                <p class="tool-description">Create beautiful CSS gradients with an intuitive interface. Choose colors, direction, and get the CSS code instantly.</p>
-                                                <div class="tool-tags">
-                                                    <span class="tag">CSS</span>
-                                                    <span class="tag">Gradient</span>
-                                                    <span class="tag">Utility</span>
+                                                <div class="tool-content">
+                                                    <h3 class="tool-title">Credit Card Validator</h3>
+                                                    <p class="tool-description">Validate credit card numbers using the
+                                                        Luhn
+                                                        algorithm.
+                                                        Check if a card number is valid without storing any data -
+                                                        completely secure and private.</p>
+                                                    <div class="tool-tags">
+                                                        <span class="tag">Validation</span>
+                                                        <span class="tag">Security</span>
+                                                        <span class="tag">Algorithm</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="tool-arrow">
-                                                <i class="fas fa-arrow-right"></i>
-                                            </div>
-                                        </a>
->>>>>>> master
-
-                                        <!-- Add Tool Card -->
-                                        <div class="tool-card add-tool-card" data-category="all">
-                                            <div class="tool-icon">
-                                                <i class="fas fa-plus"></i>
-                                            </div>
-                                            <div class="tool-content">
-                                                <h3 class="tool-title">Add Your Tool</h3>
-                                                <p class="tool-description">Contribute a new tool and be part of
-                                                    Hacktoberfest 2025! Help us
-
-                                                    build the ultimate developer toolkit.</p>
-                                                <div class="tool-tags">
-                                                    <span class="tag">Contribute</span>
-                                                    <span class="tag">Open Source</span>
+                                                <div class="tool-arrow">
+                                                    <i class="fas fa-arrow-right"></i>
                                                 </div>
-                                            </div>
-                                            <div class="tool-arrow">
-                                                <i class="fas fa-external-link-alt"></i>
+                                            </a>
+
+                                            <!-- Internet Speed Checker -->
+                                            <a href="tools/internet-speed/index.html" class="tool-card"
+                                                data-category="utility">
+                                                <div class="tool-icon">
+                                                    <i class="fas fa-compress"></i>
+                                                </div>
+                                                <div class="tool-content">
+                                                    <h3 class="tool-title">Internet Spped Check</h3>
+                                                    <p class="tool-description">A simple and fast internet speed testing
+                                                        tool built with HTML, CSS,
+                                                        and JavaScript to measure your connection's download, upload,
+                                                        and
+                                                        ping."</p>
+                                                    <div class="tool-tags">
+                                                        <span class="tag">Tool</span>
+                                                        <span class="tag">Internet Speed</span>
+                                                        <span class="tag">Web</span>
+                                                    </div>
+                                                </div>
+                                                <div class="tool-arrow">
+                                                    <i class="fas fa-arrow-right"></i>
+                                                </div>
+                                            </a>
+
+                                            <!-- Word Scrambler -->
+                                            <a href="tools/word-scrambler/index.html" class="tool-card"
+                                                data-category="text">
+                                                <div class="tool-icon">
+                                                    <i class="fas fa-random"></i>
+                                                </div>
+                                                <div class="tool-content">
+                                                    <h3 class="tool-title">Word Scrambler</h3>
+                                                    <p class="tool-description">Scramble the letters of each word while
+                                                        keeping the first and last
+                                                        letters fixed.</p>
+                                                    <div class="tool-tags">
+                                                        <span class="tag">Text</span>
+                                                        <span class="tag">Scramble</span>
+                                                    </div>
+                                                </div>
+                                                <div class="tool-arrow">
+                                                    <i class="fas fa-arrow-right"></i>
+                                                </div>
+                                            </a>
+
+                                            <!-- Text Extraction Tool -->
+                                            <a href="tools/text-extractor/index.html" class="tool-card"
+                                                data-category="utility">
+                                                <div class="tool-icon">
+                                                    <i class="fas fa-file-alt"></i>
+                                                </div>
+                                                <div class="tool-content">
+                                                    <h3 class="tool-title">Text Extractor</h3>
+                                                    <p class="tool-description">
+                                                        Extract meaningful text from various document formats, including
+                                                        PDFs, Word files and images
+                                                        using OCR technology.
+                                                    </p>
+                                                    <div class="tool-tags">
+                                                        <span class="tag">Text</span>
+                                                        <span class="tag">Extraction</span>
+                                                        <span class="tag">Utility</span>
+                                                    </div>
+                                                </div>
+                                                <div class="tool-arrow">
+                                                    <i class="fas fa-arrow-right"></i>
+                                                </div>
+                                            </a>
+                                            <!-- Image Performance Audit Tool -->
+                                            <a href="tools/image-performance-audit/index.html" class="tool-card"
+                                                data-category="utility">
+                                                <div class="tool-icon">
+                                                    <i class="fas fa-chart-line"></i>
+                                                </div>
+                                                <div class="tool-content">
+                                                    <h3 class="tool-title">Image Performance Audit</h3>
+                                                    <p class="tool-description">
+                                                        Analyze any webpage's images for performance issues, missing alt
+                                                        tags,
+                                                        and optimization opportunities. Get detailed insights and
+                                                        recommendations.
+                                                    </p>
+                                                    <div class="tool-tags">
+                                                        <span class="tag">Performance</span>
+                                                        <span class="tag">SEO</span>
+                                                        <span class="tag">Images</span>
+                                                    </div>
+                                                </div>
+                                                <div class="tool-arrow">
+                                                    <i class="fas fa-arrow-right"></i>
+                                                </div>
+                                            </a>
+                                            <!-- String-Length_counter -->
+                                            <a href="tools/string-length-counter/index.html" class="tool-card"
+                                                data-category="utility">
+                                                <div class="tool-icon">
+                                                    <i class="fas fa-text-width"></i>
+                                                </div>
+                                                <div class="tool-content">
+                                                    <h3 class="tool-title">String Length Counter</h3>
+                                                    <p class="tool-description">
+                                                        A simple tool to count the number of characters in any text
+                                                        input.
+                                                    </p>
+                                                    <div class="tool-tags">
+                                                        <span class="tag">Text</span>
+                                                        <span class="tag">Utility</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="tool-arrow">
+                                                    <i class="fas fa-arrow-right"></i>
+                                                </div>
+                                            </a>
+                                            <!-- percentage-calculator -->
+                                            <a href="tools/percentage-calculator/index.html" class="tool-card"
+                                                data-category="utility">
+                                                <div class="tool-icon">
+                                                    <i class="fas fa-percentage"></i>
+                                                </div>
+                                                <div class="tool-content">
+                                                    <h3 class="tool-title">Percentage Calculator</h3>
+                                                    <p class="tool-description">
+                                                        A simple percentage calculator to find percentage of a number.
+                                                    </p>
+                                                    <div class="tool-tags">
+                                                        <span class="tag">Math</span>
+                                                        <span class="tag">Utility</span>
+                                                    </div>
+                                                </div>
+                                                <div class="tool-arrow">
+                                                    <i class="fas fa-arrow-right"></i>
+                                                </div>
+                                            </a>
+                                            <!-- meme generator -->
+                                            <a href="tools/meme-generator/index.html" class="tool-card"
+                                                data-category="your-category">
+                                                <div class="tool-icon">
+                                                    <i class="fas fa-image"></i>
+                                                </div>
+                                                <div class="tool-content">
+                                                    <h3 class="tool-title">Meme Generator</h3>
+                                                    <p class="tool-description">
+                                                        Generate memes with customizable text and images.
+                                                    </p>
+                                                    <div class="tool-tags">
+                                                        <span class="tag">Image</span>
+                                                        <span class="tag">Utility</span>
+                                                    </div>
+                                                </div>
+                                                <div class="tool-arrow">
+                                                    <i class="fas fa-arrow-right"></i>
+                                                </div>
+                                            </a>
+
+                                            <!-- diff checker -->
+                                            <a href="tools/text-diff-checker/index.html" class="tool-card"
+                                                data-category="your-category">
+                                                <div class="tool-icon">
+                                                    <i class="fas fa-quote-left"></i>
+                                                </div>
+                                                <div class="tool-content">
+                                                    <h3 class="tool-title">Text Diff Checker</h3>
+                                                    <p class="tool-description">
+                                                        Compare snippets side-by-side with diff highlighting.
+                                                    </p>
+                                                    <div class="tool-tags">
+                                                        <span class="tag">Math</span>
+                                                        <span class="tag">Utility</span>
+                                                    </div>
+                                                </div>
+                                                <div class="tool-arrow">
+                                                    <i class="fas fa-arrow-right"></i>
+                                                </div>
+                                            </a>
+
+
+
+                                            <!-- Gantt Chart Generator -->
+                                            <a href="tools/gantt-chart-generator/index.html" class="tool-card"
+                                                data-category="utility">
+                                                <div class="tool-icon">
+                                                    <i class="fas fa-tasks"></i>
+                                                </div>
+                                                <div class="tool-content">
+                                                    <h3 class="tool-title">Gantt Chart Generator</h3>
+                                                    <p class="tool-description">Create professional Gantt charts for
+                                                        project
+                                                        planning and scheduling. Add tasks, set durations, dependencies
+                                                        and
+                                                        export as image.</p>
+                                                    <div class="tool-tags">
+                                                        <span class="tag">Project</span>
+                                                        <span class="tag">Planning</span>
+                                                        <span class="tag">Charts</span>
+                                                    </div>
+                                                </div>
+                                                <div class="tool-arrow">
+                                                    <i class="fas fa-arrow-right"></i>
+                                                </div>
+                                            </a>
+                                            <!--CSS Gradient Generator-->
+                                            <a href="tools/css-gradient-generator/index.html" class="tool-card"
+                                                data-category="utility">
+                                                <div class="tool-icon">
+                                                    <i class="fas fa-fill-drip"></i>
+                                                </div>
+                                                <div class="tool-content">
+                                                    <h3 class="tool-title">CSS Gradient Generator</h3>
+                                                    <p class="tool-description">Create beautiful CSS gradients with an
+                                                        intuitive interface. Choose colors, direction, and get the CSS
+                                                        code
+                                                        instantly.</p>
+                                                    <div class="tool-tags">
+                                                        <span class="tag">CSS</span>
+                                                        <span class="tag">Gradient</span>
+                                                        <span class="tag">Utility</span>
+                                                    </div>
+                                                </div>
+                                                <div class="tool-arrow">
+                                                    <i class="fas fa-arrow-right"></i>
+                                                </div>
+                                            </a>
+
+                                            <!-- Add Tool Card -->
+                                            <div class="tool-card add-tool-card" data-category="all">
+                                                <div class="tool-icon">
+                                                    <i class="fas fa-plus"></i>
+                                                </div>
+                                                <div class="tool-content">
+                                                    <h3 class="tool-title">Add Your Tool</h3>
+                                                    <p class="tool-description">Contribute a new tool and be part of
+                                                        Hacktoberfest 2025! Help us
+
+                                                        build the ultimate developer toolkit.</p>
+                                                    <div class="tool-tags">
+                                                        <span class="tag">Contribute</span>
+                                                        <span class="tag">Open Source</span>
+                                                    </div>
+                                                </div>
+                                                <div class="tool-arrow">
+                                                    <i class="fas fa-external-link-alt"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
     </section>
 
     <!-- Contribution Section -->
@@ -2252,24 +2495,24 @@
     <script src="script.js"></script>
 
     <style>
-    #progress-container {
-    position: fixed ;
-    top: 0px;
-    left: 0;
-    width: 100%;
-    height: 15px;
-    z-index: 99990;
-    /* background: #f3f3f3; */
-}
+        #progress-container {
+            position: fixed;
+            top: 0px;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            z-index: 99990;
+            /* background: #f3f3f3; */
+        }
 
-    #progress-bar {
-    height: 53%;
-    width: 0;
-    background: linear-gradient(90deg, rgb(246, 154, 41) 0%, rgb(233, 111, 24) 50%, rgb(255, 150, 21) 100%);
-    box-shadow: 0 0 4px rgba(245, 158, 18, 0.7), 0 0 10px rgba(255, 255, 255, 0.7);
-    transition: width 0.09s ease-in-out;
-    border-radius: 10px;
-    }
+        #progress-bar {
+            height: 53%;
+            width: 0;
+            background: linear-gradient(90deg, rgb(246, 154, 41) 0%, rgb(233, 111, 24) 50%, rgb(255, 150, 21) 100%);
+            box-shadow: 0 0 4px rgba(245, 158, 18, 0.7), 0 0 10px rgba(255, 255, 255, 0.7);
+            transition: width 0.09s ease-in-out;
+            border-radius: 10px;
+        }
     </style>
 
 </body>
