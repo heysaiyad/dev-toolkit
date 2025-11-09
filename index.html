@@ -50,29 +50,41 @@
     <link rel="icon" type="image/x-icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>">
 
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
 
+    <script>
+
+        window.addEventListener('scroll', function () {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        });
+    </script>
 
     <!-- Schema.org structured data -->
     <script type="application/ld+json">
     {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "DevToolkit",
-    "description": "Free collection of web-based developer tools",
-    "url": "https://heysaiyad.github.io/dev-toolkit/",
-    "author": {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "DevToolkit",
+      "description": "Free collection of web-based developer tools",
+      "url": "https://heysaiyad.github.io/dev-toolkit/",
+      "author": {
         "@type": "Person",
         "name": "Md Saiyad Ali",
         "url": "https://github.com/heysaiyad"
-    },
-    "offers": {
+      },
+      "offers": {
         "@type": "Offer",
         "price": "0",
         "priceCurrency": "USD"
-    },
-    "applicationCategory": "DeveloperApplication",
-    "operatingSystem": "Any",
-    "screenshot": "https://heysaiyad.github.io/dev-toolkit/poster.png"
+      },
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "screenshot": "https://heysaiyad.github.io/dev-toolkit/poster.png"
     }
     </script>
     <link rel="stylesheet" href="style.css">
@@ -113,11 +125,6 @@
                 <a href="#tools" class="nav-link">Tools</a>
                 <a href="#contribute" class="nav-link">Contribute</a>
                 <a href="#creator" class="nav-link">Creator</a>
-                <!-- Theme toggle removed per request -->
-                <button id="theme-toggle" class="nav-link theme-toggle-btn" aria-label="Toggle light and dark theme">
-                    <i class="fas fa-sun"></i>
-                    <i class="fas fa-moon"></i>
-                </button>
                 <a href="https://github.com/heysaiyad/dev-toolkit" target="_blank" class="nav-link github-link"
                     aria-label="View source code on GitHub">
                     <i class="fab fa-github" aria-hidden="true"></i>
@@ -158,14 +165,6 @@
                     <a href="tools/word-counter/index.html" class="sidebar-tool-link" data-category="text">
                         <i class="fas fa-font"></i>
                         <span>Word Counter</span>
-                    </a>
-                    <a href="tools/api-fetch-tester/index.html" class="sidebar-tool-link" data-category="utility">
-                        <i class="fas fa-satellite-dish"></i>
-                        <span>API Fetch Tester</span>
-                    </a>
-                    <a href="tools/gantt-chart-generator/index.html" class="sidebar-tool-link" data-category="utility">
-                        <i class="fas fa-tasks"></i>
-                        <span>Gantt Chart Generator</span>
                     </a>
                 </div>
             </div>
@@ -260,10 +259,6 @@
                         <i class="fas fa-fingerprint"></i>
                         <span>UUID Generator</span>
                     </a>
-                    <a href="tools/credit-card-validator/index.html" class="sidebar-tool-link" data-category="utility">
-                        <i class="fas fa-credit-card"></i>
-                        <span>Credit Card Validator</span>
-                    </a>
                     <a href="tools/unix-timestamp-converter/index.html" class="sidebar-tool-link"
                         data-category="utility">
                         <i class="fas fa-clock"></i>
@@ -294,10 +289,6 @@
                         <span>Color Picker</span>
                         <small>Coming Soon</small>
                     </div>
-                    <a href="tools/web-scraper/index.html" class="sidebar-tool-link" data-category="utility">
-                        <i class="fas fa-spider"></i>
-                        <span>Web Scraper</span>
-                    </a>
                     <div class="sidebar-tool-link disabled" data-category="utility">
                         <i class="fas fa-qrcode"></i>
                         <span>QR Code Generator</span>
@@ -351,7 +342,7 @@
             </p>
             <div class="hero-stats">
                 <div class="stat">
-                    <span class="stat-number" data-stat="tools" data-target="16">0</span>
+                    <span class="stat-number" data-stat="tools" data-target="15">0</span>
                     <span class="stat-label">Tools Available</span>
                 </div>
                 <div class="stat">
@@ -454,8 +445,11 @@
                     <div class="search-suggestions" id="searchSuggestions"></div>
                 </div>
                 <div class="search-stats" id="searchStats">
-                    <span id="resultCount">68</span> tools found
-                    <span id="resultCount">17</span> tools found
+                    <<<<<<< webp-converter <span id="resultCount">15</span> tools found
+                        =======
+                        <span id="resultCount">68</span> tools found
+                        <span id="resultCount">17</span> tools found
+                        >>>>>>> master
                 </div>
             </div>
 
@@ -486,12 +480,11 @@
                     Utilities
                 </button>
             </div>
-
             <!--Github Profile Card generator-->
             <div id="tools-grid" class="tools-grid">
-                <a href="tools/character-case-checker/index.html" class="tool-card" data-category="text">
+                <a href="tools/github-profile-card/index.html" class="tool-card" data-category="utility">
                     <div class="tool-icon">
-                        <i class="fas fa-font-case"></i>
+                        <i class="fas fa-user-circle"></i>
                     </div>
                     <div class="tool-content">
                         <h3 class="tool-title">GitHub Profile Card</h3>
@@ -501,6 +494,25 @@
                         <div class="tool-tags">
                             <span class="tag">API</span>
                             <span class="tag">GitHub</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <a href="tools/SVGPathVisualizerEditor/index.html" class="tool-card" data-category="your-category">
+                    <div class="tool-icon">
+                        <i class="fas fa-your-icon"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h2 class="tool-title">SVG_Visualizer Editor</h2>
+                        <!-- <h2 class="tool-title">Editor</h2> -->
+
+                        <p class="tool-description">Brief description of functionality.</p>
+                        <div class="tool-tags">
+                            <span class="tag">Category</span>
+                            <span class="tag">Feature</span>
                         </div>
                     </div>
                     <div class="tool-arrow">
@@ -593,6 +605,27 @@
                     </div>
                 </a>
 
+                <!--SVG Shape Generator-->
+                <a href="tools/svg-shape-generator/index.html" class="tool-card" data-category="code">
+                    <div class="tool-icon">
+                        <i class="fas fa-shapes"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">SVG Shape Generator</h3>
+                        <p class="tool-description">Generate SVG code for basic shapes like circles, rectangles, and
+                            ellipses. Customize attributes like color, size, and position.</p>
+                        <div class="tool-tags">
+                            <span class="tag">SVG</span>
+                            <span class="tag">Shape</span>
+                            <span class="tag">Generator</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+
                 <!--Discount Calculator-->
                 <a href="tools/SimpleDiscountCalculator/index.html" class="tool-card" data-category="utility">
                     <div class="tool-icon">
@@ -613,26 +646,6 @@
                 </a>
 
                 <!-- Word Counter -->
-                <!-- Webpage to Markdown -->
-                <a href="tools/webpage-to-markdown/index.html" class="tool-card" data-category="converter">
-                    <div class="tool-icon">
-                        <i class="fas fa-file-code"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Webpage to Markdown</h3>
-                        <p class="tool-description">Convert any webpage into clean, readable Markdown format. Perfect
-                            for content creation, documentation, and note-taking.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Converter</span>
-                            <span class="tag">Markdown</span>
-                            <span class="tag">Web</span>
-                        </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
                 <a href="tools/word-counter/index.html" class="tool-card" data-category="text" data-featured="true">
                     <div class="tool-icon">
                         <i class="fas fa-font"></i>
@@ -770,7 +783,67 @@
                     </div>
                 </a>
 
+                <!-- Commit Message Formatter -->
+                <a href="tools/commit-formatter/index.html" class="tool-card" data-category="code">
+                    <div class="tool-icon">
+                        <i class="fas fa-message"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Commit Message Formatter</h3>
+                        <p class="tool-description">Create well-structured commit messages following the Conventional
+                            Commits specification.
+                            Includes type selection, scope, and emoji support.</p>
+                        <div class="tool-tags">
+                            <span class="tag">Git</span>
+                            <span class="tag">Commits</span>
+                            <span class="tag">Developer</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
 
+                <!-- API Fetch Tester -->
+                <a href="tools/api-fetch-tester/index.html" class="tool-card" data-category="utility"
+                    data-featured="true">
+                    <div class="tool-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3 class="tool-title">API Fetch Tester</h3>
+                    <p class="tool-description">
+                        Test API endpoints quickly with customizable headers, methods, and body. Ideal for developers
+                        debugging APIs.
+                    </p>
+                    <div class="tool-tags">
+                        <span class="tag">API</span>
+                        <span class="tag">Utility</span>
+                        <span class="tag">Developer</span>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Git Branch Visualizer -->
+                <a href="tools/git-branch-visualizer/index.html" class="tool-card" data-category="code">
+                    <div class="tool-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <h3 class="tool-title">Git Branch Visualizer</h3>
+                    <p class="tool-description">
+                        Interactive visualization of Git branch history with support for merges and complex flows.
+                        Perfect for understanding repository structure.
+                    </p>
+                    <div class="tool-tags">
+                        <span class="tag">Git</span>
+                        <span class="tag">Visualization</span>
+                        <span class="tag">Developer</span>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
                 <!-- JSON Formatter -->
                 <a href="tools/json-formatter/index.html" class="tool-card" data-category="code">
                     <div class="tool-icon">
@@ -783,28 +856,6 @@
                         <div class="tool-tags">
                             <span class="tag">JSON</span>
                             <span class="tag">Format</span>
-                        </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
-                <!-- API Fetch Tester -->
-                <a href="tools/api-fetch-tester/index.html" class="tool-card" data-category="utility"
-                    data-featured="true">
-                    <div class="tool-icon">
-                        <i class="fas fa-satellite-dish"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">API Fetch Tester</h3>
-                        <p class="tool-description">Test REST API endpoints with ease. Send GET, POST, PUT, PATCH, and
-                            DELETE requests, view responses with beautiful formatting, and copy as cURL commands.</p>
-                        <div class="tool-tags">
-                            <span class="tag">API</span>
-                            <span class="tag">Testing</span>
-                            <span class="tag">REST</span>
-                            <span class="tag">Featured</span>
                         </div>
                     </div>
                     <div class="tool-arrow">
@@ -826,28 +877,6 @@
                             <span class="tag">Units</span>
                             <span class="tag">Conversion</span>
                             <span class="tag">Utility</span>
-                        </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
-                <a href="tools/web-scraper/index.html" class="tool-card" data-category="utility" data-featured="true">
-                    <div class="tool-icon">
-                        <i class="fas fa-spider"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Web Scraper</h3>
-                        <p class="tool-description">
-                            Extract links and images from any website using our powerful web scraper. Input a URL and
-                            get organized results with detailed statistics and export options.
-                        </p>
-                        <div class="tool-tags">
-                            <span class="tag">Scraping</span>
-                            <span class="tag">Parser</span>
-                            <span class="tag">API</span>
-                            <span class="tag">Featured</span>
                         </div>
                     </div>
                     <div class="tool-arrow">
@@ -956,6 +985,7 @@
                     </div>
                 </a>
 
+
                 <a href="tools/date-difference/index.html" class="tool-card" data-category="date">
                     <div class="tool-icon">
                         <i class="fas fa-calendar-alt"></i>
@@ -1016,7 +1046,6 @@
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
-
                 <!-- Random Number Generator -->
                 <a href="tools/random-number-generator/index.html" class="tool-card" data-category="utility">
                     <div class="tool-icon">
@@ -1091,6 +1120,28 @@
                             <span class="tag">Image</span>
                             <span class="tag">Compression</span>
                             <span class="tag">Utility</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- WebP Image Converter -->
+                <a href="tools/webp-converter/index.html" class="tool-card" data-category="utility">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-image"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">WebP Image Converter</h3>
+                        <p class="tool-description">
+                            Convert images to WebP format for better web performance. Upload JPG, PNG, GIF, and other
+                            formats to get optimized WebP files.
+                        </p>
+                        <div class="tool-tags">
+                            <span class="tag">WebP</span>
+                            <span class="tag">Image</span>
+                            <span class="tag">Converter</span>
                         </div>
                     </div>
                     <div class="tool-arrow">
@@ -1198,6 +1249,8 @@
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
+
+
 
                 <!-- QR Code Generator -->
                 <a href="tools/qr-code-generator/index.html" class="tool-card" data-category="utility">
@@ -1336,6 +1389,7 @@
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
+
                 <!-- Number Squarer/Cuber -->
                 <a href="tools/number-squarer-cuber/index.html" class="tool-card" data-category="utility">
                     <div class="tool-icon">
@@ -1818,6 +1872,7 @@
                                     <i class="fas fa-arrow-right"></i>
                                 </div>
                             </a>
+
                             <!-- File Encryptor (AES-GCM) -->
                             <a href="tools/file-encryptor/index.html" class="tool-card" data-category="utility">
                                 <div class="tool-icon">
@@ -1839,27 +1894,6 @@
                                     <i class="fas fa-arrow-right"></i>
                                 </div>
                             </a>
-                            <!-- Internet Speed Checker -->
-                            <a href="tools/internet-speed/index.html" class="tool-card" data-category="utility">
-                                <div class="tool-icon">
-                                    <i class="fas fa-compress"></i>
-                                </div>
-                                <div class="tool-content">
-                                    <h3 class="tool-title">Internet Spped Check</h3>
-                                    <p class="tool-description">A simple and fast internet speed testing tool built with
-                                        HTML, CSS,
-                                        and JavaScript to measure your connection's download, upload, and ping."</p>
-                                    <div class="tool-tags">
-                                        <span class="tag">Tool</span>
-                                        <span class="tag">Internet Speed</span>
-                                        <span class="tag">Web</span>
-                                    </div>
-                                </div>
-                                <div class="tool-arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </a>
-
 
                             <!-- Color Contrast Checker -->
                             <a href="tools/color-contrast-checker/index.html" class="tool-card" data-category="utility">
@@ -2193,6 +2227,27 @@
                                             </div>
                                         </a>
 
+                                        <!-- diff checker -->
+                                        <a href="tools/text-diff-checker/index.html" class="tool-card"
+                                            data-category="your-category">
+                                            <div class="tool-icon">
+                                                <i class="fas fa-quote-left"></i>
+                                            </div>
+                                            <div class="tool-content">
+                                                <h3 class="tool-title">Text Diff Checker</h3>
+                                                <p class="tool-description">
+                                                    Compare snippets side-by-side with diff highlighting.
+                                                </p>
+                                                <div class="tool-tags">
+                                                    <span class="tag">Math</span>
+                                                    <span class="tag">Utility</span>
+                                                </div>
+                                            </div>
+                                            <div class="tool-arrow">
+                                                <i class="fas fa-arrow-right"></i>
+                                            </div>
+                                        </a>
+
 
 
                                         <!-- Gantt Chart Generator -->
@@ -2418,8 +2473,28 @@
         <i class="fas fa-chevron-up"></i>
     </button>
 
-    <script src="script.js?v=1.2"></script>
-    <script src="script.js?v=20241219"></script>
+    <script src="script.js"></script>
+
+    <style>
+        #progress-container {
+            position: fixed;
+            top: 0px;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            z-index: 99990;
+            /* background: #f3f3f3; */
+        }
+
+        #progress-bar {
+            height: 53%;
+            width: 0;
+            background: linear-gradient(90deg, rgb(246, 154, 41) 0%, rgb(233, 111, 24) 50%, rgb(255, 150, 21) 100%);
+            box-shadow: 0 0 4px rgba(245, 158, 18, 0.7), 0 0 10px rgba(255, 255, 255, 0.7);
+            transition: width 0.09s ease-in-out;
+            border-radius: 10px;
+        }
+    </style>
 
 </body>
 

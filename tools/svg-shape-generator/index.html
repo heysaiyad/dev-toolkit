@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Shape Generator - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1 class="tool-title">SVG Shape Generator</h1>
+            <p class="tool-subtitle">
+                Generate SVG code for basic shapes like circles, rectangles, and ellipses. 
+                Customize attributes like color, size, and position.
+            </p>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <div class="shape-selector">
+                <label for="shapeType">Shape Type:</label>
+                <select id="shapeType">
+                    <option value="circle">Circle</option>
+                    <option value="rectangle">Rectangle</option>
+                    <option value="ellipse">Ellipse</option>
+                </select>
+            </div>
+
+            <div class="controls-grid">
+                <!-- Position Controls -->
+                <div class="control-group">
+                    <label for="x">X Position:</label>
+                    <input type="number" id="x" value="100" min="0" max="500">
+                </div>
+
+                <div class="control-group">
+                    <label for="y">Y Position:</label>
+                    <input type="number" id="y" value="100" min="0" max="500">
+                </div>
+
+                <!-- Size Controls -->
+                <div class="control-group" id="radiusGroup">
+                    <label for="radius">Radius:</label>
+                    <input type="number" id="radius" value="50" min="1" max="200">
+                </div>
+
+                <div class="control-group" id="widthGroup" style="display: none;">
+                    <label for="width">Width:</label>
+                    <input type="number" id="width" value="100" min="1" max="400">
+                </div>
+
+                <div class="control-group" id="heightGroup" style="display: none;">
+                    <label for="height">Height:</label>
+                    <input type="number" id="height" value="80" min="1" max="400">
+                </div>
+
+                <div class="control-group" id="rxGroup" style="display: none;">
+                    <label for="rx">Radius X:</label>
+                    <input type="number" id="rx" value="50" min="1" max="200">
+                </div>
+
+                <div class="control-group" id="ryGroup" style="display: none;">
+                    <label for="ry">Radius Y:</label>
+                    <input type="number" id="ry" value="30" min="1" max="200">
+                </div>
+
+                <!-- Color Controls -->
+                <div class="control-group">
+                    <label for="fillColor">Fill Color:</label>
+                    <input type="color" id="fillColor" value="#3498db">
+                </div>
+
+                <div class="control-group">
+                    <label for="strokeColor">Stroke Color:</label>
+                    <input type="color" id="strokeColor" value="#2c3e50">
+                </div>
+
+                <div class="control-group">
+                    <label for="strokeWidth">Stroke Width:</label>
+                    <input type="number" id="strokeWidth" value="2" min="0" max="20">
+                </div>
+
+                <div class="control-group">
+                    <label for="opacity">Opacity:</label>
+                    <input type="range" id="opacity" min="0" max="1" step="0.1" value="1">
+                    <span id="opacityValue">1</span>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-primary" id="generateBtn">
+                    <i class="fas fa-magic"></i> Generate SVG
+                </button>
+                <button class="btn btn-secondary" id="copyBtn">
+                    <i class="fas fa-copy"></i> Copy Code
+                </button>
+                <button class="btn btn-secondary" id="downloadBtn">
+                    <i class="fas fa-download"></i> Download SVG
+                </button>
+            </div>
+        </div>
+
+        <!-- Preview Section -->
+        <div class="preview-section">
+            <h3>Preview</h3>
+            <div class="svg-preview" id="svgPreview">
+                <svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="50" fill="#3498db" stroke="#2c3e50" stroke-width="2" opacity="1"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Output Section -->
+        <div class="output-section">
+            <h3>Generated SVG Code</h3>
+            <div class="code-output" id="codeOutput">
+                <pre><code>&lt;svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg"&gt;
+  &lt;circle cx="100" cy="100" r="50" fill="#3498db" stroke="#2c3e50" stroke-width="2" opacity="1"/&gt;
+&lt;/svg&gt;</code></pre>
+            </div>
+        </div>
+
+        <div id="message"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
