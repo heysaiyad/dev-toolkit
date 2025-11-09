@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enhanced SVG Path Editor</title>
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #0081b4;
+            --accent-color: #ff8c42;
+            --success-color: #7ed321;
+            --warning-color: #f5a623;
+            --error-color: #d0021b;
+            --bg-primary: #0f0f23;
+            --bg-secondary: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #b8b8d1;
+            --text-muted: #8b8ba7;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            overflow: hidden;
+        }
+        body { height: 100vh; }
+
+        .main-layout {
+            height: 100vh;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .editor-panel {
+            min-width: 300px;
+            max-width: 340px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.21);
+            padding: 18px 12px;
+            height: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .svg-panel {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+            width: 620px;
+            height: 480px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 6px;
+            font-size: 1.5em;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 54px;
+            padding: 8px;
+            background: var(--bg-primary);
+            border: 2px solid var(--secondary-color);
+            color: var(--text-secondary);
+            border-radius: 8px;
+            font-size: 1em;
+            resize: none;
+        }
+
+        .controls {
+            display: flex;
+            gap: 7px;
+            margin-bottom: 3px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: var(--primary-color);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 6px;
+            font-size: 0.98em;
+            cursor: pointer;
+            padding: 6px 11px;
+            transition: background 0.2s;
+        }
+
+        button:hover { background: var(--accent-color); }
+
+        label {
+            font-size: 0.97em;
+            color: var(--text-muted);
+            margin-right: 4px;
+        }
+
+        input[type="color"] { margin-left: 4px; }
+
+        #svgContainer {
+            width: 600px;
+            height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--bg-primary);
+            border: 2px solid var(--secondary-color);
+        }
+
+        #svg {
+            width: 600px;
+            height: 400px;
+            background: transparent;
+            display: block;
+        }
+
+        .anchor {
+            fill: var(--primary-color);
+            stroke: var(--secondary-color);
+            stroke-width: 2;
+            cursor: pointer;
+        }
+
+        .anchor.selected {
+            fill: var(--warning-color);
+            stroke: var(--error-color);
+        }
+
+        .ghost-anchor {
+            fill: var(--success-color);
+            stroke: var(--secondary-color);
+            stroke-width: 2;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .grid-line {
+            stroke: var(--bg-secondary);
+            stroke-width: 1;
+            opacity: 0.17;
+        }
+
+        .info {
+            color: var(--text-muted);
+            margin-top: 2px;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 990px) {
+            .main-layout {
+                flex-direction: column;
+                height: auto;
+            }
+            .svg-panel, .editor-panel {
+                margin: 0 auto 10px auto;
+            }
+        }
+        
+        .uppercase { color: var(--primary-color); }
+        .lowercase { color: var(--success-color); }
+        .mixedcase { color: var(--warning-color); }
+    </style>
+</head>
+<body>
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+    
+
+    <!-- 🔹 Main Tool Layout -->
+    <div class="main-layout">
+        <div class="editor-panel">
+            <h2>SVG Path Editor</h2>
+            <label for="pathInput" class="info">
+                SVG path <code>d</code> attribute:
+            </label>
+            <textarea id="pathInput">M100,200 L200,100 L400,120 L400,200 Z</textarea>
+            <div class="controls">
+                <button id="updatePath">Update</button>
+                <button id="undoBtn">&#8630; Undo</button>
+                <button id="redoBtn">&#8631; Redo</button>
+                <button id="downloadSVG">Export</button>
+                <button id="toggleGridBtn">Grid</button>
+                <button id="zoomInBtn">+</button>
+                <button id="zoomOutBtn">-</button>
+                <label>
+                    <input type="checkbox" id="snapToGrid"> Snap
+                </label>
+                <label>
+                    Stroke: <input type="color" id="strokeColor" value="#202020">
+                </label>
+                <label>
+                    Fill: <input type="color" id="fillColor" value="#ffffff">
+                </label>
+            </div>
+            <div class="info">
+                <strong>Add Point:</strong> Click the path or a line segment.<br>
+                <strong>Remove Point:</strong> Double-click an anchor (unless last).<br>
+                <strong>Move Point:</strong> Drag anchor.<br>
+                <strong>Undo/Redo, color, download, grid, snap, and zoom supported.</strong>
+            </div>
+        </div>
+
+        <div class="svg-panel">
+            <div id="svgContainer">
+                <svg id="svg" width="600" height="400"></svg>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

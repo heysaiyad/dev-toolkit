@@ -6,6 +6,7 @@ A curated list of amazing resources, tools, and contributions for DevToolkit!
 
 ### ✅ Available Tools
 - **[Word Counter](tools/word-counter/)** - Advanced text analysis with real-time stats
+- **[Git Branch Visualizer](tools/git-branch-visualizer/)** - Interactive Git history visualization tool
 
 ### 🚧 Coming Soon
 - **JSON Formatter** - Format and validate JSON data
