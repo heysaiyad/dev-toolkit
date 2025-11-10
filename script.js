@@ -4,17 +4,13 @@
 // Updated: 2024-12-19 - Added Credit Card Validator tool
 
 // Global error handling
-window.addEventListener('error', function (e) {
-  console.error('Global error:', e.error);
+window.addEventListener("error", function (e) {
+  console.error("Global error:", e.error);
 });
 
-window.addEventListener('unhandledrejection', function (e) {
-  console.error('Unhandled promise rejection:', e.reason);
+window.addEventListener("unhandledrejection", function (e) {
+  console.error("Unhandled promise rejection:", e.reason);
 });
-
-
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
   try {
@@ -37,28 +33,28 @@ document.addEventListener("DOMContentLoaded", function () {
     initMicroAnimations();
     initSectionAnimations();
     initBackToTop();
-  // Theme system removed per user request
+    // Theme system removed per user request
 
     // Hide loading screen after initialization
     setTimeout(hideLoadingScreen, 1500);
   } catch (error) {
-    console.error('Error during initialization:', error);
+    console.error("Error during initialization:", error);
     hideLoadingScreen();
   }
 });
 
 // Advanced Loading Screen
 function initLoadingScreen() {
-  const loadingOverlay = document.getElementById('loadingOverlay');
+  const loadingOverlay = document.getElementById("loadingOverlay");
   if (loadingOverlay) {
     // Add random loading messages
     const messages = [
-      'Loading DevToolkit...',
-      'Preparing tools...',
-      'Setting up workspace...',
-      'Almost ready...'
+      "Loading DevToolkit...",
+      "Preparing tools...",
+      "Setting up workspace...",
+      "Almost ready...",
     ];
-    const textElement = loadingOverlay.querySelector('.loading-text');
+    const textElement = loadingOverlay.querySelector(".loading-text");
     let messageIndex = 0;
 
     const messageInterval = setInterval(() => {
@@ -74,7 +70,7 @@ function initLoadingScreen() {
 }
 
 function hideLoadingScreen() {
-  const loadingOverlay = document.getElementById('loadingOverlay');
+  const loadingOverlay = document.getElementById("loadingOverlay");
   if (loadingOverlay) {
     // Clear message interval
     if (loadingOverlay.messageInterval) {
@@ -82,7 +78,7 @@ function hideLoadingScreen() {
     }
 
     // Fade out with advanced animation
-    loadingOverlay.classList.add('fade-out');
+    loadingOverlay.classList.add("fade-out");
 
     setTimeout(() => {
       loadingOverlay.remove();
@@ -208,11 +204,11 @@ function initToolsFilter() {
         if (filterValue === "all" || cardCategory === filterValue) {
           card.style.display = "flex";
           card.style.animation = "fadeInUp 0.5s ease-out";
-          card.classList.remove('hidden');
+          card.classList.remove("hidden");
           visibleCount++;
         } else {
           card.style.display = "none";
-          card.classList.add('hidden');
+          card.classList.add("hidden");
         }
       });
 
@@ -265,9 +261,9 @@ function initNavbarScroll() {
 
     // ✅ FIXED: Toggle a class instead of setting inline styles
     if (scrollTop > 100) {
-      navbar.classList.add('scrolled');
+      navbar.classList.add("scrolled");
     } else {
-      navbar.classList.remove('scrolled');
+      navbar.classList.remove("scrolled");
     }
 
     // This part for hiding/showing the navbar is fine and can stay
@@ -313,8 +309,9 @@ function initParallaxEffect() {
 
     shapes.forEach((shape, index) => {
       const speed = 0.2 + index * 0.1;
-      shape.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.1
-        }deg)`;
+      shape.style.transform = `translateY(${scrolled * speed}px) rotate(${
+        scrolled * 0.1
+      }deg)`;
     });
   });
 }
@@ -348,7 +345,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Show a brief notification
         const notification = document.createElement("div");
         notification.className = "coming-soon-notification";
-        notification.innerHTML = "🚧 This tool is coming soon! Check back later.";
+        notification.innerHTML =
+          "🚧 This tool is coming soon! Check back later.";
         notification.style.cssText = `
           position: fixed;
           top: 50%;
@@ -494,17 +492,38 @@ function initAdvancedSearch() {
   const toolsDatabase = [
     {
       name: "Word Counter",
-      description: "Advanced text analysis tool with real-time word, character, and paragraph counting",
+      description:
+        "Advanced text analysis tool with real-time word, character, and paragraph counting",
       category: "text",
-      keywords: ["word", "count", "text", "character", "paragraph", "analysis", "writing", "blog"],
+      keywords: [
+        "word",
+        "count",
+        "text",
+        "character",
+        "paragraph",
+        "analysis",
+        "writing",
+        "blog",
+      ],
       icon: "fas fa-font",
       url: "tools/word-counter/index.html",
     },
     {
       name: "Line Sorter & Unique",
-      description: "Sort text lines alphabetically and remove duplicates. Perfect for cleaning up lists, organizing data, and removing redundant lines from text files.",
+      description:
+        "Sort text lines alphabetically and remove duplicates. Perfect for cleaning up lists, organizing data, and removing redundant lines from text files.",
       category: "text",
-      keywords: ["line", "sort", "sorter", "unique", "duplicate", "alphabetical", "organize", "list", "clean"],
+      keywords: [
+        "line",
+        "sort",
+        "sorter",
+        "unique",
+        "duplicate",
+        "alphabetical",
+        "organize",
+        "list",
+        "clean",
+      ],
       icon: "fas fa-sort-alpha-down",
       url: "tools/line-sorter-unique/index.html",
     },
@@ -513,15 +532,33 @@ function initAdvancedSearch() {
       description:
         "Generate customizable placeholder text by words or paragraphs for your design and development projects. Perfect for mockups and prototyping.",
       category: "text",
-      keywords: ["lorem", "ipsum", "generator", "placeholder", "text", "mockup", "prototype", "design"],
+      keywords: [
+        "lorem",
+        "ipsum",
+        "generator",
+        "placeholder",
+        "text",
+        "mockup",
+        "prototype",
+        "design",
+      ],
       icon: "fas fa-align-justify",
       url: "tools/lorem-ipsum-generator/index.html",
     },
     {
       name: "String Reverser",
-      description: "Reverse any text instantly for coding exercises, data transformation, input testing, obfuscation, and playful text effects.",
+      description:
+        "Reverse any text instantly for coding exercises, data transformation, input testing, obfuscation, and playful text effects.",
       category: "text",
-      keywords: ["string", "reverse", "text", "flip", "backward", "coding", "transform"],
+      keywords: [
+        "string",
+        "reverse",
+        "text",
+        "flip",
+        "backward",
+        "coding",
+        "transform",
+      ],
       icon: "fas fa-sync-alt",
       url: "tools/string-reverser/index.html",
     },
@@ -530,15 +567,32 @@ function initAdvancedSearch() {
       description:
         "Write and preview Markdown in real-time with split-view editor. Export to HTML, MD, or plain text.",
       category: "code",
-      keywords: ["markdown", "preview", "editor", "md", "html", "export", "real-time"],
+      keywords: [
+        "markdown",
+        "preview",
+        "editor",
+        "md",
+        "html",
+        "export",
+        "real-time",
+      ],
       icon: "fas fa-markdown",
       url: "tools/markdown-previewer/index.html",
     },
     {
       name: "Code Beautifier",
-      description: "Paste messy HTML code and instantly get beautifully formatted code.",
+      description:
+        "Paste messy HTML code and instantly get beautifully formatted code.",
       category: "code",
-      keywords: ["code", "beautify", "format", "html", "pretty", "clean", "indent"],
+      keywords: [
+        "code",
+        "beautify",
+        "format",
+        "html",
+        "pretty",
+        "clean",
+        "indent",
+      ],
       icon: "fas fa-code",
       url: "tools/code-beautifier/index.html",
     },
@@ -546,7 +600,14 @@ function initAdvancedSearch() {
       name: "Line Sorter & Unique",
       description: "Sort text lines alphabetically and remove duplicates",
       category: "text",
-      keywords: ["sort", "unique", "lines", "text", "alphabetical", "duplicate"],
+      keywords: [
+        "sort",
+        "unique",
+        "lines",
+        "text",
+        "alphabetical",
+        "duplicate",
+      ],
       icon: "fas fa-sort-alpha-down",
       url: "tools/line-sorter-unique/index.html",
     },
@@ -587,7 +648,15 @@ function initAdvancedSearch() {
       description:
         "Countdown timer and stopwatch with lap tracking, audio alerts, and keyboard shortcuts.",
       category: "utility",
-      keywords: ["timer", "stopwatch", "countdown", "lap", "alert", "time", "track"],
+      keywords: [
+        "timer",
+        "stopwatch",
+        "countdown",
+        "lap",
+        "alert",
+        "time",
+        "track",
+      ],
       icon: "fas fa-clock",
       url: "tools/timer-stopwatch/index.html",
     },
@@ -596,7 +665,14 @@ function initAdvancedSearch() {
       description:
         "Generate secure passwords with customizable length and character sets.",
       category: "utility",
-      keywords: ["password", "generator", "secure", "random", "character", "security"],
+      keywords: [
+        "password",
+        "generator",
+        "secure",
+        "random",
+        "character",
+        "security",
+      ],
       icon: "fas fa-key",
       url: "tools/password-generator/index.html",
     },
@@ -605,15 +681,34 @@ function initAdvancedSearch() {
       description:
         "Encode text to Base64 or decode Base64 strings. Support for text and file conversion.",
       category: "utility",
-      keywords: ["base64", "encode", "decode", "encoder", "decoder", "text", "file", "conversion"],
+      keywords: [
+        "base64",
+        "encode",
+        "decode",
+        "encoder",
+        "decoder",
+        "text",
+        "file",
+        "conversion",
+      ],
       icon: "fas fa-lock",
       url: "tools/base64-encoder/index.html",
     },
     {
       name: "Image to Base64 Converter",
-      description: "Convert images to Base64 encoded strings. Perfect for embedding images directly in HTML, CSS, or JSON files.",
+      description:
+        "Convert images to Base64 encoded strings. Perfect for embedding images directly in HTML, CSS, or JSON files.",
       category: "utility",
-      keywords: ["image", "base64", "convert", "converter", "embed", "html", "css", "json"],
+      keywords: [
+        "image",
+        "base64",
+        "convert",
+        "converter",
+        "embed",
+        "html",
+        "css",
+        "json",
+      ],
       icon: "fas fa-image",
       url: "tools/image-base64-converter/index.html",
     },
@@ -622,7 +717,16 @@ function initAdvancedSearch() {
       description:
         "Encode or decode URLs to ensure proper formatting. Convert special characters and spaces for safe URL transmission.",
       category: "utility",
-      keywords: ["url", "encode", "decode", "encoder", "decoder", "format", "character", "space"],
+      keywords: [
+        "url",
+        "encode",
+        "decode",
+        "encoder",
+        "decoder",
+        "format",
+        "character",
+        "space",
+      ],
       icon: "fas fa-link",
       url: "tools/url-encoder-decoder/index.html",
     },
@@ -631,7 +735,16 @@ function initAdvancedSearch() {
       description:
         "Generate Universally Unique Identifiers (UUIDs) instantly for database keys, session IDs, and unique identifiers.",
       category: "utility",
-      keywords: ["uuid", "generator", "unique", "identifier", "database", "key", "session", "id"],
+      keywords: [
+        "uuid",
+        "generator",
+        "unique",
+        "identifier",
+        "database",
+        "key",
+        "session",
+        "id",
+      ],
       icon: "fas fa-fingerprint",
       url: "tools/uuid-generator/index.html",
     },
@@ -640,21 +753,38 @@ function initAdvancedSearch() {
       description:
         "A simple tool to convert human-readable dates into Unix timestamps and convert Unix timestamps back into readable date/time.",
       category: "utility",
-      keywords: ["unix", "timestamp", "converter", "date", "time", "epoch", "convert"],
+      keywords: [
+        "unix",
+        "timestamp",
+        "converter",
+        "date",
+        "time",
+        "epoch",
+        "convert",
+      ],
       icon: "fas fa-clock",
       url: "tools/unix-timestamp-converter/index.html",
     },
     {
       name: "Percentage Calculator",
-      description: "Easily calculate percentages with this intuitive calculator. Find out what is X% of Y in seconds.",
+      description:
+        "Easily calculate percentages with this intuitive calculator. Find out what is X% of Y in seconds.",
       category: "utility",
-      keywords: ["percentage", "calculator", "percent", "math", "calculate", "ratio"],
+      keywords: [
+        "percentage",
+        "calculator",
+        "percent",
+        "math",
+        "calculate",
+        "ratio",
+      ],
       icon: "fas fa-calculator",
       url: "tools/percentage-calculator/index.html",
     },
     {
       name: "Random Number Generator",
-      description: "Generate random numbers within a specified range quickly and easily.",
+      description:
+        "Generate random numbers within a specified range quickly and easily.",
       category: "utility",
       keywords: ["random", "number", "generator", "rng", "math", "utility"],
       icon: "fas fa-dice",
@@ -662,9 +792,20 @@ function initAdvancedSearch() {
     },
     {
       name: "Morse Code Translator",
-      description: "Convert text to Morse code and Morse code back to text — supports letters, numbers, and punctuation.",
+      description:
+        "Convert text to Morse code and Morse code back to text — supports letters, numbers, and punctuation.",
       category: "text",
-      keywords: ["morse", "code", "translator", "text", "signal", "dot", "dash", "convert", "communication"],
+      keywords: [
+        "morse",
+        "code",
+        "translator",
+        "text",
+        "signal",
+        "dot",
+        "dash",
+        "convert",
+        "communication",
+      ],
       icon: "fas fa-wave-square",
       url: "tools/morse-code-translator/index.html",
     },
@@ -674,7 +815,15 @@ function initAdvancedSearch() {
       description:
         "A simple tool to check whether a number is even or odd. Perfect for quick mathematical verifications.",
       category: "utility",
-      keywords: ["even", "odd", "checker", "number", "math", "verify", "parity"],
+      keywords: [
+        "even",
+        "odd",
+        "checker",
+        "number",
+        "math",
+        "verify",
+        "parity",
+      ],
       icon: "fas fa-calculator",
       url: "tools/even-odd-checker/index.html",
     },
@@ -784,7 +933,8 @@ function initAdvancedSearch() {
     },
     {
       name: "QR Code Generator",
-      description: "Create QR codes for URLs, text, WiFi, and more with customizable styling.",
+      description:
+        "Create QR codes for URLs, text, WiFi, and more with customizable styling.",
       category: "utility",
       keywords: ["qr", "code", "generator", "url", "text", "wifi", "scan"],
       icon: "fas fa-qrcode",
@@ -792,7 +942,8 @@ function initAdvancedSearch() {
     },
     {
       name: "Text Extractor",
-      description: "Extract meaningful text from various document formats, including PDFs, Word files and images.",
+      description:
+        "Extract meaningful text from various document formats, including PDFs, Word files and images.",
       category: "utility",
       keywords: ["text", "extraction", "pdf", "word", "image"],
       icon: "fas fa-file-alt",
@@ -800,29 +951,78 @@ function initAdvancedSearch() {
     },
     {
       name: "Image Performance Audit",
-      description: "Analyze any webpage's images for performance issues, missing alt tags, and optimization opportunities. Get detailed insights and recommendations.",
+      description:
+        "Analyze any webpage's images for performance issues, missing alt tags, and optimization opportunities. Get detailed insights and recommendations.",
       category: "utility",
-      keywords: ["image", "performance", "audit", "seo", "optimization", "alt", "webp", "avif", "analysis", "webpage", "performace", "images", "speed", "lighthouse", "web", "site", "check", "analyze"],
+      keywords: [
+        "image",
+        "performance",
+        "audit",
+        "seo",
+        "optimization",
+        "alt",
+        "webp",
+        "avif",
+        "analysis",
+        "webpage",
+        "performace",
+        "images",
+        "speed",
+        "lighthouse",
+        "web",
+        "site",
+        "check",
+        "analyze",
+      ],
       icon: "fas fa-chart-line",
       url: "tools/image-performance-audit/index.html",
       name: "Web Scraper",
-      description: "Extract links and images from any website using our powerful web scraper. Input a URL and get organized results with detailed statistics and export options.",
+      description:
+        "Extract links and images from any website using our powerful web scraper. Input a URL and get organized results with detailed statistics and export options.",
       category: "utility",
-      keywords: ["web", "scraper", "scraping", "parser", "links", "images", "extract", "crawl", "spider", "url", "website", "api", "cors"],
+      keywords: [
+        "web",
+        "scraper",
+        "scraping",
+        "parser",
+        "links",
+        "images",
+        "extract",
+        "crawl",
+        "spider",
+        "url",
+        "website",
+        "api",
+        "cors",
+      ],
       icon: "fas fa-spider",
       url: "tools/web-scraper/index.html",
       name: "Credit Card Validator",
-      description: "Validate credit card numbers using the Luhn algorithm. Check if a card number is valid without storing any data - completely secure and private.",
+      description:
+        "Validate credit card numbers using the Luhn algorithm. Check if a card number is valid without storing any data - completely secure and private.",
       category: "utility",
-      keywords: ["credit", "card", "validator", "validation", "luhn", "algorithm", "security", "payment", "check", "verify"],
+      keywords: [
+        "credit",
+        "card",
+        "validator",
+        "validation",
+        "luhn",
+        "algorithm",
+        "security",
+        "payment",
+        "check",
+        "verify",
+      ],
       icon: "fas fa-credit-card",
       url: "tools/credit-card-validator/index.html",
-    }
+    },
   ];
 
   // Debug: Log the total number of tools and check for Image Performance Audit
   console.log(`Total tools in database: ${toolsDatabase.length}`);
-  const imageAuditTool = toolsDatabase.find(tool => tool.name === "Image Performance Audit");
+  const imageAuditTool = toolsDatabase.find(
+    (tool) => tool.name === "Image Performance Audit"
+  );
   console.log("Image Performance Audit tool found:", imageAuditTool);
 
   let searchTimeout;
@@ -848,23 +1048,33 @@ function initAdvancedSearch() {
 
   function handleSearch(query) {
     const results = fuzzySearch(query, toolsDatabase);
-    console.log(`Search query: "${query}", Results: ${results.length}`, results.map(r => r.name));
-    
+    console.log(
+      `Search query: "${query}", Results: ${results.length}`,
+      results.map((r) => r.name)
+    );
+
     // Debug: Check if Image Performance Audit is in the database
-    const imageAuditTool = toolsDatabase.find(tool => tool.name === "Image Performance Audit");
+    const imageAuditTool = toolsDatabase.find(
+      (tool) => tool.name === "Image Performance Audit"
+    );
     console.log("Image Performance Audit tool in database:", imageAuditTool);
-    
+
     // Debug: Check if it's in the results
-    const imageAuditInResults = results.find(tool => tool.name === "Image Performance Audit");
+    const imageAuditInResults = results.find(
+      (tool) => tool.name === "Image Performance Audit"
+    );
     console.log("Image Performance Audit in results:", imageAuditInResults);
-    
+
     // Debug logging
-    if (query.toLowerCase().includes('credit')) {
-      console.log('Search query:', query);
-      console.log('Search results:', results);
-      console.log('Credit Card Validator in results:', results.find(r => r.name === 'Credit Card Validator'));
+    if (query.toLowerCase().includes("credit")) {
+      console.log("Search query:", query);
+      console.log("Search results:", results);
+      console.log(
+        "Credit Card Validator in results:",
+        results.find((r) => r.name === "Credit Card Validator")
+      );
     }
-    
+
     updateToolDisplay(results, query);
 
     if (query.length > 0) {
@@ -882,65 +1092,82 @@ function initAdvancedSearch() {
     const queryWords = query.split(/\s+/);
 
     // Score and sort tools for better relevance
-    const scoredTools = tools.map(tool => {
-      const searchText = `${tool.name} ${tool.description} ${tool.keywords.join(" ")}`.toLowerCase();
-      let score = 0;
+    const scoredTools = tools
+      .map((tool) => {
+        const searchText = `${tool.name} ${
+          tool.description
+        } ${tool.keywords.join(" ")}`.toLowerCase();
+        let score = 0;
 
-      // Exact match gets highest priority
-      if (searchText.includes(query)) score += 100;
+        // Exact match gets highest priority
+        if (searchText.includes(query)) score += 100;
 
-      // Check if tool name starts with query
-      if (tool.name.toLowerCase().startsWith(query)) score += 80;
+        // Check if tool name starts with query
+        if (tool.name.toLowerCase().startsWith(query)) score += 80;
 
-      // Check individual words with better typo tolerance
-      const nameWords = tool.name.toLowerCase().split(/\s+/);
-      queryWords.forEach(queryWord => {
-        if (queryWord.length < 2) return;
+        // Check individual words with better typo tolerance
+        const nameWords = tool.name.toLowerCase().split(/\s+/);
+        queryWords.forEach((queryWord) => {
+          if (queryWord.length < 2) return;
 
-        // Check exact word matches in name
-        if (nameWords.some(nameWord => nameWord.includes(queryWord))) {
-          score += 60;
-        }
+          // Check exact word matches in name
+          if (nameWords.some((nameWord) => nameWord.includes(queryWord))) {
+            score += 60;
+          }
 
-        // Check keywords with typo tolerance
-        tool.keywords.forEach(keyword => {
-          const keywordLower = keyword.toLowerCase();
-          if (keywordLower.includes(queryWord) || keywordLower.startsWith(queryWord)) {
-            score += 40;
-          } else if (levenshteinDistance(queryWord, keywordLower) <= 2) {
-            score += 20; // More lenient typo matching
+          // Check keywords with typo tolerance
+          tool.keywords.forEach((keyword) => {
+            const keywordLower = keyword.toLowerCase();
+            if (
+              keywordLower.includes(queryWord) ||
+              keywordLower.startsWith(queryWord)
+            ) {
+              score += 40;
+            } else if (levenshteinDistance(queryWord, keywordLower) <= 2) {
+              score += 20; // More lenient typo matching
+            }
+          });
+
+          // Check description
+          if (tool.description.toLowerCase().includes(queryWord)) {
+            score += 10;
           }
         });
 
-        // Check description
-        if (tool.description.toLowerCase().includes(queryWord)) {
-          score += 10;
+        // Special handling for common typos
+        if (
+          query.includes("performace") &&
+          tool.name.toLowerCase().includes("performance")
+        ) {
+          score += 50; // Boost for "performace" typo
         }
-      });
 
-      // Special handling for common typos
-      if (query.includes('performace') && tool.name.toLowerCase().includes('performance')) {
-        score += 50; // Boost for "performace" typo
-      }
+        // Special boost for Image Performance Audit tool
+        if (
+          tool.name === "Image Performance Audit" &&
+          query.includes("image")
+        ) {
+          score += 100; // High boost for image searches
+          console.log(
+            `Image Performance Audit tool scored: ${score} for query: "${query}"`
+          );
+        }
 
-      // Special boost for Image Performance Audit tool
-      if (tool.name === "Image Performance Audit" && query.includes('image')) {
-        score += 100; // High boost for image searches
-        console.log(`Image Performance Audit tool scored: ${score} for query: "${query}"`);
-      }
+        // Debug logging for Image Performance Audit tool
+        if (tool.name === "Image Performance Audit") {
+          console.log(
+            `Image Performance Audit - Query: "${query}", Score: ${score}, SearchText: "${searchText}"`
+          );
+        }
 
-      // Debug logging for Image Performance Audit tool
-      if (tool.name === "Image Performance Audit") {
-        console.log(`Image Performance Audit - Query: "${query}", Score: ${score}, SearchText: "${searchText}"`);
-      }
-
-      return { tool, score };
-    }).filter(item => item.score > 0);
+        return { tool, score };
+      })
+      .filter((item) => item.score > 0);
 
     // Sort by score (highest first) and return tools
     return scoredTools
       .sort((a, b) => b.score - a.score)
-      .map(item => item.tool);
+      .map((item) => item.tool);
   }
 
   function levenshteinDistance(str1, str2) {
@@ -979,22 +1206,32 @@ function initAdvancedSearch() {
       .slice(0, 10)
       .map(
         (tool) => `
-            <div class="suggestion-item" data-url="${tool.url}" ${tool.url === '#' ? 'data-disabled="true"' : ''}>
+            <div class="suggestion-item" data-url="${tool.url}" ${
+          tool.url === "#" ? 'data-disabled="true"' : ""
+        }>
                 <div class="suggestion-icon">
                     <i class="${tool.icon}"></i>
                 </div>
                 <div class="suggestion-content">
                     <div class="suggestion-title">${highlightText(
-          tool.name,
-          query
-        )}</div>
+                      tool.name,
+                      query
+                    )}</div>
                     <div class="suggestion-description">${highlightText(
-          tool.description,
-          query
-        )}</div>
-                    ${tool.url === '#' ? '<div class="coming-soon">Coming Soon</div>' : ''}
+                      tool.description,
+                      query
+                    )}</div>
+                    ${
+                      tool.url === "#"
+                        ? '<div class="coming-soon">Coming Soon</div>'
+                        : ""
+                    }
                 </div>
-                ${tool.url !== '#' ? '<div class="suggestion-arrow"><i class="fas fa-arrow-right"></i></div>' : ''}
+                ${
+                  tool.url !== "#"
+                    ? '<div class="suggestion-arrow"><i class="fas fa-arrow-right"></i></div>'
+                    : ""
+                }
             </div>
         `
       )
@@ -1046,23 +1283,27 @@ function initAdvancedSearch() {
 
       // Debug: Check if this is the Image Performance Audit tool card
       if (toolName === "Image Performance Audit") {
-        console.log(`Image Performance Audit card - Query: "${query}", IsMatch: ${isMatch}, Results:`, results.map(r => r.name));
+        console.log(
+          `Image Performance Audit card - Query: "${query}", IsMatch: ${isMatch}, Results:`,
+          results.map((r) => r.name)
+        );
+      }
       // Debug logging for Credit Card Validator
-      if (toolName === 'Credit Card Validator') {
-        console.log('Credit Card Validator card found:', card);
-        console.log('Query:', query);
-        console.log('Results:', results);
-        console.log('Is match:', isMatch);
+      if (toolName === "Credit Card Validator") {
+        console.log("Credit Card Validator card found:", card);
+        console.log("Query:", query);
+        console.log("Results:", results);
+        console.log("Is match:", isMatch);
       }
 
       if (query.length === 0 || isMatch) {
         card.style.display = "flex";
         card.style.animation = "fadeInUp 0.5s ease-out";
-        card.classList.remove('hidden');
+        card.classList.remove("hidden");
         visibleCount++;
       } else {
         card.style.display = "none";
-        card.classList.add('hidden');
+        card.classList.add("hidden");
       }
     });
 
@@ -1074,7 +1315,7 @@ function initAdvancedSearch() {
     toolCards.forEach((card) => {
       card.style.display = "flex";
       card.style.animation = "fadeInUp 0.5s ease-out";
-      card.classList.remove('hidden');
+      card.classList.remove("hidden");
       visibleCount++;
     });
     updateResultCount(visibleCount);
@@ -1139,23 +1380,27 @@ function initThemeSystem() {
                 <h3>Choose Theme</h3>
                 <div class="theme-options">
                     ${Object.keys(themes)
-        .map(
-          (key) => `
-                        <div class="theme-option ${key === currentTheme ? "active" : ""
-            }" data-theme="${key}">
+                      .map(
+                        (key) => `
+                        <div class="theme-option ${
+                          key === currentTheme ? "active" : ""
+                        }" data-theme="${key}">
                             <div class="theme-preview">
-                                <div class="color-primary" style="background: ${themes[key].primary
-            }"></div>
-                                <div class="color-secondary" style="background: ${themes[key].secondary
-            }"></div>
-                                <div class="color-accent" style="background: ${themes[key].accent
-            }"></div>
+                                <div class="color-primary" style="background: ${
+                                  themes[key].primary
+                                }"></div>
+                                <div class="color-secondary" style="background: ${
+                                  themes[key].secondary
+                                }"></div>
+                                <div class="color-accent" style="background: ${
+                                  themes[key].accent
+                                }"></div>
                             </div>
                             <span>${themes[key].name}</span>
                         </div>
                     `
-        )
-        .join("")}
+                      )
+                      .join("")}
                 </div>
                 <button class="close-theme-selector">×</button>
             </div>
@@ -1484,7 +1729,8 @@ function initSidebar() {
       const searchWords = searchTerm.split(/\s+/);
 
       toolLinks.forEach((link) => {
-        const toolName = link.querySelector("span")?.textContent.toLowerCase() || "";
+        const toolName =
+          link.querySelector("span")?.textContent.toLowerCase() || "";
 
         // Check for matches using the same logic as main search
         let isMatch = false;
@@ -1494,21 +1740,22 @@ function initSidebar() {
           isMatch = true;
         } else {
           // Check individual words
-          isMatch = searchWords.some(word => {
+          isMatch = searchWords.some((word) => {
             if (word.length < 2) return false;
             return toolName.includes(word) || toolName.startsWith(word);
           });
 
           // Fuzzy matching with database
           if (!isMatch) {
-            const dbTool = toolsDatabase.find(tool =>
-              tool.name.toLowerCase() === toolName
+            const dbTool = toolsDatabase.find(
+              (tool) => tool.name.toLowerCase() === toolName
             );
             if (dbTool) {
-              isMatch = searchWords.some(word => {
-                return dbTool.keywords.some(keyword =>
-                  keyword.toLowerCase().includes(word) ||
-                  levenshteinDistance(word, keyword.toLowerCase()) <= 1
+              isMatch = searchWords.some((word) => {
+                return dbTool.keywords.some(
+                  (keyword) =>
+                    keyword.toLowerCase().includes(word) ||
+                    levenshteinDistance(word, keyword.toLowerCase()) <= 1
                 );
               });
             }
@@ -1854,7 +2101,7 @@ function initSectionAnimations() {
 
 // Back to Top Button functionality
 function initBackToTop() {
-  const backToTopBtn = document.getElementById('backToTopBtn');
+  const backToTopBtn = document.getElementById("backToTopBtn");
 
   if (!backToTopBtn) return;
 
@@ -1867,9 +2114,9 @@ function initBackToTop() {
       if (!inThrottle) {
         func.apply(context, args);
         inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
+        setTimeout(() => (inThrottle = false), limit);
       }
-    }
+    };
   }
 
   // Show/hide button based on scroll position
@@ -1878,9 +2125,9 @@ function initBackToTop() {
     const showThreshold = 300; // Show button after scrolling 300px
 
     if (scrollTop > showThreshold) {
-      backToTopBtn.classList.add('show');
+      backToTopBtn.classList.add("show");
     } else {
-      backToTopBtn.classList.remove('show');
+      backToTopBtn.classList.remove("show");
     }
   }, 100);
 
@@ -1918,31 +2165,31 @@ function initBackToTop() {
     // Easing function for smooth animation
     function ease(t, b, c, d) {
       t /= d / 2;
-      if (t < 1) return c / 2 * t * t + b;
+      if (t < 1) return (c / 2) * t * t + b;
       t--;
-      return -c / 2 * (t * (t - 2) - 1) + b;
+      return (-c / 2) * (t * (t - 2) - 1) + b;
     }
 
     requestAnimationFrame(animation);
   }
 
   // Event listeners
-  window.addEventListener('scroll', toggleBackToTopButton, { passive: true });
+  window.addEventListener("scroll", toggleBackToTopButton, { passive: true });
 
-  backToTopBtn.addEventListener('click', (e) => {
+  backToTopBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
     // Add click animation
-    backToTopBtn.style.transform = 'scale(0.95)';
+    backToTopBtn.style.transform = "scale(0.95)";
     setTimeout(() => {
-      backToTopBtn.style.transform = '';
+      backToTopBtn.style.transform = "";
     }, 150);
 
     // Use modern smooth scroll if supported, fallback to custom animation
-    if ('scrollBehavior' in document.documentElement.style) {
+    if ("scrollBehavior" in document.documentElement.style) {
       window.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     } else {
       smoothScrollToTop();
@@ -1950,8 +2197,8 @@ function initBackToTop() {
   });
 
   // Keyboard accessibility
-  backToTopBtn.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+  backToTopBtn.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       backToTopBtn.click();
     }
