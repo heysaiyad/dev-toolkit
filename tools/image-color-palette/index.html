@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Color Palette Extractor - DevToolkit</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    .tool-container {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 2rem 4rem;
+    }
+
+    .tool-header {
+      margin-bottom: 2.5rem;
+      text-align: center;
+      animation: fadeInDown 1s ease;
+    }
+
+    .tool-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+    }
+
+    .tool-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 2rem;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .sidebar {
+      background: rgba(26, 26, 46, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      backdrop-filter: blur(25px);
+    }
+
+    .sidebar h2 {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .upload-area {
+      border: 2px dashed rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      text-align: center;
+      background: rgba(15, 15, 35, 0.6);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 1.5rem;
+    }
+
+    .upload-area:hover {
+      border-color: var(--primary-color);
+      background: rgba(255, 107, 53, 0.05);
+    }
+
+    .upload-area.dragover {
+      border-color: var(--primary-color);
+      background: rgba(255, 107, 53, 0.1);
+      transform: scale(1.02);
+    }
+
+    .upload-icon {
+      font-size: 3rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .upload-text {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .upload-hint {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    #imageUpload {
+      display: none;
+    }
+
+    .preview-container {
+      margin-top: 1.5rem;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: rgba(10, 10, 25, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    #imagePreview {
+      width: 100%;
+      height: auto;
+      max-height: 300px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .controls {
+      margin-top: 1.5rem;
+    }
+
+    .control-group {
+      margin-bottom: 1rem;
+    }
+
+    .control-group label {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #ccc;
+      margin-bottom: 0.5rem;
+    }
+
+    .control-group input[type="range"] {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .control-group input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(255, 107, 53, 0.5);
+    }
+
+    .control-group input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 8px rgba(255, 107, 53, 0.5);
+    }
+
+    .range-value {
+      display: inline-block;
+      float: right;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .extract-btn {
+      width: 100%;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-md);
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      background: var(--gradient-primary);
+      color: white;
+      margin-top: 1rem;
+    }
+
+    .extract-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+    }
+
+    .extract-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .palette-container {
+      background: rgba(26, 26, 46, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      min-height: 600px;
+      backdrop-filter: blur(25px);
+    }
+
+    .palette-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .palette-header h3 {
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+
+    .export-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .export-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    #palette {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      min-height: 500px;
+    }
+
+    #palette.empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .empty-icon {
+      font-size: 4rem;
+      opacity: 0.3;
+    }
+
+    .color-card {
+      background: rgba(15, 15, 35, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .color-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .color-preview {
+      width: 100%;
+      height: 120px;
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .color-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .color-value {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem;
+      background: rgba(10, 10, 25, 0.6);
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+    }
+
+    .color-label {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .color-code {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .copy-color-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.25rem;
+      transition: all 0.3s ease;
+    }
+
+    .copy-color-btn:hover {
+      color: var(--primary-color);
+    }
+
+    .copied-toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: rgba(52, 211, 153, 0.9);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      animation: slideInUp 0.3s ease;
+      z-index: 1000;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(20px);
+    }
+
+    .back-button:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    canvas {
+      display: none;
+    }
+
+    @media (max-width: 1200px) {
+      .tool-container {
+        padding: 2rem;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+      
+      #palette {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <a href="../../index.html" class="back-button">
+    <i class="fas fa-arrow-left"></i>
+    Back to Tools
+  </a>
+
+  <div class="tool-container">
+    <div class="tool-header">
+      <h1 class="tool-title">Image Color Palette Extractor</h1>
+      <p class="tool-subtitle">
+        Upload an image and extract the dominant colors with hex, RGB, and HSL values.
+      </p>
+    </div>
+
+    <div class="main-content">
+      <div class="sidebar">
+        <h2><i class="fas fa-upload"></i> Upload Image</h2>
+        
+        <div class="upload-area" id="uploadArea">
+          <div class="upload-icon">
+            <i class="fas fa-cloud-upload-alt"></i>
+          </div>
+          <div class="upload-text">Click to upload or drag & drop</div>
+          <div class="upload-hint">PNG, JPG, GIF up to 10MB</div>
+        </div>
+        
+        <input type="file" id="imageUpload" accept="image/*">
+        
+        <div class="preview-container" id="previewContainer" style="display: none;">
+          <img id="imagePreview" alt="Preview">
+        </div>
+
+        <div class="controls">
+          <div class="control-group">
+            <label>
+              Number of Colors
+              <span class="range-value" id="colorCountValue">5</span>
+            </label>
+            <input type="range" id="colorCount" min="3" max="10" value="5">
+          </div>
+
+          <button class="extract-btn" id="extractBtn" disabled>
+            <i class="fas fa-palette"></i> Extract Colors
+          </button>
+        </div>
+      </div>
+
+      <div class="palette-container">
+        <div class="palette-header">
+          <h3>Color Palette</h3>
+          <button class="export-btn" id="exportBtn" style="display: none;">
+            <i class="fas fa-download"></i> Export Palette
+          </button>
+        </div>
+
+        <div id="palette" class="empty">
+          <i class="fas fa-palette empty-icon"></i>
+          <div>Upload an image to extract colors</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>
