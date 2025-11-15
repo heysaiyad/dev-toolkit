@@ -1,94 +1,94 @@
-name: Update Contributors
+# name: Update Contributors
 
-on:
-  schedule:
-    - cron: "30 1 * * *" # run daily at 7:00 AM IST (1:30 AM UTC)
-  workflow_dispatch:      # allow manual trigger
+# on:
+#   schedule:
+#     - cron: "30 1 * * *" # run daily at 7:00 AM IST (1:30 AM UTC)
+#   workflow_dispatch:      # allow manual trigger
 
-permissions:
-  contents: write
-  actions: read
+# permissions:
+#   contents: write
+#   actions: read
 
-jobs:
-  update-contributors:
-    runs-on: ubuntu-latest
+# jobs:
+#   update-contributors:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout repo
+#         uses: actions/checkout@v4
 
-      - name: Generate contributors list
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.MY_GITHUB_TOKEN }}
-          script: |
-            const fs = require("fs");
-            const path = "README.md";
+#       - name: Generate contributors list
+#         uses: actions/github-script@v7
+#         with:
+#           github-token: ${{ secrets.MY_GITHUB_TOKEN }}
+#           script: |
+#             const fs = require("fs");
+#             const path = "README.md";
 
-            try {
-              // Fetch contributors via API
-              const contributors = await github.paginate(
-                github.rest.repos.listContributors,
-                { owner: context.repo.owner, repo: context.repo.repo }
-              );
+#             try {
+#               // Fetch contributors via API
+#               const contributors = await github.paginate(
+#                 github.rest.repos.listContributors,
+#                 { owner: context.repo.owner, repo: context.repo.repo }
+#               );
 
-              if (!contributors || contributors.length === 0) {
-                console.log("No contributors found");
-                return;
-              }
+#               if (!contributors || contributors.length === 0) {
+#                 console.log("No contributors found");
+#                 return;
+#               }
 
-              // Build Markdown table
-              let table = "## Contributors ✨\n\nThanks goes to these wonderful people:\n\n<table><tr>\n";
-              contributors.forEach((c, i) => {
-                if (c.type === 'User') { // Only include real users, not bots
-                  table += `
-              <td align="center">
-                <a href="${c.html_url}">
-                  <img src="${c.avatar_url}" width="100px;" alt="${c.login}"/>
-                  <br />
-                  <sub><b>${c.login}</b></sub>
-                </a>
-                <br />💻
-              </td>`;
-                  if ((i + 1) % 6 === 0) table += "\n</tr><tr>\n";
-                }
-              });
-              table += "\n</tr></table>\n";
+#               // Build Markdown table
+#               let table = "## Contributors ✨\n\nThanks goes to these wonderful people:\n\n<table><tr>\n";
+#               contributors.forEach((c, i) => {
+#                 if (c.type === 'User') { // Only include real users, not bots
+#                   table += `
+#               <td align="center">
+#                 <a href="${c.html_url}">
+#                   <img src="${c.avatar_url}" width="100px;" alt="${c.login}"/>
+#                   <br />
+#                   <sub><b>${c.login}</b></sub>
+#                 </a>
+#                 <br />💻
+#               </td>`;
+#                   if ((i + 1) % 6 === 0) table += "\n</tr><tr>\n";
+#                 }
+#               });
+#               table += "\n</tr></table>\n";
 
-              // Read README, replace section between markers
-              if (!fs.existsSync(path)) {
-                console.log("README.md not found");
-                return;
-              }
+#               // Read README, replace section between markers
+#               if (!fs.existsSync(path)) {
+#                 console.log("README.md not found");
+#                 return;
+#               }
 
-              let readme = fs.readFileSync(path, "utf8");
-              const start = "<!-- CONTRIBUTORS-START -->";
-              const end = "<!-- CONTRIBUTORS-END -->";
-              const regex = new RegExp(`${start}[\\s\\S]*${end}`);
-              const replacement = `${start}\n${table}\n${end}`;
+#               let readme = fs.readFileSync(path, "utf8");
+#               const start = "<!-- CONTRIBUTORS-START -->";
+#               const end = "<!-- CONTRIBUTORS-END -->";
+#               const regex = new RegExp(`${start}[\\s\\S]*${end}`);
+#               const replacement = `${start}\n${table}\n${end}`;
               
-              if (readme.match(regex)) {
-                readme = readme.replace(regex, replacement);
-              } else {
-                readme += `\n\n${replacement}`;
-              }
+#               if (readme.match(regex)) {
+#                 readme = readme.replace(regex, replacement);
+#               } else {
+#                 readme += `\n\n${replacement}`;
+#               }
 
-              fs.writeFileSync(path, readme);
-              console.log("Contributors section updated successfully!");
+#               fs.writeFileSync(path, readme);
+#               console.log("Contributors section updated successfully!");
               
-            } catch (error) {
-              console.error("Error updating contributors:", error);
-              process.exit(1);
-            }
+#             } catch (error) {
+#               console.error("Error updating contributors:", error);
+#               process.exit(1);
+#             }
 
-      - name: Commit changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add README.md
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "chore: update contributors list"
-            git push
-          fi
+#       - name: Commit changes
+#         run: |
+#           git config --global user.name "github-actions[bot]"
+#           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+#           git add README.md
+#           if git diff --staged --quiet; then
+#             echo "No changes to commit"
+#           else
+#             git commit -m "chore: update contributors list"
+#             git push
+#           fi
